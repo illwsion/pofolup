@@ -112,7 +112,7 @@ router.post('/upload', upload.single('user_file'),  async (req, res) => {
         '\n이메일 : ' + sanitize(req.body.user_email) +
         '\n접한 경로 : ' + req.body.user_route +
         '\n추가 포트폴리오 링크 : ' + sanitize(req.body.user_url) +
-        '\n첨부 파일 ' + filename + ' 를 보냈지만 용량 문제로 전송되지 않음'
+        '\n용량 ' + myfile.size +'의 첨부 파일 ' + filename + ' 를 보냈지만 용량 문제로 전송되지 않음'
     };
   }
   console.log("@@@@@@@@@@@@@@@@@mailOptions: " + mailOptions);
