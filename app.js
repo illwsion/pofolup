@@ -33,10 +33,9 @@
   app.set('port', process.env.PORT);
 
   //폴더 지정
-  app.use(express.static(__dirname + '/static')); //스태틱 폴더 지정
-  app.use('/position', express.static(__dirname + '/static')); //스태틱 폴더 지정
-  app.use('/js', express.static(__dirname + '/js')); //script 폴더 지정
-  app.use('/styles', express.static(__dirname + '/styles')); //css 폴더 지정
+  app.use(express.static(__dirname + '/public')); //스태틱 폴더 지정
+  app.use('/js', express.static(__dirname + '/public/js')); //script 폴더 지정
+  app.use('/styles', express.static(__dirname + '/public/styles')); //css 폴더 지정
 
   //배포, 개발 시 설정
   if (process.env.NODE_ENV === 'production'){
