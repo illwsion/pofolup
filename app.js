@@ -19,7 +19,10 @@
     path: path.resolve(__dirname, "./.env")
   });
 
-
+  //mongoose
+  const mongoose = require('mongoose');
+  const Applicant = require('./models/applicant');
+  const applicantController = require('./controllers/applicantController');
 
   //보안 관련 미들웨어
   const helmet = require('helmet');
@@ -38,12 +41,14 @@
   app.use('/styles', express.static(__dirname + '/public/styles')); //css 폴더 지정
 
   //배포, 개발 시 설정
-  if (process.env.NODE_ENV === 'production'){
+  if (process.env.NODE_ENV === 'production') {
     app.use(morgan('combined'));
     app.enable('trust proxy');
-    app.use(helmet({ contentSecurityPolicy : false}));
+    app.use(helmet({
+      contentSecurityPolicy: false
+    }));
     app.use(hpp());
-  } else{
+  } else {
     app.use(morgan('dev'));
   }
 
@@ -52,12 +57,29 @@
   app.use(express.urlencoded({
     extended: true
   }));
-  //favicon 설정
-  //app.use(favicon(__dirname + '/images/favicon.ico'));
 
 
-  //지원 기능
 
+  //mongoose
+  //Conneting
+  mongoose
+    .connect("mongodb://127.0.0.1:27017/recruit", {
+      useNewUrlParser: true,
+
+    })
+    .then(() => {
+      console.log("Connected to MongoDB");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  //몽구스 테스트
+  app.get('/applicants', applicantController.getAllApplicants, (req, res, next)=>{
+    console.log("req.data from app.js");
+    //console.log(req.data);
+    res.send(req.data);
+  });
 
 
 

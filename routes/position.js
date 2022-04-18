@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 
+//mongoose
+const applicantController = require('./../controllers/applicantController');
+
 //파일 관리, 이메일 전송 미들웨어
 const nodemailer = require('nodemailer');
 const fs = require('fs');
@@ -17,7 +20,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1024*1024*10}
+  //limits: { fileSize: 1024*1024*10}
 });
 
 //스태틱 폴더 지정
@@ -33,16 +36,16 @@ router.get('/', (req, res, next) => {
 router.get('/:pos', (req, res) => {
   switch (req.params.pos) {
     case 'writer':
-      res.sendFile(path.resolve(__dirname + '/../views/writer.html'));
+      res.sendFile(path.resolve(path.join(__dirname, '/../views/writer.html')));
       break;
     case 'illustrator':
-      res.sendFile(path.resolve(__dirname + '/../views/illustrator.html'));
+      res.sendFile(path.resolve(path.join(__dirname, '/../views/illustrator.html')));
       break;
     case 'pm':
-      res.sendFile(path.resolve(__dirname + '/../views/pm.html'));
+      res.sendFile(path.resolve(path.join(__dirname, '/../views/pm.html')));
       break;
     case 'apply':
-      res.sendFile(path.resolve(__dirname + '/../views/apply.html'));
+      res.sendFile(path.resolve(path.join(__dirname, '/../views/apply.html')));
       break;
     case 'upload':
       res.sendFile()
@@ -54,6 +57,8 @@ router.get('/:pos', (req, res) => {
 router.post('/upload', upload.single('user_file'),  async (req, res) => {
   console.time('upload');
   console.log("1");
+
+  applicantController.saveApplicant(req, res);
 
   let filename = req.file.filename;
 
@@ -70,7 +75,7 @@ router.post('/upload', upload.single('user_file'),  async (req, res) => {
   });
 
   //111111111111111.파일 사이즈 알아오기
-  let myfile = fs.statSync(__dirname + '/../uploads/' + req.file.filename);
+  let myfile = fs.statSync(path.join(__dirname, '/../uploads/', req.file.filename));
   console.log("myfile : ");
   console.log(myfile.size);
 
@@ -79,7 +84,7 @@ router.post('/upload', upload.single('user_file'),  async (req, res) => {
   //사용자에게 보내는 페이지 설정
   let mailOptions;
   console.log(myfile.size);
-  if ( myfile.size < 11000000){
+  if ( myfile.size < 1024*1024*11){
     res.send('Uploaded! : ' + filename);
     console.log("파일 첨부 가능");
     mailOptions = {
@@ -112,7 +117,7 @@ router.post('/upload', upload.single('user_file'),  async (req, res) => {
         '\n이메일 : ' + sanitize(req.body.user_email) +
         '\n접한 경로 : ' + req.body.user_route +
         '\n추가 포트폴리오 링크 : ' + sanitize(req.body.user_url) +
-        '\n용량 ' + myfile.size +'의 첨부 파일 ' + filename + ' 를 보냈지만 용량 문제로 전송되지 않음'
+        '\n용량 ' + (myfile.size/(1024*1024)).toFixed(2) +'mb의 첨부 파일 ' + filename + ' 를 보냈지만 용량 문제로 전송되지 않음'
     };
   }
   console.log("@@@@@@@@@@@@@@@@@mailOptions: " + mailOptions);
