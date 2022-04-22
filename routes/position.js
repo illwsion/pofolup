@@ -11,16 +11,20 @@ const fs = require('fs');
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/')
+  destination: (req, file, callback) => {
+    callback(null, 'uploads/')
   },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname)
+  filename: (req, file, callback) => {
+
+
+    callback(null, Date.now() + '-' + file.originalname)
   }
 });
 const upload = multer({
   storage: storage,
-  //limits: { fileSize: 1024*1024*10}
+  //파일 크기 100mb로 제한
+  limits: { fileSize: 1024*1024*100}
+
 });
 
 //스태틱 폴더 지정
@@ -54,13 +58,21 @@ router.get('/:pos', (req, res) => {
 
 
 //지원하기 버튼 클릭
-router.post('/upload', upload.single('user_file'),  async (req, res) => {
+router.post('/upload', upload.array('file'),  async (req, res) => {
   console.time('upload');
   console.log("1");
+  const files = req.files;
+  if (Array.isArray(req.files)){
+    console.log("파일은 여러개");
+  }else{
+    console.log("파일은 하나");
+  }
+  console.log(req.files);
 
+  //applicant 생성
   applicantController.saveApplicant(req, res);
 
-  let filename = req.file.filename;
+  let filename = req.files[0].filename;
 
   //res.send('Uploaded! : ' + filename);
 
@@ -75,7 +87,7 @@ router.post('/upload', upload.single('user_file'),  async (req, res) => {
   });
 
   //111111111111111.파일 사이즈 알아오기
-  let myfile = fs.statSync(path.join(__dirname, '/../uploads/', req.file.filename));
+  let myfile = fs.statSync(path.join(__dirname, '/../uploads/', req.files[0].filename));
   console.log("myfile : ");
   console.log(myfile.size);
 
@@ -85,7 +97,7 @@ router.post('/upload', upload.single('user_file'),  async (req, res) => {
   let mailOptions;
   console.log(myfile.size);
   if ( myfile.size < 1024*1024*11){
-    res.send('Uploaded! : ' + filename);
+    //res.send('Uploaded! : ' + filename);
     console.log("파일 첨부 가능");
     mailOptions = {
       from: process.env.senderID,
@@ -105,7 +117,7 @@ router.post('/upload', upload.single('user_file'),  async (req, res) => {
     };
   }
   else{
-    res.send('파일의 크기가 10mb를 넘습니다!\n파일 빼고 Uploaded! : ' + filename);
+    //res.send('파일의 크기가 10mb를 넘습니다!\n파일 빼고 Uploaded! : ' + filename);
     console.log("파일 첨부 불가능");
     mailOptions = {
       from: process.env.senderID,
@@ -124,6 +136,7 @@ router.post('/upload', upload.single('user_file'),  async (req, res) => {
   console.log(mailOptions);
 
   //3333333333333333. 그 후 메일 전송
+  /*
   transporter.sendMail(mailOptions, (error, info) => {
     console.log("메일 전송 시도");
     if (error) {
@@ -148,9 +161,10 @@ router.post('/upload', upload.single('user_file'),  async (req, res) => {
 
 
   });
-
+  */
 
   console.timeEnd('upload');
+  res.sendFile(path.resolve(path.join(__dirname, '/../views/applied.html')));
 });
 
 

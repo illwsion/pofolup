@@ -12,7 +12,6 @@
   //LOG 기록 미들웨어
   const morgan = require('morgan');
   const winston = require('./config/winston');
-
   const dotenv = require('dotenv');
   const path = require('path');
   dotenv.config({
@@ -34,9 +33,11 @@
 
   //기본 설정
   app.set('port', process.env.PORT);
+  app.set('view engine', 'ejs');
 
   //폴더 지정
   app.use(express.static(__dirname + '/public')); //스태틱 폴더 지정
+  app.use('/uploads', express.static(__dirname + '/uploads'));
   app.use('/js', express.static(__dirname + '/public/js')); //script 폴더 지정
   app.use('/styles', express.static(__dirname + '/public/styles')); //css 폴더 지정
 
@@ -74,12 +75,7 @@
       console.log(err);
     });
 
-  //몽구스 테스트
-  app.get('/applicants', applicantController.getAllApplicants, (req, res, next)=>{
-    console.log("req.data from app.js");
-    //console.log(req.data);
-    res.send(req.data);
-  });
+
 
 
 

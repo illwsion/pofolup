@@ -4,16 +4,18 @@ const mongoose = require('mongoose');
 
 //defining schema
 const applicantSchema = mongoose.Schema({
-  name: 'string',
+  name : 'string',
+  email : 'string',
+  password : 'string',
   position : 'string',
-  number: 'string',
-  email: 'string',
   route : 'string',
-  file : 'string',
-  url : 'string',
+  files : 'array',
+  createDate : 'date',
+  updateDate : 'date',
+  isAdmin : 'bool'
 
 }, {
-  collection: 'newApplicant'
+  collection: 'applicant'
 });
 
 

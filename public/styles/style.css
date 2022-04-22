@@ -1,7 +1,24 @@
-a {
-  color: red
+html {
+  background-color : #00539F;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
+body {
+  width: 600px;
+  margin: 0 auto;
+  background-color: #FF9500;
+  padding: 0 20px 20px 20px;
+  border: 5px solid black;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+}
+
+.header_navbar{
+
+}
 
 .header_category{
   color: blue;

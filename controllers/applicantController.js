@@ -1,35 +1,51 @@
 const Applicant = require('./../models/applicant');
 
+//mongoose
+const articleController = require('./../controllers/articleController');
 
 exports.getAllApplicants = (req, res, next)=>{
-
   Applicant.find({}, (error, applicants)=>{
-    if (error) next(error);
-    req.data = applicants;
-    console.log("applicants");
-    console.log(applicants);
-    next();
+    if (error){
+        console.log(err);
+    }else{
+      req.data = applicants;
+      next();
+    }
   });
 };
 
 exports.saveApplicant = (req, res)=>{
+  let fileArray = [];
+  console.log(req.files);
+  for (var i=0; i<req.files.length; i++){
+    fileArray.push(req.files[i].filename);
+    console.log(fileArray);
+  }
   let newApplicant = new Applicant({
-    name: req.body.user_name,
-    position : req.body.user_job,
-    number: req.body.user_phone,
-    email: req.body.user_email,
-    route : req.body.user_route,
-    file : req.file.filename,
-    url : req.body.user_url,
+    name: req.body.name,
+    email: req.body.email,
+    password : req.body.password,
+    position : '그림작가',
+    route : req.body.route,
+    files : fileArray,
+    url : req.body.url,
+    createDate : new Date().getTime(),
+    updateDate : new Date().getTime(),
+    isAdmin : false,
   });
-
   newApplicant.save((error, result) =>{
     if (error) res.send(error);
-    console.log("save complete");
-
+    console.log("applicant save complete");
+    console.log(result);
+    articleController.saveArticle(req, res, result._id);
 
   });
 };
+exports.deleteApplicant = (req, res)=>{
+
+
+}
+
 
 /*
 //schema -> model

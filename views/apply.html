@@ -19,41 +19,47 @@
 
   <form action="/position/upload" method="post" enctype="multipart/form-data">
     <div>
-      <label for="user_job">지원 분야</label><br>
-      <input type="radio" name="user_job" value="글작가" required>
-      <label for="user_route">글작가</label>
-      <input type="radio" name="user_job" value="그림작가">
-      <label for="user_route">그림작가</label>
-      <input type="radio" name="user_job" value="기획자">
-      <label for="user_route">기획자</label><br><br><br>
+      <label for="position">지원 분야</label><br>
+      <input type="radio" name="position" value="글작가" required>
+      <label for="position">글작가</label>
+      <input type="radio" name="position" value="그림작가">
+      <label for="position">그림작가</label>
+      <input type="radio" name="position" value="기획자">
+      <label for="position">기획자</label><br><br><br>
     </div>
 
 
     <div>
-      <label for="user_name">이름</label><br>
-      <input type="text" name="user_name" id="user_name" required><br>
-      <label for="user_phone">전화번호</label><br>
-      <input type="tel" name="user_phone" id="user_name" required><br>
-      <label for="user_email">이메일</label><br>
-      <input type="email" name="user_email" id="user_name" required><br><br><br>
+      <label for="name">이름</label><br>
+      <input type="text" name="name" id="name" required><br>
+      <label for="email">이메일</label><br>
+      <input type="email" name="email" id="email" required><br>
+      <label for="password">비밀번호</label><br>
+      <input type="password" name="password" id="password" required><br><br><br>
     </div>
 
 
     <div>
-      <label for="user_route">본 공고를 처음 접한 경호를 선택해주세요</label><br>
-      <input type="radio" name="user_route" value="워니프레임 홈페이지">
-      <label for="user_route">워니프레임 홈페이지</label>
-      <input type="radio" name="user_route" value="카카오톡">
-      <label for="user_route">카카오톡</label>
-      <input type="radio" name="user_route" value="인스타그램">
-      <label for="user_route">인스타그램</label><br><br><br>
+      <label for="route">본 공고를 처음 접한 경호를 선택해주세요</label><br>
+      <input type="radio" name="route" value="워니프레임 홈페이지">
+      <label for="route">워니프레임 홈페이지</label>
+      <input type="radio" name="route" value="카카오톡">
+      <label for="route">카카오톡</label>
+      <input type="radio" name="route" value="인스타그램">
+      <label for="route">인스타그램</label><br><br><br>
     </div>
 
     <div>
-      <label for="user_file">제출 서류</label><br>
-      <input type="file" name="user_file" required><br>
-      <label for="user_url">포트폴리오</label><br>
-      <input type="url" name="user_url"><br>
+      <label for="file">그림 1</label><br>
+      <input type="file" name="file" required><br>
+      <label for="file">그림 2</label><br>
+      <input type="file" name="file" required><br>
+      <label for="file">그림 3</label><br>
+      <input type="file" name="file" required><br>
+      <label for="url">포트폴리오</label><br>
+      <input type="url" name="url"><br>
+      <label for="comment">기타 하고싶은 말</label><br>
+      <input type="text" name="comment"><br>
     </div><br>
 
     <div>

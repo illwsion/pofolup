@@ -1,0 +1,32 @@
+<table class="tg">
+  <thead>
+    <tr>
+      <th class="tg-lboi">번호</th>
+      <th class="tg-cly1">이름</th>
+      <th class="tg-cly1">이메일</th>
+      <th class="tg-cly1">지원분야</th>
+      <th class="tg-cly1">파일이름1</th>
+      <th class="tg-cly1">파일이름2</th>
+      <th class="tg-cly1">파일이름3</th>
+      <th class="tg-cly1">지원 경로</th>
+      <th class="tg-cly1">날짜</th>
+      <th class="tg-cly1">삭제 버튼</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(var i=0; i<Applicants.length; i++) { %>
+    <tr>
+      <td class="tg-cly1"><%= Applicants.length-i %></td>
+      <td class="tg-cly1"> <a href="/applicants/<%= Applicants[i].name%>"><%= Applicants[i].name%></a></td>
+      <td class="tg-cly1"> <a href="/applicants/<%= Applicants[i].email%>"><%= Applicants[i].email%></a></td>
+      <td class="tg-cly1"><%= Applicants[i].position%></td>
+      <td class="tg-cly1"><%= Applicants[i].files[0]%> <img src="/uploads/<%= Applicants[i].files[0]%>" width = "50px", height ="50px") alt="">  </td>
+      <td class="tg-cly1"><%= Applicants[i].files[1]%> <img src="/uploads/<%= Applicants[i].files[1]%>" width = "50px", height ="50px") alt="">  </td>
+      <td class="tg-cly1"><%= Applicants[i].files[2]%> <img src="/uploads/<%= Applicants[i].files[2]%>" width = "50px", height ="50px") alt="">  </td>
+      <td class="tg-cly1"><%= Applicants[i].route%></td>
+      <td class="tg-cly1"><%= Applicants[i].createDate%></td>
+      <td class="tg-cly1"> <button></button> </td>
+    </tr>
+    <%}%>
+  </tbody>
+</table>
