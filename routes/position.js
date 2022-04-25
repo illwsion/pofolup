@@ -62,13 +62,14 @@ router.post('/upload', upload.array('file'),  async (req, res) => {
   console.time('upload');
   console.log("1");
   const files = req.files;
+  /* 파일 여러개인지 확인
   if (Array.isArray(req.files)){
     console.log("파일은 여러개");
   }else{
     console.log("파일은 하나");
   }
   console.log(req.files);
-
+  */
   //applicant 생성
   applicantController.saveApplicant(req, res);
 
@@ -88,27 +89,24 @@ router.post('/upload', upload.array('file'),  async (req, res) => {
 
   //111111111111111.파일 사이즈 알아오기
   let myfile = fs.statSync(path.join(__dirname, '/../uploads/', req.files[0].filename));
-  console.log("myfile : ");
-  console.log(myfile.size);
 
 
   //222222222222222.filesize에 따라 mailoptions 설정
   //사용자에게 보내는 페이지 설정
   let mailOptions;
-  console.log(myfile.size);
+
   if ( myfile.size < 1024*1024*11){
     //res.send('Uploaded! : ' + filename);
     console.log("파일 첨부 가능");
     mailOptions = {
       from: process.env.senderID,
       to: process.env.receiverID,
-      subject: '채용공고 페이지 ' + req.body.user_job + ' 지원',
-      text: '지원 분야 : ' + req.body.user_job +
-        '\n이름 : ' + sanitize(req.body.user_name) +
-        '\n전화번호 : ' + sanitize(req.body.user_phone) +
-        '\n이메일 : ' + sanitize(req.body.user_email) +
-        '\n접한 경로 : ' + req.body.user_route +
-        '\n추가 포트폴리오 링크 : ' + sanitize(req.body.user_url),
+      subject: '채용공고 페이지 ' + req.body.position + ' 지원',
+      text: '지원 분야 : ' + req.body.position +
+        '\n이름 : ' + sanitize(req.body.name) +
+        '\n이메일 : ' + sanitize(req.body.email) +
+        '\n접한 경로 : ' + req.body.route +
+        '\n추가 포트폴리오 링크 : ' + sanitize(req.body.url),
 
       attachments: [{
         filename: filename,
@@ -122,18 +120,18 @@ router.post('/upload', upload.array('file'),  async (req, res) => {
     mailOptions = {
       from: process.env.senderID,
       to: process.env.receiverID,
-      subject: '채용공고 페이지 ' + req.body.user_job + ' 지원',
-      text: '지원 분야 : ' + req.body.user_job +
-        '\n이름 : ' + sanitize(req.body.user_name) +
-        '\n전화번호 : ' + sanitize(req.body.user_phone) +
-        '\n이메일 : ' + sanitize(req.body.user_email) +
-        '\n접한 경로 : ' + req.body.user_route +
-        '\n추가 포트폴리오 링크 : ' + sanitize(req.body.user_url) +
+      subject: '채용공고 페이지 ' + req.body.position + ' 지원',
+      text: '지원 분야 : ' + req.body.position +
+        '\n이름 : ' + sanitize(req.body.name) +
+        '\n이메일 : ' + sanitize(req.body.email) +
+        '\n접한 경로 : ' + req.body.route +
+        '\n추가 포트폴리오 링크 : ' + sanitize(req.body.url) +
         '\n용량 ' + (myfile.size/(1024*1024)).toFixed(2) +'mb의 첨부 파일 ' + filename + ' 를 보냈지만 용량 문제로 전송되지 않음'
     };
   }
-  console.log("@@@@@@@@@@@@@@@@@mailOptions: " + mailOptions);
-  console.log(mailOptions);
+
+  //console.log("@@@@@@@@@@@@@@@@@mailOptions: " + mailOptions);
+  //console.log(mailOptions);
 
   //3333333333333333. 그 후 메일 전송
   /*

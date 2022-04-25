@@ -1,12 +1,12 @@
 const Article = require('./../models/article');
-
+const applicantController = require('./../controllers/applicantController');
 
 exports.getAllArticles = (req, res, next)=>{
   Article.find({}, (error, articles)=>{
     if (error){
         console.log(err);
     }else{
-      req.data = articles;
+      req.articlesData = articles;
       next();
     }
   });
@@ -14,11 +14,11 @@ exports.getAllArticles = (req, res, next)=>{
 exports.findArticle = (req, res, next)=>{
   Article.find({userEmail : req.params.email}, (error, articles)=>{
     if (error){
-      console.log(err);
+      console.log(error);
     }else{
-      console.log('@@@@@@articles');
-      console.log(articles);
-      req.data = articles;
+      //console.log('@@@@@@articles');
+      //console.log(articles);
+      req.articlesData = articles;
       next();
     }
   });
@@ -33,7 +33,7 @@ exports.saveArticle = (req, res, id)=>{
   //console.log(req.files);
   for (var i=0; i<req.files.length; i++){
     fileArray.push(req.files[i].filename);
-    console.log(fileArray);
+    //console.log(fileArray);
   }
   let newArticle = new Article({
     userId : id,
@@ -45,8 +45,8 @@ exports.saveArticle = (req, res, id)=>{
 
   newArticle.save((error, result) =>{
     if (error) res.send(error);
-    console.log("article save complete");
-    console.log(result);
+    //console.log("article save complete");
+    //console.log(result);
 
   });
 };

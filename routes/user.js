@@ -18,8 +18,8 @@ router.get('/', (req, res, next) => {
 
 
 
-router.get('/adminPage/:pageNum', applicantController.getAllApplicants, (req, res, next) => {
-  var ApplicantsData = req.data;
+router.get('/adminPage/:pageNum', applicantController.getAllApplicants, (req, res) => {
+  var ApplicantsData = req.applicantsData;
   ApplicantsData.reverse();
   //res.sendFile(path.resolve(__dirname + '/../views/adminPage.html'));
   res.render('index', {
@@ -30,15 +30,23 @@ router.get('/adminPage/:pageNum', applicantController.getAllApplicants, (req, re
 });
 
 //몽구스 테스트
-router.get('/applicants/:email',articleController.findArticle, (req, res, next)=>{
+router.get('/applicants/:email',applicantController.findApplicant,articleController.findArticle, (req, res)=>{
 
-  console.log("req.data from findArticle");
-  console.log(req.data);
-  var ArticlesData = req.data;
+  //console.log("req.data from findArticle");
+  //console.log(req.data);
+
+  let ArticlesData = req.articlesData;
   ArticlesData.reverse();
+  let ApplicantsData = req.applicantsData;
 
 
-  res.render('index2', {
+  console.log("@@@@@@@@@@@@ArticlesData");
+  console.log(ArticlesData);
+  console.log("@@@@@@@@@@@@ApllicantsData");
+  console.log(ApplicantsData);
+
+  res.render('applicant', {
+    Applicants: ApplicantsData,
     Articles: ArticlesData,
     title: "Mytitle",
   });

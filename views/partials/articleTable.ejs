@@ -1,0 +1,30 @@
+<% for(var i=0; i<Articles.length; i++) { %>
+<table class="tg">
+  <thead>
+    <tr>
+      <th class="tg-lboi">번호</th>
+      <th class="tg-cly1">파일이름1</th>
+      <th class="tg-cly1">파일이름2</th>
+      <th class="tg-cly1">파일이름3</th>
+      <th class="tg-cly1">추가사항</th>
+      <th class="tg-cly1">url</th>
+      <th class="tg-cly1">생성 날짜</th>
+      <th class="tg-cly1">삭제 버튼</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-cly1"><%= Articles.length-i %></td>
+      <td class="tg-cly1"><img src="/uploads/<%= Articles[i].files[0]%>" width = "100px", height ="100px") alt=""></td>
+      <td class="tg-cly1"><img src="/uploads/<%= Articles[i].files[1]%>" width = "100px", height ="100px") alt=""></td>
+      <td class="tg-cly1"><img src="/uploads/<%= Articles[i].files[2]%>" width = "100px", height ="100px") alt=""></td>
+      <td class="tg-cly1"><%= Articles[i].comment%></td>
+      <td class="tg-cly1"><%= Articles[i].url%></td>
+      <td class="tg-cly1"><%= Articles[i].createDate%></td>
+
+      <td class="tg-cly1"> <button></button> </td>
+    </tr>
+    </tbody>
+  </table>
+  <br><br>
+<% } %>
