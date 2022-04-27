@@ -2,22 +2,16 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>워니프레임 채용</title>
+  <%- include('./partials/head'); %>
 </head>
 
 <body>
   <header>
-    <a href="/"><img src="images/logo.png" height ="30" alt=""></a>
-    <a href="/position/writer" class="header_category">글작가 페이지</a>
-    <a href="/position/illustrator" class="header_category">그림작가 페이지</a>
-    <a href="/position/pm" class="header_category">기획자 페이지</a>
-    <a href="https://wonyframe.com/" class="header_category">워니프레임 홈페이지</a>
+    <%- include('./partials/header'); %>
   </header><br>
 
   <form action="/position/upload" method="post" enctype="multipart/form-data">
+    <!-- 추후 그림작가 말고 다른 분야도 모집할 시
     <div>
       <label for="position">지원 분야</label><br>
       <input type="radio" name="position" value="글작가" required>
@@ -27,13 +21,13 @@
       <input type="radio" name="position" value="기획자">
       <label for="position">기획자</label><br><br><br>
     </div>
-
+    -->
 
     <div>
-      <label for="name">이름</label><br>
-      <input type="text" name="name" id="name" required><br>
-      <label for="email">이메일</label><br>
-      <input type="email" name="email" id="email" required><br>
+      <label for="realname">이름</label><br>
+      <input type="text" name="realname" id="name" required><br>
+      <label for="username">이메일</label><br>
+      <input type="email" name="username" id="username" required><br>
       <label for="password">비밀번호</label><br>
       <input type="password" name="password" id="password" required><br><br><br>
     </div>
@@ -74,6 +68,9 @@
 
   </form>
 
+  <footer>
+    <%- include('./partials/footer'); %>
+  </footer>
 </body>
 
 </html>

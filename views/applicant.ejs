@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-<head>
+  <head>
   <%- include('./partials/head'); %>
+
   <style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-cly1{text-align:left;vertical-align:middle}
-.tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
-</style>
-</head>
-<header>
-  <%- include('./partials/header'); %>
-</header>
 
-<body>
+  </style>
+  </head>
 
-  <%- include('./partials/applicantTable'); %>
 
-  <p>Hello</p>
 
-  <%- include('./partials/articleTable'); %>
+  <body>
+    <header>
+      <%- include('./partials/header'); %>
+    </header>
+    <form action="logout" method="post">
+      <input type="submit" value="Log out">
+    </form>
+    <a href="/logout">Logout</a>
+
+    <div class="container1">
+      <p>지원자 프로필</p>
+      <%- include('./partials/applicantTable'); %>
+    </div>
+
+
+    <div class="container2">
+      <p>지원 내역</p>
+      <%- include('./partials/articleTable'); %>
+    </div>
+
 
   </body>
+
   <footer>
     <%- include('./partials/footer'); %>
-      </footer>
+  </footer>
 
 </html>

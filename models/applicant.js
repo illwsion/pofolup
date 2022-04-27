@@ -1,12 +1,11 @@
 //mongoose
 const mongoose = require('mongoose');
-
+const passportLocalMongoose = require('passport-local-mongoose');
 
 //defining schema
 const applicantSchema = mongoose.Schema({
-  name : 'string',
-  email : 'string',
-  password : 'string',
+  username : 'string',
+  realname : 'string',
   position : 'string',
   route : 'string',
   files : 'array',
@@ -18,6 +17,10 @@ const applicantSchema = mongoose.Schema({
   collection: 'applicant'
 });
 
+
+applicantSchema.plugin(passportLocalMongoose, {
+  //usernameField: "email"
+});
 
 
 

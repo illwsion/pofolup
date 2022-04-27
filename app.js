@@ -1,32 +1,35 @@
   //express 설정
   const express = require('express');
-  const app = express();
 
-  //router
-  const userRouter = require('./routes/user');
-  const positionRouter = require('./routes/position');
-
-  app.use('/', userRouter);
-  app.use('/position', positionRouter);
+  const morgan = require('morgan');
+  //session, passport
+  const cookieParser = require('cookie-parser');
+  const session = require('express-session');
+  const passport = require('passport');
+  const Localstrategy = require('passport-local').Strategy;
 
   //LOG 기록 미들웨어
-  const morgan = require('morgan');
   const winston = require('./config/winston');
   const dotenv = require('dotenv');
   const path = require('path');
-  dotenv.config({
-    path: path.resolve(__dirname, "./.env")
-  });
-
-  //mongoose
-  const mongoose = require('mongoose');
-  const Applicant = require('./models/applicant');
-  const applicantController = require('./controllers/applicantController');
 
   //보안 관련 미들웨어
   const helmet = require('helmet');
   const hpp = require('hpp');
   const sanitize = require('sanitize-html');
+
+  //mongoose
+  const mongoose = require('mongoose');
+
+  //router
+  const userRouter = require('./routes/user');
+  const positionRouter = require('./routes/position');
+  const applicantController = require('./controllers/applicantController');
+  dotenv.config({
+    path: path.resolve(__dirname, "./.env")
+  });
+
+  const app = express();
 
   //https 받은 이후 삭제 예정
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -34,6 +37,10 @@
   //기본 설정
   app.set('port', process.env.PORT);
   app.set('view engine', 'ejs');
+
+  //라우터
+  app.use('/', userRouter);
+  app.use('/position', positionRouter);
 
   //폴더 지정
   app.use(express.static(__dirname + '/public')); //스태틱 폴더 지정
@@ -59,7 +66,25 @@
     extended: true
   }));
 
+  app.use(cookieParser(process.env.cookieKey));
+  app.use(session({
+    secret: process.env.cookieKey,
+    resave: false,
+    secure: false,
+    saveUninitialized: true,
+    cookie:{
+      httpOnly: true
+    }
+  }));
 
+  //passport
+  app.use(passport.initialize());
+  app.use(passport.session());
+  //passport-local
+  const Applicant = require('./models/applicant');
+  passport.use(new Localstrategy(Applicant.authenticate()));
+  passport.serializeUser(Applicant.serializeUser());
+  passport.deserializeUser(Applicant.deserializeUser());
 
   //mongoose
   //Conneting

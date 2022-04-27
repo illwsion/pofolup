@@ -1,6 +1,8 @@
 const express = require('express');
+const passport = require('passport');
 const router = express.Router();
 const path = require('path');
+const Applicant = require('./../models/applicant');
 
 //mongoose
 const applicantController = require('./../controllers/applicantController');
@@ -49,30 +51,33 @@ router.get('/:pos', (req, res) => {
       res.sendFile(path.resolve(path.join(__dirname, '/../views/pm.html')));
       break;
     case 'apply':
-      res.sendFile(path.resolve(path.join(__dirname, '/../views/apply.html')));
+      res.render('apply');
+      //res.sendFile(path.resolve(path.join(__dirname, '/../views/apply.html')));
       break;
-    case 'upload':
-      res.sendFile()
   }
 })
 
 
 //지원하기 버튼 클릭
-router.post('/upload', upload.array('file'),  async (req, res) => {
-  console.time('upload');
-  console.log("1");
-  const files = req.files;
-  /* 파일 여러개인지 확인
-  if (Array.isArray(req.files)){
-    console.log("파일은 여러개");
-  }else{
-    console.log("파일은 하나");
+router.post('/upload', upload.array('file'), applicantController.findApplicant,  async (req, res) => {
+  //applicant 있는지 확인
+  if (req.applicantsData.length == 0){
+    console.log("그런 이메일은 없음");
+    //새로운 계정 생성
+    applicantController.createApplicant(req, res);
   }
-  console.log(req.files);
-  */
-  //applicant 생성
-  applicantController.saveApplicant(req, res);
+  else{
+    console.log("이미 존재하는 이메일");
+    //그 이메일로 로그인 시도
 
+    //
+  }
+  //applicant 생성
+  //applicantController.createApplicant(req, res);
+
+
+  //메일 관련
+  const files = req.files;
   let filename = req.files[0].filename;
 
   //res.send('Uploaded! : ' + filename);
@@ -103,8 +108,8 @@ router.post('/upload', upload.array('file'),  async (req, res) => {
       to: process.env.receiverID,
       subject: '채용공고 페이지 ' + req.body.position + ' 지원',
       text: '지원 분야 : ' + req.body.position +
-        '\n이름 : ' + sanitize(req.body.name) +
-        '\n이메일 : ' + sanitize(req.body.email) +
+        '\n이름 : ' + sanitize(req.body.realname) +
+        '\n이메일 : ' + sanitize(req.body.username) +
         '\n접한 경로 : ' + req.body.route +
         '\n추가 포트폴리오 링크 : ' + sanitize(req.body.url),
 
@@ -122,8 +127,8 @@ router.post('/upload', upload.array('file'),  async (req, res) => {
       to: process.env.receiverID,
       subject: '채용공고 페이지 ' + req.body.position + ' 지원',
       text: '지원 분야 : ' + req.body.position +
-        '\n이름 : ' + sanitize(req.body.name) +
-        '\n이메일 : ' + sanitize(req.body.email) +
+        '\n이름 : ' + sanitize(req.body.realname) +
+        '\n이메일 : ' + sanitize(req.body.username) +
         '\n접한 경로 : ' + req.body.route +
         '\n추가 포트폴리오 링크 : ' + sanitize(req.body.url) +
         '\n용량 ' + (myfile.size/(1024*1024)).toFixed(2) +'mb의 첨부 파일 ' + filename + ' 를 보냈지만 용량 문제로 전송되지 않음'
@@ -161,8 +166,9 @@ router.post('/upload', upload.array('file'),  async (req, res) => {
   });
   */
 
-  console.timeEnd('upload');
-  res.sendFile(path.resolve(path.join(__dirname, '/../views/applied.html')));
+  //console.timeEnd('upload');
+  //res.sendFile(path.resolve(path.join(__dirname, '/../views/applied.html')));
+  res.render('applied');
 });
 
 

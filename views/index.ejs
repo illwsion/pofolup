@@ -3,30 +3,49 @@
 
 <head>
   <%- include('./partials/head'); %>
-  <style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-cly1{text-align:left;vertical-align:middle}
-.tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
-</style>
 </head>
 
-<header>
-  <%- include('./partials/header'); %>
-</header>
-
 <body>
-  <p>hello</p>
-  <h1>지원자 데이터베이스</h1>
+
+  <form action="logout" method="post">
+    <input type="submit" value="Log out">
+  </form>
+  <a href="/logout">Logout</a>
+
+  <header>
+    <%- include('./partials/header'); %>
+  </header><br>
+
+  <div class="container1">
+    <div class="main_banner">
+      <img src="images/0.png" alt="" height="" width="">
+    </div>
+  </div>
+
+  <div class="container2">
+    <a type="button" href="/position/apply">지원하기 페이지</a><br>
 
 
-  <%- include('./partials/applicantTable'); %>
+    <a href="/adminPage/1">데이터베이스 보기</a>
+
+    <div>
+      <p>이미 지원했다면?</p>
+      <p>지원내역 보기</p>
+      <form action="/userLogin" method="post">
+        <label for="username">이메일</label><br>
+        <input type="text" name="username" id="username" required><br>
+        <label for="password">비밀번호</label><br>
+        <input type="password" name="password" id="password" required><br><br><br>
+
+        <input type="submit" value="로그인">
+      </form>
+    </div>
+
+  </div>
+  <footer>
+    <%- include('./partials/footer'); %>
+  </footer>
 </body>
-<footer>
-  <%- include('./partials/footer'); %>
-</footer>
+
 
 </html>
