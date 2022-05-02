@@ -1,6 +1,7 @@
 //mongoose
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
+const Article = require('./article');
 
 //defining schema
 const applicantSchema = mongoose.Schema({
@@ -8,11 +9,19 @@ const applicantSchema = mongoose.Schema({
   realname : 'string',
   position : 'string',
   route : 'string',
-  files : 'array',
+  file : 'string',
   createDate : 'date',
   updateDate : 'date',
-  isAdmin : 'bool'
-
+  isAdmin : 'bool',
+  articles : [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Article"
+  }],
+  scored_posts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Article"
+  }
+],
 }, {
   collection: 'applicant'
 });

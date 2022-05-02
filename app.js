@@ -17,6 +17,8 @@
   const helmet = require('helmet');
   const hpp = require('hpp');
   const sanitize = require('sanitize-html');
+  const csrf = require('csurf');
+  const csrfProtection = csrf({cookie: true});
 
   //mongoose
   const mongoose = require('mongoose');
@@ -38,15 +40,23 @@
   app.set('port', process.env.PORT);
   app.set('view engine', 'ejs');
 
-  //라우터
-  app.use('/', userRouter);
-  app.use('/position', positionRouter);
+
 
   //폴더 지정
   app.use(express.static(__dirname + '/public')); //스태틱 폴더 지정
   app.use('/uploads', express.static(__dirname + '/uploads'));
   app.use('/js', express.static(__dirname + '/public/js')); //script 폴더 지정
   app.use('/styles', express.static(__dirname + '/public/styles')); //css 폴더 지정
+
+  const sessOptions={
+    secret: process.env.cookieKey,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  };
 
   //배포, 개발 시 설정
   if (process.env.NODE_ENV === 'production') {
@@ -56,6 +66,8 @@
       contentSecurityPolicy: false
     }));
     app.use(hpp());
+    sessOptions.proxy = true;
+    sessOptions.cookie.secure = true;
   } else {
     app.use(morgan('dev'));
   }
@@ -67,15 +79,7 @@
   }));
 
   app.use(cookieParser(process.env.cookieKey));
-  app.use(session({
-    secret: process.env.cookieKey,
-    resave: false,
-    secure: false,
-    saveUninitialized: true,
-    cookie:{
-      httpOnly: true
-    }
-  }));
+  app.use(session(sessOptions));
 
   //passport
   app.use(passport.initialize());
@@ -91,29 +95,35 @@
   mongoose
     .connect("mongodb://127.0.0.1:27017/recruit", {
       useNewUrlParser: true,
-
+      useUnifiedTopology: true
     })
     .then(() => {
       console.log("Connected to MongoDB");
     })
     .catch((err) => {
-      console.log(err);
+      winston.error(err);
     });
 
 
+  app.use((req, res, next)=>{
+    res.locals.user = req.user;
+    res.locals.login = req.isAuthenticated();
+    next();
+  });
 
-
-
+  //라우터
+  app.use('/', userRouter);
+  app.use('/position', positionRouter);
 
   //에러 페이지
   app.all('*', (req, res) => {
-    res.status(404).send('<h1>페이지를 찾을 수 없습니다.</h1>');
+    //res.status(404).send('<h1>페이지를 찾을 수 없습니다.</h1>');
+    res.render('errorPage')
   });
 
 
 
   //서버와 포트 연결
   app.listen(app.get('port'), () => {
-    //winston.info('App is running on port ' + app.get('port'));
-    console.log(app.get('port'), '번 포트에서 실행 중..');
+    winston.info('App is running on port ' + app.get('port'));
   })

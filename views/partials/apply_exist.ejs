@@ -1,0 +1,46 @@
+<form action="/position/upload" method="post" enctype="multipart/form-data">
+  <!-- 추후 그림작가 말고 다른 분야도 모집할 시
+  <div>
+    <label for="position">지원 분야</label><br>
+    <input type="radio" name="position" value="글작가" required>
+    <label for="position">글작가</label>
+    <input type="radio" name="position" value="그림작가">
+    <label for="position">그림작가</label>
+    <input type="radio" name="position" value="기획자">
+    <label for="position">기획자</label><br><br><br>
+  </div>
+  -->
+
+  <div>
+    <label for="realname">이름</label><br>
+    <input type="text" name="realname" id="name" value="<%= user.realname %>" required readonly><br>
+    <label for="username">이메일</label><br>
+    <input type="email" name="username" id="username" value="<%= user.username %>" required readonly><br>
+  </div>
+
+
+
+  <div>
+    <label for="file">구도 1</label><br>
+    <input type="file" name="file" required accept=".jpg, .png, .gif"><br>
+    <label for="file">구도 2</label><br>
+    <input type="file" name="file" required accept=".jpg, .png, .gif"><br>
+    <label for="file">구도 3</label><br>
+    <input type="file" name="file" required accept=".jpg, .png, .gif"><br>
+    <label for="url">포트폴리오</label><br>
+    <input type="url" name="url"><br>
+    <label for="comment">기타 하고싶은 말</label><br>
+    <input type="text" name="comment"><br>
+  </div><br>
+
+  <div>
+    <label for="user_agreement"></label>
+    <p><textarea name="agreement" rows="8" cols="80" readonly>개인정보 수집 및 이용동의</textarea></p>
+    <p>위 내용을 확인하였으며 동의합니다.</p>
+    <input type="checkbox" name="user_agreement" required>
+  </div>
+
+
+  <input type="submit" value="지원하기">
+
+</form>

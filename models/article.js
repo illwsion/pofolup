@@ -1,6 +1,6 @@
 //mongoose
 const mongoose = require('mongoose');
-
+const Applicant = require('./applicant');
 const scoreSchema = mongoose.Schema({
   raterId : 'array',
   raterScore : 'array',
@@ -10,7 +10,10 @@ const scoreSchema = mongoose.Schema({
 
 //defining schema
 const articleSchema = mongoose.Schema({
-  userId : 'string',
+  applicantId : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Applicant"
+  },
   userEmail : 'string',
   files : 'array',
   comment : 'string',

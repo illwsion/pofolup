@@ -6,12 +6,6 @@
 </head>
 
 <body>
-
-  <form action="logout" method="post">
-    <input type="submit" value="Log out">
-  </form>
-  <a href="/logout">Logout</a>
-
   <header>
     <%- include('./partials/header'); %>
   </header><br>
@@ -26,21 +20,34 @@
     <a type="button" href="/position/apply">지원하기 페이지</a><br>
 
 
-    <a href="/adminPage/1">데이터베이스 보기</a>
+
 
     <div>
-      <p>이미 지원했다면?</p>
-      <p>지원내역 보기</p>
-      <form action="/userLogin" method="post">
-        <label for="username">이메일</label><br>
-        <input type="text" name="username" id="username" required><br>
-        <label for="password">비밀번호</label><br>
-        <input type="password" name="password" id="password" required><br><br><br>
+      <% if (login == false) { %>
+        <p>아무도 로그인하지 않음</p>
+        <p><%= login %></p>
+        <p>이미 지원했다면?</p>
+        <p>지원내역 보기</p>
+        <form action="/userLogin" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken%>">
+          <label for="username">이메일</label><br>
+          <input type="text" name="username" id="username" required><br>
+          <label for="password">비밀번호</label><br>
+          <input type="password" name="password" id="password" required><br><br><br>
 
-        <input type="submit" value="로그인">
-      </form>
+          <input type="submit" value="로그인">
+        </form>
+      <% } else { %>
+        <p> <%= user.realname %>님, 안녕하세요  </p>
+        <p>로그인되어있나? : <%= login %></p>
+        <p>관리자? : <%= user.isAdmin %></p>
+        <a href="/applicants/<%= user.username %>">내 지원내역 보기</a>
+        <a href="/logout">Logout</a>
+        <% if (user.isAdmin) { %>
+          <br><a href="/adminPage/1">전체 데이터베이스 보기</a>
+        <% } %>
+      <% } %>
     </div>
-
   </div>
   <footer>
     <%- include('./partials/footer'); %>

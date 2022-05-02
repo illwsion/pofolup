@@ -4,83 +4,80 @@ const router = express.Router();
 const path = require('path');
 const Applicant = require('./../models/applicant');
 
-//보안 관련 미들웨어
-const sanitize = require('sanitize-html');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const dotenv = require('dotenv');
+const csrf = require('csurf');
+const csrfProtection = csrf({cookie: true});
 
-//mongoose
 const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
-dotenv.config({
-  path: path.resolve(__dirname, "./.env")
-});
 
-router.use(express.static(__dirname + '/../public')); //스태틱 폴더 지정
-// req.body
-router.use(express.json());
-router.use(express.urlencoded({
-  extended: true
-}));
-router.use(cookieParser('cookieKey'));
-router.use(session({
-  secret: process.env.cookieKey,
-  resave: false,
-  secure: false,
-  saveUninitialized: true,
-  cookie:{
-    httpOnly: true
+
+//로그인 여부 확인
+const isLoggedIn = (req, res, next)=>{
+  if (req.isAuthenticated()){
+    return next();
   }
-}));
-
-router.use(passport.initialize());
-router.use(passport.session());
-
-
-
-router.get('/', (req, res) => {
-  console.log("req.user at index");
+  console.log("user is not logged in!!");
+  res.redirect('/');
+};
+//관리자 여부 확인
+const isAdmin = (req, res, next)=>{
+  console.log('logged in user@@@@@@@@@@');
   console.log(req.user);
-  res.render('index'), {
-    user: req.user
-  };
+  if (req.login){
+    console.log('someone is logged in@@@@@@@');
+    if (req.user.isAdmin){
+      return next();
+    }
+  }else{
+    console.log("user is not admin or logged in!!");
+    res.render('errorPage');
+  }
+
+};
+
+router.get('/', csrfProtection, (req, res) => {
+  res.render('index',{
+    user: req.user,
+    csrfToken: req.csrfToken()
+  });
 });
 
+router.get('/position/:pos', (req, res) => {
+  switch (req.params.pos) {
+    case 'writer':
+      res.sendFile(path.resolve(path.join(__dirname, '/../views/writer.html')));
+      break;
+    case 'illustrator':
+      res.sendFile(path.resolve(path.join(__dirname, '/../views/illustrator.html')));
+      break;
+    case 'pm':
+      res.sendFile(path.resolve(path.join(__dirname, '/../views/pm.html')));
+      break;
+    case 'apply':
+      res.render('apply');
+      //res.sendFile(path.resolve(path.join(__dirname, '/../views/apply.html')));
+      break;
+  }
+})
 
 //유저 목록 페이지
-router.get('/adminPage/:pageNum', applicantController.getAllApplicants, (req, res) => {
-
-  if (!req.user){
-    console.log('아무도 로그인 안돼있음');
-    res.redirect('/');
-  }else{
-    console.log('현재 로그인된 유저:');
-    console.log(req.user);
+router.get('/adminPage/:pageNum', isAdmin, applicantController.getAllApplicants, (req, res) => {
     var ApplicantsData = req.applicantsData;
     ApplicantsData.reverse();
     res.render('adminPage', {
       Applicants: ApplicantsData,
       pageNum: req.params.pageNum,
     });
-  }
 });
 
 //유저 상세 페이지
-router.get('/applicants/:username',applicantController.findApplicant,articleController.findArticle, (req, res)=>{
-
-  if (!req.user){
-    console.log('아무도 로그인 안돼있음');
+router.get('/applicants/:username',isLoggedIn, applicantController.findApplicant,articleController.findArticle, (req, res)=>{
+  //관리자도 아니고 내 계정도 아니면 튕겨나감
+  if (req.user.username != req.params.username && req.user.isAdmin == false){
+    console.log('다른 사람의 페이지입니다');
     res.redirect('/');
-  }else{
-    console.log('현재 로그인된 유저:');
-    console.log(req.user);
-    if (req.user.isAdmin){
-      console.log('유저는 관리자');
-    }else{
-      console.log('그냥 일반 유저');
-    }
-
+  }
+  else{
     let ArticlesData = req.articlesData;
     ArticlesData.reverse();
     let ApplicantsData = req.applicantsData;
@@ -89,42 +86,49 @@ router.get('/applicants/:username',applicantController.findApplicant,articleCont
       Articles: ArticlesData,
     });
   }
-
-
-
 });
 
 //로그인 기능
 //router.post()
 
-router.post('/userLogin', passport.authenticate('local',{
-  failureRedirect: '/',
+router.post('/userLogin', csrfProtection, passport.authenticate('local',{
+  failureRedirect: '/loginFailed',
   session: true
 }),applicantController.findApplicant, articleController.findArticle, (req, res)=>{
+  //로그인 성공하면 유저, 게시글 정보 불러옴
   var applicantsData = req.applicantsData;
   var articlesData = req.articlesData;
   if (applicantsData[0].isAdmin){
     res.render('adminPage', {
       Applicants: applicantsData,
-      //Articles: articlesData,
-      pageNum: req.params.pageNum,
-    });
-  }
-  else{
-    res.render('applicant', {
-      Applicants: applicantsData,
       Articles: articlesData,
       pageNum: req.params.pageNum,
     });
   }
+  else{
+    res.redirect('/applicants/'+req.user.username);
+  }
+});
 
+router.get('/deleteApplicant/:applicantId', (req, res)=>{
+  res.redirect('/');
+
+});
+
+router.get('/deleteArticle/:articleId', isLoggedIn, (req, res)=>{
+  articleController.deleteArticle(req, res, req.params.articleId);
+  res.redirect('/applicants/'+req.user.username);
+});
+
+router.get('/loginFailed', (req, res)=>{
+  res.render('loginFailed');
 });
 
 router.post('/logout', (req, res)=>{
   req.logout();
   res.redirect('/');
 });
-router.get("/logout", function(req, res){
+router.get("./logout", function(req, res){
     req.logout();
     res.redirect("/");
 });

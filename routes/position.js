@@ -6,172 +6,64 @@ const Applicant = require('./../models/applicant');
 
 //mongoose
 const applicantController = require('./../controllers/applicantController');
-
-//파일 관리, 이메일 전송 미들웨어
-const nodemailer = require('nodemailer');
-const fs = require('fs');
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, 'uploads/')
-  },
-  filename: (req, file, callback) => {
+const articleController = require('./../controllers/articleController');
+const nodemailerController = require('./../controllers/nodemailerController.js')
 
 
-    callback(null, Date.now() + '-' + file.originalname)
-  }
-});
-const upload = multer({
-  storage: storage,
-  //파일 크기 100mb로 제한
-  limits: { fileSize: 1024*1024*100}
 
-});
 
 //스태틱 폴더 지정
 router.use(express.static(__dirname + '/../public'));
 
-//보안 관련 미들웨어
-const sanitize = require('sanitize-html');
 
-router.get('/', (req, res, next) => {
-  res.sendFile(path.resolve(__dirname + '/../index.html'));
+
+router.get('/', (req, res) => {
+  res.render('index',{
+    user: req.user
+  });
 });
 
-router.get('/:pos', (req, res) => {
-  switch (req.params.pos) {
-    case 'writer':
-      res.sendFile(path.resolve(path.join(__dirname, '/../views/writer.html')));
-      break;
-    case 'illustrator':
-      res.sendFile(path.resolve(path.join(__dirname, '/../views/illustrator.html')));
-      break;
-    case 'pm':
-      res.sendFile(path.resolve(path.join(__dirname, '/../views/pm.html')));
-      break;
-    case 'apply':
-      res.render('apply');
-      //res.sendFile(path.resolve(path.join(__dirname, '/../views/apply.html')));
-      break;
-  }
-})
 
 
 //지원하기 버튼 클릭
-router.post('/upload', upload.array('file'), applicantController.findApplicant,  async (req, res) => {
-  //applicant 있는지 확인
-  if (req.applicantsData.length == 0){
-    console.log("그런 이메일은 없음");
-    //새로운 계정 생성
-    applicantController.createApplicant(req, res);
+router.post('/upload', nodemailerController.upload.array('file'), applicantController.findApplicant,  async (req, res) => {
+
+  //이미 로그인이 되어있다면?
+  if (req.isAuthenticated()){
+    if (req.user.username == sanitize(req.body.username)){
+      //게시물 생성
+      articleController.saveArticle(req, res, req.user._id);
+      nodemailerController.sendMail(req, res);
+      res.render('applied');
+    }
+    else{
+      res.render('errorPage');
+    }
   }
+  //로그인이 안되어있음
   else{
-    console.log("이미 존재하는 이메일");
-    //그 이메일로 로그인 시도
-
-    //
-  }
-  //applicant 생성
-  //applicantController.createApplicant(req, res);
-
-
-  //메일 관련
-  const files = req.files;
-  let filename = req.files[0].filename;
-
-  //res.send('Uploaded! : ' + filename);
-
-  let transporter = nodemailer.createTransport({
-    service: 'Naver',
-    host: process.env.senderHOST,
-    port: process.env.senderPORT,
-    auth: {
-      user: process.env.senderID,
-      pass: process.env.senderPW
+    //applicant 있는지 확인
+    if (req.applicantsData.length == 0){
+      console.log("그런 이메일은 없음");
+      //새로운 계정 생성
+      applicantController.createApplicant(req, res);
+      nodemailerController.sendMail(req, res);
+      res.render('applied');
     }
-  });
-
-  //111111111111111.파일 사이즈 알아오기
-  let myfile = fs.statSync(path.join(__dirname, '/../uploads/', req.files[0].filename));
-
-
-  //222222222222222.filesize에 따라 mailoptions 설정
-  //사용자에게 보내는 페이지 설정
-  let mailOptions;
-
-  if ( myfile.size < 1024*1024*11){
-    //res.send('Uploaded! : ' + filename);
-    console.log("파일 첨부 가능");
-    mailOptions = {
-      from: process.env.senderID,
-      to: process.env.receiverID,
-      subject: '채용공고 페이지 ' + req.body.position + ' 지원',
-      text: '지원 분야 : ' + req.body.position +
-        '\n이름 : ' + sanitize(req.body.realname) +
-        '\n이메일 : ' + sanitize(req.body.username) +
-        '\n접한 경로 : ' + req.body.route +
-        '\n추가 포트폴리오 링크 : ' + sanitize(req.body.url),
-
-      attachments: [{
-        filename: filename,
-        path: __dirname + '/../uploads/' + filename
-      }]
-    };
-  }
-  else{
-    //res.send('파일의 크기가 10mb를 넘습니다!\n파일 빼고 Uploaded! : ' + filename);
-    console.log("파일 첨부 불가능");
-    mailOptions = {
-      from: process.env.senderID,
-      to: process.env.receiverID,
-      subject: '채용공고 페이지 ' + req.body.position + ' 지원',
-      text: '지원 분야 : ' + req.body.position +
-        '\n이름 : ' + sanitize(req.body.realname) +
-        '\n이메일 : ' + sanitize(req.body.username) +
-        '\n접한 경로 : ' + req.body.route +
-        '\n추가 포트폴리오 링크 : ' + sanitize(req.body.url) +
-        '\n용량 ' + (myfile.size/(1024*1024)).toFixed(2) +'mb의 첨부 파일 ' + filename + ' 를 보냈지만 용량 문제로 전송되지 않음'
-    };
-  }
-
-  //console.log("@@@@@@@@@@@@@@@@@mailOptions: " + mailOptions);
-  //console.log(mailOptions);
-
-  //3333333333333333. 그 후 메일 전송
-  /*
-  transporter.sendMail(mailOptions, (error, info) => {
-    console.log("메일 전송 시도");
-    if (error) {
-      console.log(error);
-      console.log("이메일 전송 실패");
-    } else {
-      console.log('Email sent: ' + info.response);
-      console.log("이메일 전송 성공");
-
+    else{
+      //로그인이 안되어있지만 계정이 존재할 경우
+      //로그인이 되는지 확인
+      passport.authenticate("local", {
+        //비밀번호 틀리면 loginFailed 창으로
+        failureRedirect: '/loginFailed'
+      })(req, res, (error, applicant)=>{
+        //로그인에 성공하면 위와 똑같음
+        articleController.saveArticle(req, res, req.user._id);
+        nodemailerController.sendMail(req, res);
+        res.render('applied');
+      });
     }
-
-    //4. uploads에 있는 파일은 삭제
-    try {
-      console.log('파일 삭제 시도');
-      fs.unlinkSync(__dirname + '/../uploads/' + filename);
-      console.log("삭제됐나?");
-    } catch (error) {
-      if (err.code == 'ENOENT') {
-        console.log("파일 삭제 Error 발생");
-      }
-    }
-
-
-  });
-  */
-
-  //console.timeEnd('upload');
-  //res.sendFile(path.resolve(path.join(__dirname, '/../views/applied.html')));
-  res.render('applied');
+  }
 });
-
-
-
 
 module.exports = router;

@@ -19,6 +19,21 @@
 </header>
 
 <body>
+  <div>
+    <% if (login == false) { %>
+      <p>아무도 로그인하지 않음</p>
+      <p><%= login %></p>
+    <% } else { %>
+      <p> <%= user.realname %>님, 안녕하세요  </p>
+      <p>로그인되어있나? : <%= login %></p>
+      <p>관리자? : <%= user.isAdmin %></p>
+      <form action="/logout" method="post">
+        <input type="submit" value="Log out">
+      </form>
+      <a href="/logout">Logout</a>
+    <% } %>
+  </div>
+
   <p>hello</p>
   <h1>지원자 데이터베이스</h1>
 

@@ -8,18 +8,16 @@
 <body>
   <header>
     <%- include('./partials/header'); %>
-  </header><br>
-  <div>
-    <% if (login == false) { %>
-      <%- include('./partials/apply_new'); %>
-    <% } else { %>
-      <%- include('./partials/apply_exist'); %>
-    <% } %>
+  </header>
 
-  </div>
+  <p>로그인이 실패하셨습니다. 다시 시도해 주세요</p>
+
+
   <footer>
     <%- include('./partials/footer'); %>
   </footer>
 </body>
+
+
 
 </html>

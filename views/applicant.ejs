@@ -12,13 +12,23 @@
 
 
   <body>
+    <div>
+      <% if (login == false) { %>
+        <p>아무도 로그인하지 않음</p>
+        <p><%= login %></p>
+      <% } else { %>
+        <p> <%= user.realname %>님, 안녕하세요  </p>
+        <p>로그인되어있나? : <%= login %></p>
+        <p>관리자? : <%= user.isAdmin %></p>
+        <form action="/logout" method="post">
+          <input type="submit" value="Log out">
+        </form>
+        <a href="/logout">Logout</a>
+      <% } %>
+    </div>
     <header>
       <%- include('./partials/header'); %>
     </header>
-    <form action="logout" method="post">
-      <input type="submit" value="Log out">
-    </form>
-    <a href="/logout">Logout</a>
 
     <div class="container1">
       <p>지원자 프로필</p>
