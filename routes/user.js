@@ -32,13 +32,13 @@ const isAdmin = (req, res, next)=>{
 
 };
 
-router.get('/', csrfProtection, (req, res) => {
+router.get('/', (req, res) => {
   console.log('@@@get /');
   console.log('req.user');
   console.log(req.user);
   res.render('index',{
     user: req.user,
-    csrfToken: req.csrfToken()
+    //csrfToken: req.csrfToken()
   });
 });
 
@@ -94,7 +94,7 @@ router.get('/applicants/:username',isLoggedIn, applicantController.findApplicant
 //로그인 기능
 //router.post()
 
-router.post('/userLogin', csrfProtection, passport.authenticate('local',{
+router.post('/userLogin', passport.authenticate('local',{
   failureRedirect: '/loginFailed',
   session: true
 }),applicantController.findApplicant, articleController.findArticle, (req, res)=>{

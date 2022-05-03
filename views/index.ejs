@@ -28,7 +28,6 @@
         <p><%= login %></p>
         <p>이미 지원했다면?</p>
         <form action="/userLogin" method="post">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <label for="username">이메일</label><br>
           <input type="text" name="username" id="username" required><br>
           <label for="password">비밀번호</label><br>
