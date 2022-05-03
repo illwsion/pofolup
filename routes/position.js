@@ -4,6 +4,8 @@ const router = express.Router();
 const path = require('path');
 const Applicant = require('./../models/applicant');
 
+
+
 //mongoose
 const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
@@ -25,7 +27,6 @@ router.get('/', (req, res) => {
 
 //지원하기 버튼 클릭
 router.post('/upload', nodemailerController.upload.array('file'), applicantController.findApplicant,  async (req, res) => {
-
   //이미 로그인이 되어있다면?
   if (req.isAuthenticated()){
     if (req.user.username == req.body.username){
@@ -42,7 +43,7 @@ router.post('/upload', nodemailerController.upload.array('file'), applicantContr
   else{
     //applicant 있는지 확인
     if (req.applicantsData.length == 0){
-      console.log("그런 이메일은 없음");
+      console.log("등록되지 않은 지원자");
       //새로운 계정 생성
       applicantController.createApplicant(req, res);
       nodemailerController.sendMail(req, res);

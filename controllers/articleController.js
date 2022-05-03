@@ -2,6 +2,7 @@ const Applicant = require('./../models/applicant');
 const Article = require('./../models/article');
 const applicantController = require('./../controllers/applicantController');
 const fs = require('fs');
+const passport = require('passport');
 
 exports.getAllArticles = (req, res, next)=>{
   Article.find({}, (error, articles)=>{
@@ -64,8 +65,6 @@ exports.saveArticle = (req, res, applicantId)=>{
           console.log(error);
         }
         else{
-          console.log('current user@@@@@@@@@@@@');
-          console.log(applicant);
           applicant.articles.push(result._id);
           applicant.updateData = new Date().getTime();
           applicant.save();
@@ -73,6 +72,8 @@ exports.saveArticle = (req, res, applicantId)=>{
       })
     }
   });
+  console.log("user at end of saveArticle");
+  console.log(req.user);
 };
 
 exports.deleteArticle = (req, res, articleId)=>{

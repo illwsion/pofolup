@@ -4,6 +4,9 @@ const router = express.Router();
 const path = require('path');
 const Applicant = require('./../models/applicant');
 
+const csrf = require('csurf');
+const csrfProtection = csrf({cookie: true});
+
 const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
 
@@ -19,27 +22,23 @@ const isLoggedIn = (req, res, next)=>{
 };
 //관리자 여부 확인
 const isAdmin = (req, res, next)=>{
-  console.log("@@@check isAdmin");
-  console.log(req.user);
   if (req.login){
-    console.log('someone is logged in@@@@@');
     if (req.user.isAdmin == true){
       return next();
     }
   }
-  else{
-    console.log('req.login is false?');
-    console.log(req.login);
-    console.log(req.isAuthenticated());
-  }
   console.log("user is not admin or logged in!!");
   res.render('errorPage');
+
 };
 
-router.get('/', (req, res) => {
+router.get('/', csrfProtection, (req, res) => {
   console.log('@@@get /');
+  console.log('req.user');
+  console.log(req.user);
   res.render('index',{
-    user: req.user
+    user: req.user,
+    csrfToken: req.csrfToken()
   });
 });
 
@@ -95,7 +94,7 @@ router.get('/applicants/:username',isLoggedIn, applicantController.findApplicant
 //로그인 기능
 //router.post()
 
-router.post('/userLogin', passport.authenticate('local',{
+router.post('/userLogin', csrfProtection, passport.authenticate('local',{
   failureRedirect: '/loginFailed',
   session: true
 }),applicantController.findApplicant, articleController.findArticle, (req, res)=>{

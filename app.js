@@ -46,6 +46,8 @@
   app.use('/js', express.static(__dirname + '/public/js')); //script 폴더 지정
   app.use('/styles', express.static(__dirname + '/public/styles')); //css 폴더 지정
 
+
+
   //배포, 개발 시 설정
   if (process.env.NODE_ENV === 'production') {
     app.use(morgan('combined'));
@@ -58,7 +60,23 @@
     app.use(morgan('dev'));
   }
 
+  const sessOptions = {
+    secret: process.env.cookieKey,
+    resave: false,
+    saveUninitialized: false,
+    cookie:{
+      httpOnly: true,
+      secure: false,
+    },
+  };
+  if (process.env.NODE_ENV === 'production'){
+    sessOptions.proxy = true;
+    //https 이후
+    //sessOptions.cookie.secure = true;
+  }
+  app.use(session(sessOptions));
   app.use(cookieParser(process.env.cookieKey));
+  /*
   app.use(session({
     secret: process.env.cookieKey,
     resave: false,
@@ -67,7 +85,7 @@
       httpOnly: true
     }
   }));
-
+  */
   //req.body 에 접근하기 위한 미들웨어
   app.use(express.json());
   app.use(express.urlencoded({

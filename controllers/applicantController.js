@@ -91,12 +91,13 @@ exports.createApplicant = (req, res) => {
     } else {
       console.log("createApplicant success");
       //바로 로그인
-      passport.authenticate("local")(req, res, () => {
-        console.log("registered and logged in as: ");
-        console.log(req.user);
-      });
       articleController.saveArticle(req, res, applicant._id);
     }
-
-  })
+  });
+  passport.authenticate("local")(req, res, () => {
+    console.log("registered and logged in as: ");
+    console.log(req.user);
+  });
+  console.log("user at end of createApplicant");
+  console.log(req.user);
 };
