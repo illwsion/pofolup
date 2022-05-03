@@ -10,8 +10,6 @@ const articleController = require('./../controllers/articleController');
 const nodemailerController = require('./../controllers/nodemailerController.js')
 
 
-
-
 //스태틱 폴더 지정
 router.use(express.static(__dirname + '/../public'));
 
@@ -30,7 +28,7 @@ router.post('/upload', nodemailerController.upload.array('file'), applicantContr
 
   //이미 로그인이 되어있다면?
   if (req.isAuthenticated()){
-    if (req.user.username == sanitize(req.body.username)){
+    if (req.user.username == req.body.username){
       //게시물 생성
       articleController.saveArticle(req, res, req.user._id);
       nodemailerController.sendMail(req, res);

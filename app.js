@@ -17,8 +17,6 @@
   const helmet = require('helmet');
   const hpp = require('hpp');
   const sanitize = require('sanitize-html');
-  const csrf = require('csurf');
-  const csrfProtection = csrf({cookie: true});
 
   //mongoose
   const mongoose = require('mongoose');
@@ -48,16 +46,6 @@
   app.use('/js', express.static(__dirname + '/public/js')); //script 폴더 지정
   app.use('/styles', express.static(__dirname + '/public/styles')); //css 폴더 지정
 
-  const sessOptions={
-    secret: process.env.cookieKey,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: false,
-    },
-  };
-
   //배포, 개발 시 설정
   if (process.env.NODE_ENV === 'production') {
     app.use(morgan('combined'));
@@ -66,20 +54,25 @@
       contentSecurityPolicy: false
     }));
     app.use(hpp());
-    sessOptions.proxy = true;
-    sessOptions.cookie.secure = true;
   } else {
     app.use(morgan('dev'));
   }
+
+  app.use(cookieParser(process.env.cookieKey));
+  app.use(session({
+    secret: process.env.cookieKey,
+    resave: false,
+    saveUninitialized: true,
+    cookie:{
+      httpOnly: true
+    }
+  }));
 
   //req.body 에 접근하기 위한 미들웨어
   app.use(express.json());
   app.use(express.urlencoded({
     extended: true
   }));
-
-  app.use(cookieParser(process.env.cookieKey));
-  app.use(session(sessOptions));
 
   //passport
   app.use(passport.initialize());
@@ -101,13 +94,14 @@
       console.log("Connected to MongoDB");
     })
     .catch((err) => {
-      winston.error(err);
+      console.log(err);
     });
 
 
   app.use((req, res, next)=>{
     res.locals.user = req.user;
     res.locals.login = req.isAuthenticated();
+    req.login = req.isAuthenticated();
     next();
   });
 
@@ -117,13 +111,13 @@
 
   //에러 페이지
   app.all('*', (req, res) => {
-    //res.status(404).send('<h1>페이지를 찾을 수 없습니다.</h1>');
-    res.render('errorPage')
+    res.status(404).send('<h1>페이지를 찾을 수 없습니다.</h1>');
   });
 
 
 
   //서버와 포트 연결
   app.listen(app.get('port'), () => {
-    winston.info('App is running on port ' + app.get('port'));
+    //winston.info('App is running on port ' + app.get('port'));
+    console.log(app.get('port'), '번 포트에서 실행 중..');
   })
