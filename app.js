@@ -104,6 +104,7 @@
   //mongoose
   //Conneting
   mongoose
+    //.connect("mongodb://mongo:27017/recruit", {
     .connect("mongodb://127.0.0.1:27017/recruit", {
       useNewUrlParser: true,
       useUnifiedTopology: true

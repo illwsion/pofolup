@@ -1,8 +1,11 @@
 const Applicant = require('./../models/applicant');
 const Article = require('./../models/article');
 const applicantController = require('./../controllers/applicantController');
+const s3Controller = require('./../controllers/s3Controller');
 const fs = require('fs');
 const passport = require('passport');
+let fileLength = 3;
+
 
 exports.getAllArticles = (req, res, next)=>{
   Article.find({}, (error, articles)=>{
@@ -41,7 +44,7 @@ exports.findArticle = (req, res, next)=>{
 exports.saveArticle = (req, res, applicantId)=>{
   let fileArray = [];
   console.log('saveArticle 발동');
-  for (var i=0; i<req.files.length; i++){
+  for (var i=0; i<fileLength; i++){
     fileArray.push(req.files[i].filename);
   }
   let newArticle = new Article({
@@ -54,12 +57,15 @@ exports.saveArticle = (req, res, applicantId)=>{
   });
 
   newArticle.save((error, result) =>{
-    console.log('result@@@@@@@@@@@@@@@@@@@@@@@');
-    console.log(result);
     if (error){
       res.send(error);
     }
     else{
+      //s3에 이미지 업로드
+      for (var i=0; i<req.files.length; i++){
+        s3Controller.s3Upload(req, res, req.files[i].filename);
+      }
+
       Applicant.findById(applicantId, (error, applicant)=>{
         if (error){
           console.log(error);
@@ -72,8 +78,6 @@ exports.saveArticle = (req, res, applicantId)=>{
       })
     }
   });
-  console.log("user at end of saveArticle");
-  console.log(req.user);
 };
 
 exports.deleteArticle = (req, res, articleId)=>{
@@ -105,6 +109,9 @@ exports.deleteArticle = (req, res, articleId)=>{
         })
         //게시글에 연결된 파일들 삭제
         for (var i=0; i<article.files.length; i++){
+          //aws에서 파일 삭제
+          s3Controller.s3Delete(req, res, article.files[i]);
+          //uploads/에서 파일 삭제
           if (fs.existsSync('./uploads/' + article.files[i])){
             fs.unlinkSync('./uploads/' + article.files[i]);
           }

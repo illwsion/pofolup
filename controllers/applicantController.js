@@ -2,6 +2,7 @@ const Applicant = require('./../models/applicant');
 const passport = require('passport');
 //mongoose
 const articleController = require('./../controllers/articleController');
+const s3Controller = require('./../controllers/s3Controller');
 
 exports.getAllApplicants = (req, res, next) => {
   Applicant.find({}, (error, applicants) => {
@@ -90,6 +91,9 @@ exports.createApplicant = (req, res) => {
       console.log('error while user register!', error);
     } else {
       console.log("createApplicant success");
+      //s3에 썸네일 이미지 업로드
+      s3Controller.s3Upload(req, res, req.files[3].filename);
+
       //바로 로그인
       articleController.saveArticle(req, res, applicant._id);
     }

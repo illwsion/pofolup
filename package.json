@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1129.0",
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
     "csurf": "^1.11.0",
