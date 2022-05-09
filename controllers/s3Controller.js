@@ -11,35 +11,33 @@ const s3 = new AWS.S3({
   region: process.env.AWS_REGION,
 });
 
-exports.s3Upload = (req, res, filename)=>{
+exports.s3Upload = (req, res, filename) => {
   let param = {
-    'Bucket' : process.env.AWS_BUCKET,
-    'Key' : 'image/' + filename,
-    'ACL' : 'public-read',
-    'Body' : fs.createReadStream(__dirname + '/../uploads/' + filename),
+    'Bucket': process.env.AWS_BUCKET,
+    'Key': 'image/' + filename,
+    'ACL': 'public-read',
+    'Body': fs.createReadStream(__dirname + '/../uploads/' + filename),
   };
-  s3.upload(param, (err, data)=>{
-    if (err){
+  s3.upload(param, (err, data) => {
+    if (err) {
       console.log('something wrong at s3.upload');
       console.log(err);
-    }
-    else{
+    } else {
       //업로드 성공
     }
   });
 };
 
-exports.s3Delete = (req, res, filename)=>{
+exports.s3Delete = (req, res, filename) => {
   let param = {
-    'Bucket' : process.env.AWS_BUCKET,
-    'Key' : 'image/' + filename,
+    'Bucket': process.env.AWS_BUCKET,
+    'Key': 'image/' + filename,
   };
-  s3.deleteObject(param, (err, data)=>{
-    if (err){
+  s3.deleteObject(param, (err, data) => {
+    if (err) {
       console.log('something wrong at s3.delete');
       console.log(err);
-    }
-    else{
+    } else {
       //삭제 성공
     }
   });

@@ -25,9 +25,8 @@ exports.findApplicant = (req, res, next) => {
     targetEmail = req.body.username;
   } else {
     console.log("no email found");
+    next();
   }
-  console.log("target email");
-  console.log(targetEmail);
   Applicant.find({
     username: targetEmail
   }, (error, applicant) => {
@@ -42,32 +41,38 @@ exports.findApplicant = (req, res, next) => {
 
 
 //아직 미구현
-exports.deleteApplicant = (req, res) => {
-  //먼저 찾음
-  let targetEmail;
-  if (req.params.username) {
-    targetEmail = req.params.username;
-  } else if (req.body.username) {
-    targetEmail = req.body.username;
-  } else {
-    console.log("no email found");
-    return;
-  }
-  Applicant.find({
-    username: req.body.username
-  }, (error, applicant) => {
+exports.deleteApplicant = (req, res, applicantId) => {
+  //console.log('사용자 삭제 시도');
+  Applicant.findById(applicantId, async (error, applicant) => {
     if (error) {
-      console.log('error in deleting user');
       console.log(error);
     } else {
       //연결된 게시글 모두 삭제
-      //article.find로 다 불러와서 다 삭제?
+      for (var i = 0; i < applicant.articles.length; i++) {
+        //console.log("for 게시글 삭제");
+        await articleController.deleteArticle(req, res, applicant.articles[i]);
+        console.log(applicant.articles.length);
+        if (i == applicant.articles.length - 1) {
+          Applicant.deleteOne({
+            _id: applicant._id
+          }, (error, result) => {
+            console.log('applicant.deleteOne');
+            if (error) {
+              console.log('error at deleteApplicant');
+              console.log(error);
+            } else {
+              //console.log('유저 삭제 성공');
+            }
+          });
+        }
+      }
+      //썸네일 파일 삭제
+      s3Controller.s3Delete(req, res, applicant.file);
       //유저 삭제
     }
-
-
   });
 };
+
 //사용자 정보 수정 어떻게 할 것인지 고민
 exports.updateApplicant = (req, res) => {
 
@@ -90,18 +95,15 @@ exports.createApplicant = (req, res) => {
     if (error) {
       console.log('error while user register!', error);
     } else {
-      console.log("createApplicant success");
+      //console.log("createApplicant success");
       //s3에 썸네일 이미지 업로드
       s3Controller.s3Upload(req, res, req.files[3].filename);
-
       //바로 로그인
       articleController.saveArticle(req, res, applicant._id);
     }
   });
   passport.authenticate("local")(req, res, () => {
-    console.log("registered and logged in as: ");
-    console.log(req.user);
+    //console.log("registered and logged in as: ");
+    //console.log(req.user);
   });
-  console.log("user at end of createApplicant");
-  console.log(req.user);
 };

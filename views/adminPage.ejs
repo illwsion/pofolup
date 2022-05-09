@@ -3,15 +3,6 @@
 
 <head>
   <%- include('./partials/head'); %>
-  <style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-cly1{text-align:left;vertical-align:middle}
-.tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
-</style>
 </head>
 
 <header>
@@ -21,16 +12,16 @@
 <body>
   <div>
     <% if (login == false) { %>
-      <p>아무도 로그인하지 않음</p>
-      <p><%= login %></p>
+    <p>아무도 로그인하지 않음</p>
+    <p><%= login %></p>
     <% } else { %>
-      <p> <%= user.realname %>님, 안녕하세요  </p>
-      <p>로그인되어있나? : <%= login %></p>
-      <p>관리자? : <%= user.isAdmin %></p>
-      <form action="/logout" method="post">
-        <input type="submit" value="Log out">
-      </form>
-      <a href="/logout">Logout</a>
+    <p> <%= user.realname %>님, 안녕하세요 </p>
+    <p>로그인되어있나? : <%= login %></p>
+    <p>관리자? : <%= user.isAdmin %></p>
+    <form action="/logout" method="post">
+      <input type="submit" value="Log out">
+    </form>
+    <a href="/logout">Logout</a>
     <% } %>
   </div>
 

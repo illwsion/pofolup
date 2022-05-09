@@ -1,51 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-  <head>
+<head>
   <%- include('./partials/head'); %>
-
-  <style type="text/css">
-
-  </style>
-  </head>
+</head>
 
 
 
-  <body>
-    <div>
-      <% if (login == false) { %>
-        <p>아무도 로그인하지 않음</p>
-        <p><%= login %></p>
-      <% } else { %>
-        <p> <%= user.realname %>님, 안녕하세요  </p>
-        <p>로그인되어있나? : <%= login %></p>
-        <p>관리자? : <%= user.isAdmin %></p>
-        <form action="/logout" method="post">
-          <input type="submit" value="Log out">
-        </form>
-        <a href="/logout">Logout</a>
-      <% } %>
-    </div>
-    <header>
-      <%- include('./partials/header'); %>
-    </header>
+<body>
+  <div>
+    <% if (login == false) { %>
+    <p>아무도 로그인하지 않음</p>
+    <p><%= login %></p>
+    <% } else { %>
+    <p> <%= user.realname %>님, 안녕하세요 </p>
+    <p>로그인되어있나? : <%= login %></p>
+    <p>관리자? : <%= user.isAdmin %></p>
+    <form action="/logout" method="post">
+      <input type="submit" value="Log out">
+    </form>
+    <a href="/logout">Logout</a>
+    <% } %>
+  </div>
+  <header>
+    <%- include('./partials/header'); %>
+  </header>
 
-    <div class="container1">
-      <p>지원자 프로필</p>
-      <%- include('./partials/applicantTable'); %>
-    </div>
-
-
-    <div class="container2">
-      <p>지원 내역</p>
-      <%- include('./partials/articleTable'); %>
-    </div>
+  <div class="container1">
+    <p>지원자 프로필</p>
+    <%- include('./partials/applicantTable'); %>
+  </div>
 
 
-  </body>
+  <div class="container2">
+    <p>지원 내역</p>
+    <%- include('./partials/articleTable'); %>
+  </div>
 
-  <footer>
-    <%- include('./partials/footer'); %>
-  </footer>
+
+</body>
+
+<footer>
+  <%- include('./partials/footer'); %>
+</footer>
 
 </html>

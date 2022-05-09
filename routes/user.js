@@ -111,14 +111,14 @@ router.post('/userLogin', passport.authenticate('local',{
   }
 });
 
-router.get('/deleteApplicant/:applicantId', (req, res)=>{
-  res.redirect('/');
-
-});
 
 router.get('/deleteArticle/:articleId', isLoggedIn, (req, res)=>{
   articleController.deleteArticle(req, res, req.params.articleId);
   res.redirect('/applicants/'+req.user.username);
+});
+router.get('/deleteApplicant/:applicantId', isLoggedIn, (req, res)=>{
+  applicantController.deleteApplicant(req, res, req.params.applicantId);
+  res.redirect('/adMinPage/1');
 });
 
 router.get('/loginFailed', (req, res)=>{

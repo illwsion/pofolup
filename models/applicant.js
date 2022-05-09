@@ -5,23 +5,22 @@ const Article = require('./article');
 
 //defining schema
 const applicantSchema = mongoose.Schema({
-  username : 'string',
-  realname : 'string',
-  position : 'string',
-  route : 'string',
-  file : 'string',
-  createDate : 'date',
-  updateDate : 'date',
-  isAdmin : 'bool',
-  articles : [{
+  username: 'string',
+  realname: 'string',
+  position: 'string',
+  route: 'string',
+  file: 'string',
+  createDate: 'date',
+  updateDate: 'date',
+  isAdmin: 'bool',
+  articles: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Article"
   }],
   scored_posts: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Article"
-  }
-],
+  }],
 }, {
   collection: 'applicant'
 });
