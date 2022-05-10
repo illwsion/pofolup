@@ -12,6 +12,7 @@ const s3 = new AWS.S3({
 });
 
 exports.s3Upload = (req, res, filename) => {
+
   let param = {
     'Bucket': process.env.AWS_BUCKET,
     'Key': 'image/' + filename,

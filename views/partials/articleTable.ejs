@@ -1,37 +1,77 @@
 <% for(var i=0; i<Articles.length; i++) { %>
-<table class="tg">
-  <thead>
-    <tr>
-      <th class="tg-lboi">번호</th>
-      <th class="tg-cly1">파일이름1</th>
-      <th class="tg-cly1">파일이름2</th>
-      <th class="tg-cly1">파일이름3</th>
-      <th class="tg-cly1">추가사항</th>
-      <th class="tg-cly1">url</th>
-      <th class="tg-cly1">생성 날짜</th>
-      <th class="tg-cly1">삭제 버튼</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="tg-cly1"><%= Articles.length-i %></td>
-      <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[0]%>" width = "100px", height ="100px") alt=""></td>
-      <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[1]%>" width = "100px", height ="100px") alt=""></td>
-      <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[2]%>" width = "100px", height ="100px") alt=""></td>
-      <td class="tg-cly1"><%= Articles[i].comment%></td>
-      <td class="tg-cly1"><%= Articles[i].url%></td>
-      <td class="tg-cly1"><%= Articles[i].createDate%></td>
 
-      <td class="tg-cly1"> <a href="/deleteArticle/<%= Articles[i]._id %>">게시글 삭제</a> </td>
+  <table class="tg">
+    <thead>
+      <tr>
+        <th class="tg-lboi">번호</th>
+        <th class="tg-cly1">파일이름1</th>
+        <th class="tg-cly1">파일이름2</th>
+        <th class="tg-cly1">파일이름3</th>
+        <th class="tg-cly1">추가사항</th>
+        <th class="tg-cly1">url</th>
+        <th class="tg-cly1">생성 날짜</th>
+        <th class="tg-cly1">삭제 버튼</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tg-cly1"><%= Articles.length-i %></td>
+        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[0]%>" width="100px" , height="100px" ) alt=""></td>
+        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[1]%>" width="100px" , height="100px" ) alt=""></td>
+        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[2]%>" width="100px" , height="100px" ) alt=""></td>
+        <td class="tg-cly1">
+          <div class="" style="width:300px; height: 100px; overflow: auto"><%= Articles[i].comment%></div>
+        </td>
+        <% if (Articles[i].url)   {%>
+        <td class="tg-cly1"><a href="<%= Articles[i].url%>">포트폴리오 링크</a></td>
+        <% } else { %>
+        <td class="tg-cly1">포트폴리오 링크 없음</td>
+        <% } %>
 
-    </tr>
+        <td class="tg-cly1"><%= Articles[i].createDate%></td>
+
+        <td class="tg-cly1"> <a href="/deleteArticle/<%= Articles[i]._id %>">게시글 삭제</a> </td>
+
+      </tr>
+    </tbody>
+    <thead>
+      <tr>
+        <th class="tg-lboi">번호</th>
+        <th class="tg-cly1">파일이름1</th>
+        <th class="tg-cly1">파일이름2</th>
+        <th class="tg-cly1">파일이름3</th>
+        <th class="tg-cly1">추가사항</th>
+        <th class="tg-cly1">url</th>
+        <th class="tg-cly1">생성 날짜</th>
+        <th class="tg-cly1">삭제 버튼</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tg-cly1"><%= Articles.length-i %></td>
+        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[0]%>" width="100px" , height="100px" ) alt=""></td>
+        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[1]%>" width="100px" , height="100px" ) alt=""></td>
+        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[2]%>" width="100px" , height="100px" ) alt=""></td>
+        <td class="tg-cly1"></td>
+        <% if (Articles[i].url)   {%>
+        <td class="tg-cly1"><a href="<%= Articles[i].url%>">포트폴리오 링크</a></td>
+        <% } else { %>
+        <td class="tg-cly1">포트폴리오 링크 없음</td>
+        <% } %>
+
+        <td class="tg-cly1"><%= Articles[i].createDate%></td>
+
+        <td class="tg-cly1"> <a href="/deleteArticle/<%= Articles[i]._id %>">게시글 삭제</a> </td>
+
+      </tr>
     </tbody>
   </table>
-  <br><br>
+
+<br><br>
 <% } %>
 
 <script type="text/javascript">
-  function hello()={
+  function hello() = {
     alert(hello);
   }
 </script>

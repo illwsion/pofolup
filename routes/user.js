@@ -13,11 +13,9 @@ const articleController = require('./../controllers/articleController');
 
 //로그인 여부 확인
 const isLoggedIn = (req, res, next)=>{
-  console.log("@@@check isLoggedIn");
   if (req.isAuthenticated()){
     return next();
   }
-  console.log("user is not logged in!!");
   res.redirect('/');
 };
 //관리자 여부 확인
@@ -29,8 +27,20 @@ const isAdmin = (req, res, next)=>{
   }
   console.log("user is not admin or logged in!!");
   res.render('errorPage');
-
 };
+/*
+//이메일 인증 확인
+const isVerified = (req, res, next)=>{
+  if (req.isAuthenticated()){
+    if (req.user.isVerified){
+      return next();
+    }
+  }
+  //이메일 인증 안내 페이지
+  //다시 보내는 기능도 있고 해야 함
+  res.redirect('/');
+};
+*/
 
 router.get('/', (req, res) => {
   console.log('@@@get /');
@@ -55,8 +65,22 @@ router.get('/position/:pos', (req, res) => {
       res.sendFile(path.resolve(path.join(__dirname, '/../views/pm.html')));
       break;
     case 'apply':
-      res.render('apply');
-      //res.sendFile(path.resolve(path.join(__dirname, '/../views/apply.html')));
+      //로그인되어있어야 가능
+      if (req.isAuthenticated()){
+        res.render('apply');
+      }
+      else{
+        res.redirect('/');
+      }
+      break;
+    case 'register':
+      //로그인 안되어있어야 가능
+      if (req.isAuthenticated()){
+        res.redirect('/');
+      }
+      else{
+        res.render('applicantRegister');
+      }
       break;
   }
 })
@@ -116,9 +140,24 @@ router.get('/deleteArticle/:articleId', isLoggedIn, (req, res)=>{
   articleController.deleteArticle(req, res, req.params.articleId);
   res.redirect('/applicants/'+req.user.username);
 });
+
 router.get('/deleteApplicant/:applicantId', isLoggedIn, (req, res)=>{
   applicantController.deleteApplicant(req, res, req.params.applicantId);
-  res.redirect('/adMinPage/1');
+  if (req.isAuthenticated()){
+    if (req.user.isAdmin){
+      res.redirect('/adMinPage/1');
+    }else{
+      res.redirect('/');
+    }
+  }else{
+    res.redirect('/');
+  }
+
+
+});
+
+router.get('/updateApplicant', isLoggedIn, (req, res)=>{
+
 });
 
 router.get('/loginFailed', (req, res)=>{

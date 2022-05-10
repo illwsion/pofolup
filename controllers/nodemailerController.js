@@ -12,17 +12,30 @@ const storage = multer.diskStorage({
     callback(null, 'uploads/')
   },
   filename: (req, file, callback) => {
-
-
-    callback(null, Date.now() + '-' + file.originalname)
+    callback(null, req.body.username + '-' + Date.now() + '-' + file.originalname)
   }
+
 });
+
+exports.uploadFile = (req, res)=>{
+  console.log('uploadFile');
+  const upload = multer().array('file');
+  upload(req, res, (error)=>{
+    if (error){
+      console.log('multer error');
+      console.log(error);
+    }
+    else{
+      console.log('no error');
+    }
+  })
+};
 
 exports.upload = multer({
   storage: storage,
-  //파일 크기 100mb로 제한
+  //파일 크기 5mb로 제한
   limits: {
-    fileSize: 1024 * 1024 * 100
+    fileSize: 1024 * 1024 * 5
   }
 
 });

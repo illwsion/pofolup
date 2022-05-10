@@ -17,7 +17,6 @@
   </div>
 
   <div class="container2">
-    <a type="button" href="/position/apply">지원하기 페이지</a><br>
 
     <div>
       <% if (login == false) { %>
@@ -29,13 +28,16 @@
         <input type="text" name="username" id="username" required><br>
         <label for="password">비밀번호</label><br>
         <input type="password" name="password" id="password" required><br><br><br>
-
         <input type="submit" value="로그인">
       </form>
+      <a type="button" href="/position/register">회원가입 페이지</a><br>
+
       <% } else { %>
+      <!-- 누군가 로그인되어있을 때 -->
       <p> <%= user.realname %>님, 안녕하세요 </p>
       <p>로그인되어있나? : <%= login %></p>
       <p>관리자? : <%= user.isAdmin %></p>
+      <a type="button" href="/position/apply">지원하기 페이지</a><br>
       <a href="/applicants/<%= user.username %>">내 지원내역 보기</a><br>
       <a href="/logout">Logout</a>
       <% if (user.isAdmin) { %>

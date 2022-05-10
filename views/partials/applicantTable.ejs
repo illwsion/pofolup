@@ -1,4 +1,4 @@
-<table class="tg">
+<table class="tg" style="width:100%">
   <thead>
     <tr>
       <th class="tg-lboi">번호</th>
@@ -14,14 +14,14 @@
   <tbody>
     <% for(var i=0; i<Applicants.length; i++) { %>
     <tr>
-      <td class="tg-cly1"><%= Applicants.length-i %></td>
-      <td class="tg-cly1"> <%= Applicants[i].realname%> </td>
-      <td class="tg-cly1"> <a href="/applicants/<%= Applicants[i].username%>"><%= Applicants[i].username%></a></td>
-      <td class="tg-cly1"><%= Applicants[i].position%></td>
-      <td class="tg-cly1"><%= Applicants[i].file%><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Applicants[i].file%>" width = "50px", height ="50px") alt="">  </td>
-      <td class="tg-cly1"><%= Applicants[i].route%></td>
-      <td class="tg-cly1"><%= Applicants[i].updateDate%></td>
-      <td class="tg-cly1"> <a href="/deleteApplicant/<%= Applicants[i]._id %>">지원자 삭제</a></td>
+      <td class="tg-cly1" style="width:10%"><%= Applicants.length-i %></td>
+      <td class="tg-cly1" style="width:10%"> <%= Applicants[i].realname%> </td>
+      <td class="tg-cly1" style="width:10%"> <a href="/applicants/<%= Applicants[i].username%>"><%= Applicants[i].username%></a></td>
+      <td class="tg-cly1" style="width:10%"><%= Applicants[i].position%></td>
+      <td class="tg-cly1" style="width:20%"><%= Applicants[i].file%><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Applicants[i].file%>" width="50px" , height="50px" ) alt=""> </td>
+      <td class="tg-cly1" style="width:10%"><%= Applicants[i].route%></td>
+      <td class="tg-cly1" style="width:20%"><%= Applicants[i].updateDate%></td>
+      <td class="tg-cly1" style="width:10%"> <a href="/deleteApplicant/<%= Applicants[i]._id %>">지원자 삭제</a></td>
     </tr>
     <%}%>
   </tbody>

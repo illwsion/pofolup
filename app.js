@@ -64,12 +64,12 @@
     secret: process.env.cookieKey,
     resave: false,
     saveUninitialized: false,
-    cookie:{
+    cookie: {
       httpOnly: true,
       secure: false,
     },
   };
-  if (process.env.NODE_ENV === 'production'){
+  if (process.env.NODE_ENV === 'production') {
     sessOptions.proxy = true;
     //https 이후
     //sessOptions.cookie.secure = true;
@@ -117,7 +117,7 @@
     });
 
 
-  app.use((req, res, next)=>{
+  app.use((req, res, next) => {
     res.locals.user = req.user;
     res.locals.login = req.isAuthenticated();
     req.login = req.isAuthenticated();

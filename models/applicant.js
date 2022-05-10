@@ -10,9 +10,12 @@ const applicantSchema = mongoose.Schema({
   position: 'string',
   route: 'string',
   file: 'string',
+  portfolio: 'string',
   createDate: 'date',
   updateDate: 'date',
   isAdmin: 'bool',
+  isVerified: 'bool',
+  verifyKey: 'string',
   articles: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Article"
