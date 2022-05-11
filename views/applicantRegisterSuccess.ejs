@@ -10,11 +10,10 @@
     <%- include('./partials/header'); %>
   </header>
 
-  <p>에러가 발생했습니다!</p>
-  <% if (errorDetail != undefined) { %>
-  <p>에러 내용</p>
-  <p><%= errorDetail %></p>
-  <% } %>
+  <p>회원가입이 완료되었습니다!</p>
+  <p><%= user.username %>로 인증 url이 전송되었습니다.</p>
+  <p>이메일로 전송된 url로 접속해주세요</p>
+
 
   <footer>
     <%- include('./partials/footer'); %>

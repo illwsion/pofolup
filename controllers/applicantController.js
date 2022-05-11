@@ -1,8 +1,10 @@
 const Applicant = require('./../models/applicant');
 const passport = require('passport');
+const crypto = require('crypto');
 //mongoose
 const articleController = require('./../controllers/articleController');
 const s3Controller = require('./../controllers/s3Controller');
+const nodemailerController = require('./../controllers/nodemailerController');
 
 exports.getAllApplicants = (req, res, next) => {
   Applicant.find({}, (error, applicants) => {
@@ -53,6 +55,38 @@ exports.findApplicant = (req, res, next) => {
       next();
     }
   });
+};
+
+exports.verifyApplicant = (req, res, verifyKey) => {
+  Applicant.find({verifyKey: verifyKey}, (error, applicant)=>{
+    console.log('found applicant by verifyKey');
+    console.log(applicant);
+    if (error){
+      console.log('error at finding applicant by verifyKey');
+      res.render('errorPage', {
+        errorDetail: '인증 코드에 해당하는 아이디를 찾지 못했습니다'
+      });
+    }
+    else{
+      applicant = applicant[0];
+      if (applicant == undefined){
+        res.render('errorPage', {
+          errorDetail: '인증 코드에 해당하는 아이디를 찾지 못했습니다',
+        });
+      }
+      else{
+        applicant.isVerified = true;
+        applicant.save();
+        res.redirect('/');
+      }
+
+
+    }
+  });
+};
+
+exports.checkVerify = (req, res, applicantId) => {
+
 };
 
 
@@ -108,7 +142,8 @@ exports.createApplicant = (req, res) => {
     createDate: new Date().getTime(),
     updateDate: new Date().getTime(),
     isAdmin: false,
-    //isVerified: false,
+    isVerified: false,
+    verifyKey: crypto.randomBytes(16).toString('hex'),
   });
 
   Applicant.register(newApplicant, req.body.password, (error, applicant) => {
@@ -119,8 +154,10 @@ exports.createApplicant = (req, res) => {
       //s3에 썸네일 이미지 업로드
       s3Controller.s3Upload(req, res, req.files[0].filename);
       s3Controller.s3Upload(req, res, req.files[1].filename);
-      //게시글 생성?
-      //articleController.saveArticle(req, res, applicant._id);
+      //verify code 전송
+      console.log('created key');
+      console.log(applicant.verifyKey);
+      nodemailerController.sendVerificationMail(req, res, applicant.username, applicant.verifyKey);
     }
   });
   passport.authenticate("local")(req, res, () => {

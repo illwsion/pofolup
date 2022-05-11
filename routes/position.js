@@ -29,25 +29,11 @@ router.post('/register', nodemailerController.upload.array('file'), applicantCon
     console.log("등록되지 않은 지원자");
     //새로운 계정 생성
     applicantController.createApplicant(req, res);
-    nodemailerController.sendMail(req, res);
-    res.render('applied');
+    //nodemailerController.sendMail(req, res);
+    res.render('applicantRegisterSuccess');
   } else {
     console.log("이미 있는 계정입니다");
     res.redirect('/');
-    /*
-    //로그인이 안되어있지만 계정이 존재할 경우
-    //로그인이 되는지 확인
-    passport.authenticate("local", {
-      //이미 존재하는 아이디
-      //비밀번호 틀리면 loginFailed 창으로
-      failureRedirect: '/loginFailed'
-    })(req, res, (error, applicant) => {
-      //로그인에 성공하면 위와 똑같음
-      articleController.saveArticle(req, res, req.user._id);
-      nodemailerController.sendMail(req, res);
-      res.render('applied');
-    });
-    */
   }
 });
 
@@ -56,10 +42,12 @@ router.post('/apply', nodemailerController.upload.array('file'), applicantContro
   if (req.isAuthenticated()) {
     if (req.user.username == req.body.username) {
       articleController.saveArticle(req, res, req.user._id);
-      nodemailerController.sendMail(req, res);
-      res.render('applied');
+      nodemailerController.sendApplyMail(req, res);
+      res.render('applySuccess');
     } else {
-      res.render('errorPage');
+      res.render('errorPage', {
+        errorDetail: '현재 사용자와 다른 사용자입니다!'
+      });
     }
   }
   else{

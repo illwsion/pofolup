@@ -26,21 +26,26 @@ const isAdmin = (req, res, next)=>{
     }
   }
   console.log("user is not admin or logged in!!");
-  res.render('errorPage');
+  res.render('errorPage', {
+    errorDetail: '관리자가 아닙니다!'
+  });
 };
-/*
+
 //이메일 인증 확인
 const isVerified = (req, res, next)=>{
   if (req.isAuthenticated()){
     if (req.user.isVerified){
       return next();
     }
+    else{
+      res.render('applicantVerify');
+    }
   }
   //이메일 인증 안내 페이지
   //다시 보내는 기능도 있고 해야 함
   res.redirect('/');
 };
-*/
+
 
 router.get('/', (req, res) => {
   console.log('@@@get /');
@@ -67,7 +72,12 @@ router.get('/position/:pos', (req, res) => {
     case 'apply':
       //로그인되어있어야 가능
       if (req.isAuthenticated()){
-        res.render('apply');
+        if (req.user.isVerified){
+          res.render('apply');
+        }
+        else{
+          res.render('applicantVerify');
+        }
       }
       else{
         res.redirect('/');
@@ -152,7 +162,11 @@ router.get('/deleteApplicant/:applicantId', isLoggedIn, (req, res)=>{
   }else{
     res.redirect('/');
   }
+});
 
+
+router.get('/checkVerify/:verifyKey', (req, res)=>{
+  applicantController.verifyApplicant(req, res, req.params.verifyKey);
 
 });
 
