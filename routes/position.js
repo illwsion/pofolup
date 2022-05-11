@@ -30,7 +30,9 @@ router.post('/register', nodemailerController.upload.array('file'), applicantCon
     //새로운 계정 생성
     applicantController.createApplicant(req, res);
     //nodemailerController.sendMail(req, res);
-    res.render('applicantRegisterSuccess');
+    res.render('applicantRegisterSuccess', {
+      userEmail: req.body.username
+    });
   } else {
     console.log("이미 있는 계정입니다");
     res.redirect('/');

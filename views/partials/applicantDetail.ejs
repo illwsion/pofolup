@@ -1,47 +1,35 @@
 <table class="tg" style="width:100%">
-  <thead>
+
     <tr>
       <th class="tg-cly1">이름</th>
       <th class="tg-cly1">이메일</th>
       <th class="tg-cly1">대표 이미지</th>
-      <th class="tg-cly1">지원분야</th>
       <th class="tg-cly1">지원 경로</th>
       <th class="tg-cly1">회원 가입 날짜</th>
       <th class="tg-cly1">삭제 버튼</th>
     </tr>
-  </thead>
-  <tbody>
     <tr>
       <td class="tg-cly1" style="width:10%"> <%= Applicants[0].realname%> </td>
       <td class="tg-cly1" style="width:10%"> <a href="/applicants/<%= Applicants[0].username%>"><%= Applicants[0].username%></a></td>
-      <td class="tg-cly1" style="width:20%"><%= Applicants[0].file%><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Applicants[0].file%>" width="100px" , height="100px" ) alt=""> </td>
-      <td class="tg-cly1" style="width:10%"><%= Applicants[0].position%></td>
+      <td class="tg-cly1" style="width:20%" rowspan="3"><%= Applicants[0].file%><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Applicants[0].file%>" width="150px" , height="150px" ) alt=""> </td>
       <td class="tg-cly1" style="width:10%"><%= Applicants[0].route%></td>
       <td class="tg-cly1" style="width:30%"><%= Applicants[0].createDate%></td>
       <td class="tg-cly1" style="width:10%"> <a href="/deleteApplicant/<%= Applicants[0]._id %>">지원자 삭제</a></td>
     </tr>
-  </tbody>
-
-  <thead>
     <tr>
       <th class="tg-lboi">점수?</th>
-      <th class="tg-cly1"></th>
-      <th class="tg-cly1"></th>
+      <th class="tg-cly1">지원분야</th>
       <th class="tg-cly1"></th>
       <th class="tg-cly1">포트폴리오</th>
       <th class="tg-cly1">최근 변경 날짜</th>
       <th class="tg-cly1"></th>
     </tr>
-  </thead>
-  <tbody>
     <tr>
       <td class="tg-cly1" style="width:10%"></td>
-      <td class="tg-cly1" style="width:10%"></td>
-      <td class="tg-cly1" style="width:10%"></td>
+      <td class="tg-cly1" style="width:10%"><%= Applicants[0].position%></td>
       <td class="tg-cly1" style="width:20%"></td>
       <td class="tg-cly1" style="width:20%">포트폴리오<a href="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Applicants[0].portfolio%>"><%= Applicants[0].portfolio%></a> </td>
       <td class="tg-cly1" style="width:20%"><%= Applicants[0].updateDate%></td>
       <td class="tg-cly1" style="width:20%"></td>
     </tr>
-  </tbody>
 </table>

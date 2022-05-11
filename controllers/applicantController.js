@@ -49,8 +49,6 @@ exports.findApplicant = (req, res, next) => {
     if (error) {
       console.log(error);
     } else {
-      console.log('found applicant at findapplicant');
-      console.log(applicant);
       req.applicantsData = applicant;
       next();
     }
@@ -142,7 +140,7 @@ exports.createApplicant = (req, res) => {
     createDate: new Date().getTime(),
     updateDate: new Date().getTime(),
     isAdmin: false,
-    isVerified: false,
+    isVerified: true,
     verifyKey: crypto.randomBytes(16).toString('hex'),
   });
 
