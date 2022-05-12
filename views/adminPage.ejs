@@ -11,6 +11,9 @@
 
 <body>
   <div>
+
+  </div>
+  <div>
     <% if (login == false) { %>
     <p>아무도 로그인하지 않음</p>
     <p><%= login %></p>
@@ -25,10 +28,36 @@
     <% } %>
   </div>
 
+  <div>
+    <h1>지원자 데이터베이스</h1>
+    <%- include('./partials/applicantTable'); %>
+  </div>
+  <div class="paging_div">
+    <p>페이징. 총 <%= maxPage %>개의 페이지가 있음</p>
+    <div class="paging">
+      <% if (pageNum > 1) { %>
+         <a class="pg" href="/adminPage/1" class="pg">처음</a>
+      <% } %>
+      <% if (pageNum > 10) { %>
+         <a href="/adminPage/<%= parseInt((pageNum-1)/10)*10 %>" class="pg">이전</a>
+      <% } %>
+      <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
+        <% if (i <= maxPage) { %>
+          <a href="/adminPage/<%= i %>" class="pg"><%= i %></a>
+        <% } %>
+      <% } %>
+      <% if (pageNum <= parseInt(maxPage/10)*10) { %>
+         <a href="/adminPage/<%= parseInt((pageNum-1)/10)*10+11 %>" class="pg">다음</a>
+      <% } %>
+      <% if (pageNum != maxPage) { %>
+         <a href="/adminPage/<%=maxPage%>" class="pg">맨끝</a>
+      <% } %>
+    </div>
+  </div>
 
-  <h1>지원자 데이터베이스</h1>
 
-  <%- include('./partials/applicantTable'); %>
+
+
 
   <footer>
     <%- include('./partials/footer'); %>

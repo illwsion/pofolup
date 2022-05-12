@@ -1,7 +1,6 @@
 <table class="tg" style="width:100%">
   <thead>
     <tr>
-      <th class="tg-lboi">번호</th>
       <th class="tg-cly1">이름</th>
       <th class="tg-cly1">이메일</th>
       <th class="tg-cly1">지원분야</th>
@@ -14,7 +13,6 @@
   <tbody>
     <% for(var i=0; i<Applicants.length; i++) { %>
     <tr>
-      <td class="tg-cly1" style="width:10%"><%= Applicants.length-i %></td>
       <td class="tg-cly1" style="width:10%"> <%= Applicants[i].realname%> </td>
       <td class="tg-cly1" style="width:10%"> <a href="/applicants/<%= Applicants[i].username%>"><%= Applicants[i].username%></a></td>
       <td class="tg-cly1" style="width:10%"><%= Applicants[i].position%></td>

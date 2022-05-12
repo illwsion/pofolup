@@ -97,12 +97,23 @@ router.get('/position/:pos', (req, res) => {
 
 //유저 목록 페이지
 router.get('/adminPage/:pageNum', isAdmin, applicantController.getAllApplicants, (req, res) => {
-  console.log('@@@get /adminPage/:pageNum');
-  var ApplicantsData = req.applicantsData;
+  let ApplicantsData = req.applicantsData;
+  let pageSize = 10;
+  let maxPage = parseInt(ApplicantsData.length / pageSize);
+  if (ApplicantsData % pageSize != 0){
+    maxPage++;
+  }
   ApplicantsData.reverse();
+
+  if (req.params.pageNum > maxPage)
+    req.params.pageNum = maxPage;
+  ApplicantsData = ApplicantsData.slice((req.params.pageNum-1) * pageSize, req.params.pageNum * pageSize);
+
   res.render('adminPage', {
     Applicants: ApplicantsData,
     pageNum: req.params.pageNum,
+    pageSize: pageSize,
+    maxPage: maxPage,
   });
 });
 
@@ -167,7 +178,6 @@ router.get('/deleteApplicant/:applicantId', isLoggedIn, (req, res)=>{
 
 router.get('/checkVerify/:verifyKey', (req, res)=>{
   applicantController.verifyApplicant(req, res, req.params.verifyKey);
-
 });
 
 router.get('/updateApplicant', isLoggedIn, (req, res)=>{
