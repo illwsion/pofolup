@@ -1,12 +1,7 @@
 //mongoose
 const mongoose = require('mongoose');
 const Applicant = require('./applicant');
-const scoreSchema = mongoose.Schema({
-  raterId: 'array',
-  raterScore: 'array',
-  avgScore: 'array',
-  score: 'number'
-})
+
 
 //defining schema
 const articleSchema = mongoose.Schema({
@@ -19,7 +14,6 @@ const articleSchema = mongoose.Schema({
   comment: 'string',
   url: 'string',
   createDate: 'date',
-  scoreInfo: [scoreSchema]
 }, {
   collection: 'article'
 });

@@ -20,10 +20,14 @@ const applicantSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Article"
   }],
-  scored_posts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Article"
+  tagInfo: [{
+    taggerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Applicant"
+    },
+    tag: 'string'
   }],
+  userTags: 'array',
 }, {
   collection: 'applicant'
 });
@@ -34,5 +38,6 @@ applicantSchema.plugin(passportLocalMongoose, {
 });
 
 
-
-module.exports = mongoose.model('Applicant', applicantSchema);
+let Applicant = mongoose.model('Applicant', applicantSchema);
+module.exports = Applicant;
+//module.exports = mongoose.model('Applicant', applicantSchema);

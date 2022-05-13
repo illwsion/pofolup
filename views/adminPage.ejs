@@ -36,25 +36,56 @@
     <p>페이징. 총 <%= maxPage %>개의 페이지가 있음</p>
     <div class="paging">
       <% if (pageNum > 1) { %>
-         <a class="pg" href="/adminPage/1" class="pg">처음</a>
+         <a class="pg" href="/adminPage/1<%=queryString%>" class="pg">처음</a>
       <% } %>
       <% if (pageNum > 10) { %>
-         <a href="/adminPage/<%= parseInt((pageNum-1)/10)*10 %>" class="pg">이전</a>
+         <a href="/adminPage/<%= parseInt((pageNum-1)/10)*10 %><%=queryString%>" class="pg">이전</a>
       <% } %>
       <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
         <% if (i <= maxPage) { %>
-          <a href="/adminPage/<%= i %>" class="pg"><%= i %></a>
+          <a href="/adminPage/<%= i %><%=queryString%>" class="pg"><%= i %></a>
         <% } %>
       <% } %>
       <% if (pageNum <= parseInt(maxPage/10)*10) { %>
-         <a href="/adminPage/<%= parseInt((pageNum-1)/10)*10+11 %>" class="pg">다음</a>
+         <a href="/adminPage/<%= parseInt((pageNum-1)/10)*10+11 %><%=queryString%>" class="pg">다음</a>
       <% } %>
       <% if (pageNum != maxPage) { %>
-         <a href="/adminPage/<%=maxPage%>" class="pg">맨끝</a>
+         <a href="/adminPage/<%=maxPage%><%=queryString%>" class="pg">맨끝</a>
       <% } %>
     </div>
   </div>
 
+  <div>
+    <br>
+    <%=queryString%>
+    <br>
+    <%= queryString.search('good_illust') %>
+    <br>
+
+    <!-- 검색 기능 -->
+    <form action="/adminPage/1" method="post">
+      <% if (queryString.search("good_illust") != -1) { %>
+        <label><input type="checkbox" name="good_illust" value='true' checked>금손</label>
+      <% }else{ %>
+        <label><input type="checkbox" name="good_illust" value='true'>금손</label>
+      <% } %>
+
+      <% if (queryString.search("good_pose") != -1) { %>
+        <label><input type="checkbox" name="good_pose" value='true' checked>다양한 자세</label>
+      <% }else{ %>
+        <label><input type="checkbox" name="good_pose" value='true'>다양한 자세</label>
+      <% } %>
+
+      <% if (queryString.search("good_age") != -1) { %>
+        <label><input type="checkbox" name="good_age" value='true' checked>다양한 나이</label>
+      <% }else{ %>
+        <label><input type="checkbox" name="good_age" value='true'>다양한 나이</label>
+      <% } %>
+      <br><label>이메일로 검색 : <input type="text"></label>
+
+      <input type="submit" value="검색">
+    </form>
+  </div>
 
 
 

@@ -87,8 +87,6 @@ exports.checkVerify = (req, res, applicantId) => {
 
 };
 
-
-//아직 미구현
 exports.deleteApplicant = (req, res, applicantId) => {
   //console.log('사용자 삭제 시도');
   Applicant.findById(applicantId, async (error, applicant) => {
@@ -162,4 +160,69 @@ exports.createApplicant = (req, res) => {
     //console.log("registered and logged in as: ");
     //console.log(req.user);
   });
+};
+
+exports.attachTag = async (req, res)=>{
+  let username = "/applicants/";
+  let numOfAdmin;
+
+  await Applicant.find()
+    .where('isAdmin').equals(true)
+    .exec((error, admin)=>{
+      if (error){
+        console.log('query admin error');
+      }
+      else{
+        console.log('query admin success');
+        console.log(admin.length);
+        numOfAdmin = admin.length;
+      }
+    });
+
+
+  await Applicant.findById(req.params.applicantId, (error, applicant)=>{
+    if (error){
+      console.log('error at attachTag');
+      console.log(error);
+      res.render('errorPage');
+    } else{
+      username += applicant.username;
+      let tagInfo = {
+        taggerId: req.params.adminId,
+        tag: req.params.tag
+      };
+      let numOfTag = 0;
+      let alreadyExist = false;
+      applicant.tagInfo.forEach((tagInfo, i) => {
+        if (tagInfo.tag == req.params.tag){
+          numOfTag++;
+          if (tagInfo.taggerId == req.params.adminId){
+            alreadyExist = true;
+          }
+        }
+      });
+      if (!alreadyExist){
+        applicant.tagInfo.push(tagInfo);
+        applicant.updateDate = new Date().getTime();
+        //tagInfo 검사해서 과반수 이상이고 이미 없으면 usertags에 추가
+        console.log('수');
+        console.log(parseInt((numOfAdmin-1)/2) + 1);
+        console.log(numOfTag + 1);
+        if ((parseInt((numOfAdmin-1)/2) + 1) <= numOfTag + 1){
+          if (applicant.userTags.indexOf(req.params.tag) == -1){
+            applicant.userTags.push(req.params.tag);
+          }else{
+            console.log('이미 있는 태그');
+          }
+        }
+        applicant.save();
+      }
+      else{
+        //console.log('이미 태그를 누른 적 있음');
+      }
+      res.redirect(username);
+    }
+  }).clone();
+
+
 };

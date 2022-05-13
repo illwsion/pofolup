@@ -19,7 +19,6 @@
     <tr>
       <th class="tg-lboi">점수?</th>
       <th class="tg-cly1">지원분야</th>
-      <th class="tg-cly1"></th>
       <th class="tg-cly1">포트폴리오</th>
       <th class="tg-cly1">최근 변경 날짜</th>
       <th class="tg-cly1"></th>
@@ -27,9 +26,26 @@
     <tr>
       <td class="tg-cly1" style="width:10%"></td>
       <td class="tg-cly1" style="width:10%"><%= Applicants[0].position%></td>
-      <td class="tg-cly1" style="width:20%"></td>
       <td class="tg-cly1" style="width:20%">포트폴리오<a href="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Applicants[0].portfolio%>"><%= Applicants[0].portfolio%></a> </td>
       <td class="tg-cly1" style="width:20%"><%= Applicants[0].updateDate%></td>
       <td class="tg-cly1" style="width:20%"></td>
     </tr>
 </table>
+
+<div>
+  <% if (login == true) { %>
+    <% if (user.isAdmin == true) { %>
+      <a href="/adMinPage/1">전체 목록 보기</a>
+      <p>tagInfo : </p>
+      <% for (let i=0; i<Applicants[0].tagInfo.length; i++){ %>
+        <p><%= Applicants[0].tagInfo[i].tag%></p>
+      <% } %>
+
+      <p>tag 부여하기</p>
+      <a href="/attachTag/<%= Applicants[0]._id %>/good_illust/<%= user._id%>">그림을 잘 그림</a>
+      <a href="/attachTag/<%= Applicants[0]._id %>/good_pose/<%= user._id%>">다양한 포즈를 잘 그림</a>
+      <a href="/attachTag/<%= Applicants[0]._id %>/good_age/<%= user._id%>">다양한 연령을 잘 그림</a>
+
+    <% } %>
+  <% } %>
+</div>
