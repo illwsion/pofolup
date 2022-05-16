@@ -14,6 +14,7 @@ const csrfProtection = csrf({
 
 const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
+const categoryController = require('./../controllers/categoryController');
 
 
 //로그인 여부 확인
@@ -97,12 +98,31 @@ router.get('/position/:pos', (req, res) => {
 })
 
 
-router.post('/adminPage/:pageNum', (req, res) => {
-  console.log('post@@@@@@@@@@@@@@');
+router.post('/adminPage/:category/:pageNum', categoryController.getAllTags, (req, res) => {
+  console.log('post at adminPage');
+  let queryString = "/adminPage/" + req.params.category + "/" + req.params.pageNum + "?";
 
-  let queryString = "/adminPage/" + req.params.pageNum + "?";
-  console.log('req.body');
-  console.log(req.body);
+  //category별로 hashTags 불러와서 queryString에 넣음
+  let query = 'req.body.' + req.Category.hashTags[0];
+  if (req.body.hashTags != undefined){
+    //태그가 있음
+    if (typeof(req.body.hashTags) == 'string'){
+      //태그가 1개임
+      if (req.Category.hashTags.includes(req.body.hashTags)){
+        queryString += req.body.hashTags + '&';
+      }
+    }else{
+      //태그가 2개 이상임
+      for (let i=0; i<req.body.hashTags.length; i++){
+        if (req.Category.hashTags.includes(req.body.hashTags[i])){
+          queryString += req.body.hashTags[i] + '&';
+        }
+      }
+    }
+  }
+
+
+  /*
   if (req.body.good_illust == 'true'){
     console.log('good illust checked');
     queryString += 'good_illust&';
@@ -113,6 +133,7 @@ router.post('/adminPage/:pageNum', (req, res) => {
   if (req.body.good_age == 'true'){
     queryString += 'good_age&';
   }
+  */
   console.log('만든 queryString');
   console.log(queryString);
 
@@ -120,18 +141,31 @@ router.post('/adminPage/:pageNum', (req, res) => {
 });
 
 //유저 목록 페이지
-router.get('/adminPage/:pageNum', applicantController.getAllApplicants, (req, res) => {
+router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants, categoryController.getAllCategories,(req, res) => {
   let ApplicantsData = req.applicantsData;
+  let CategoryData = req.categoriesData.find((category)=>
+    category.categoryName == req.params.category
+  );
+
   const queryObject = url.parse(req.url, true).query;
   let hashTags = Object.keys(queryObject);
 
-  //주어진 queryObject로 Tag에 맞지 않는 ApplicantsData는 삭제
+  //주어진 queryObject로
   outer : for (var i=0; i<ApplicantsData.length; i++){
+    if(!ApplicantsData[i].categories.includes(req.params.category)){
+      console.log(ApplicantsData[i].username);
+      ApplicantsData.splice(i, 1);
+      console.log('applicant cut by category ' + i);
+      i--;
+      continue;
+    }
     for (var j=0; j<hashTags.length; j++){
+      //category 검사해서 맞지 않는 applicant는 삭제
+      //Tag에 맞지 않는 ApplicantsData는 삭제
       if (!ApplicantsData[i].userTags.includes(hashTags[j])) {
         console.log(ApplicantsData[i].username);
         ApplicantsData.splice(i, 1);
-        console.log('applicant cut ' + i);
+        console.log('applicant cut by hashtag ' + i);
         i--;
         continue outer;
       };
@@ -161,6 +195,9 @@ router.get('/adminPage/:pageNum', applicantController.getAllApplicants, (req, re
     pageSize: pageSize,
     maxPage: maxPage,
     queryString: queryString,
+    category: req.params.category,
+    Categories: req.categoriesData,
+    curCategory: CategoryData,
   });
 });
 
@@ -183,7 +220,7 @@ router.get('/applicants/:username', isLoggedIn, applicantController.findApplican
 });
 
 router.get('/attachTag/:applicantId/:tag/:adminId', (req, res)=>{
-  applicantController.attachTag(req, res);
+  categoryController.attachTag(req, res);
 });
 //로그인 기능
 //router.post()
@@ -198,7 +235,7 @@ router.post('/userLogin', passport.authenticate('local', {
   var applicantsData = req.applicantsData;
   var articlesData = req.articlesData;
   if (applicantsData[0].isAdmin) {
-    res.redirect('/adminPage/1');
+    res.redirect('/adminPage/illustrator/1');
   } else {
     res.redirect('/applicants/' + req.user.username);
   }
@@ -214,7 +251,7 @@ router.get('/deleteApplicant/:applicantId', isLoggedIn, (req, res) => {
   applicantController.deleteApplicant(req, res, req.params.applicantId);
   if (req.isAuthenticated()) {
     if (req.user.isAdmin) {
-      res.redirect('/adMinPage/1');
+      res.redirect('/adMinPage/illustrator/1');
     } else {
       res.redirect('/');
     }

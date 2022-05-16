@@ -9,6 +9,7 @@ const articleSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Applicant"
   },
+  category: 'string',
   userEmail: 'string',
   files: 'array',
   comment: 'string',

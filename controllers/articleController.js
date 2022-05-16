@@ -17,6 +17,7 @@ exports.getAllArticles = (req, res, next) => {
     }
   });
 };
+
 exports.findArticle = (req, res, next) => {
   let targetName;
   if (req.params.username) {
@@ -44,10 +45,13 @@ exports.findArticle = (req, res, next) => {
 exports.saveArticle = (req, res, applicantId) => {
   let fileArray = [];
   for (var i = 0; i < fileLength; i++) {
-    fileArray.push(req.files[i].filename);
+    if (req.files[i] != undefined){
+      fileArray.push(req.files[i][0].filename);
+    }
   }
   let newArticle = new Article({
     applicantId: applicantId,
+    category: req.body.category,
     userEmail: req.body.username,
     files: fileArray,
     comment: req.body.comment,
@@ -61,13 +65,19 @@ exports.saveArticle = (req, res, applicantId) => {
     } else {
       //s3에 이미지 업로드
       for (var i = 0; i < req.files.length; i++) {
-        s3Controller.s3Upload(req, res, req.files[i].filename);
+        s3Controller.s3Upload(req, res, req.files[i][0].filename);
       }
       Applicant.findById(applicantId, (error, applicant) => {
         if (error) {
           console.log(error);
         } else {
           applicant.articles.push(result._id);
+          if (applicant.categories.indexOf(req.body.category) == -1){
+            console.log('카테고리 추가');
+            applicant.categories.push(req.body.category);
+          }else{
+            console.log('카테고리 이미 있음');
+          }
           applicant.updateDate = new Date().getTime();
           applicant.save();
         }

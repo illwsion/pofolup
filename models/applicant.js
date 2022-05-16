@@ -28,6 +28,7 @@ const applicantSchema = mongoose.Schema({
     tag: 'string'
   }],
   userTags: 'array',
+  categories: 'array',
 }, {
   collection: 'applicant'
 });

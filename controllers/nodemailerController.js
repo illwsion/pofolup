@@ -55,15 +55,21 @@ exports.upload = multer({
 exports.sendApplyMail = (req, res) => {
   //메일 html
   let emailTemplate;
-  ejs.renderFile('views/applyAlarmMail.ejs', {verifyKey: verifyKey}, (err, data)=>{
-    if (err){
+  ejs.renderFile('views/applyAlarmMail.ejs',
+  {
+    verifyKey: 'verifyKey',
+    req: req
+  }, (error, data)=>{
+    if (error){
+      console.log('why?')
       console.log('ejs.renderFile err');
+      console.log(error);
     }
     else{
       emailTemplate = data;
     }
   });
-
+  /*
   const files = req.files;
   let filename = req.files[0].filename;
 
@@ -91,7 +97,7 @@ exports.sendApplyMail = (req, res) => {
       from: process.env.senderID,
       to: process.env.receiverID,
       subject: '포폴업 ' + sanitize(req.body.position) + ' ' + sanitize(req.body.realname) + ' 지원',
-      text: '지원 분야 : 그림작가' /*+ sanitize(req.body.position) */ +
+      text: '지원 분야 : 그림작가' //+ sanitize(req.body.position) +
         '\n이름 : ' + sanitize(req.body.realname) +
         '\n이메일 : ' + sanitize(req.body.username) +
         '\n접한 경로 : ' + sanitize(req.body.route) +
@@ -99,7 +105,7 @@ exports.sendApplyMail = (req, res) => {
         '\n용량 ' + (myfile.size / (1024 * 1024)).toFixed(2) + 'mb의 첨부 파일 ' + filename + ' 를 보냈지만 용량 문제로 전송되지 않음'
     };
   }
-
+  */
   //3.그 후 메일 전송
   /*
     transporter.sendMail(mailOptions, (error, info) => {
@@ -130,8 +136,8 @@ exports.sendApplyMail = (req, res) => {
 
 exports.sendVerificationMail = (req, res, username, verifyKey)=>{
   let emailTemplate;
-  ejs.renderFile('views/verificationMail.ejs', {verifyKey: verifyKey}, (err, data)=>{
-    if (err){
+  ejs.renderFile('views/verificationMail.ejs', {verifyKey: verifyKey}, (error, data)=>{
+    if (error){
       console.log('ejs.renderFile err');
     }
     else{

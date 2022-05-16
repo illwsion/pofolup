@@ -40,7 +40,20 @@ router.post('/register', nodemailerController.upload.array('file'), applicantCon
 });
 
 //지원하기 버튼 클릭
-router.post('/apply', nodemailerController.upload.array('file'), applicantController.findApplicant, async (req, res) => {
+router.post('/apply', nodemailerController.upload.fields([
+  {
+    name: '0', maxCount: 1
+  },
+  {
+    name: '1', maxCount: 1
+  },
+  {
+    name: '2', maxCount: 1
+  },
+]), applicantController.findApplicant, async (req, res) => {
+  console.log('uploaded req.file');
+  console.log(req.files);
+  console.log(req.files[0]);
   if (req.isAuthenticated()) {
     if (req.user.username == req.body.username) {
       articleController.saveArticle(req, res, req.user._id);
