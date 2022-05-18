@@ -15,6 +15,7 @@ const csrfProtection = csrf({
 const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
 const categoryController = require('./../controllers/categoryController');
+const s3Controller = require('./../controllers/s3Controller');
 
 
 //로그인 여부 확인
@@ -212,12 +213,24 @@ router.get('/applicants/:username', isLoggedIn, applicantController.findApplican
     let ArticlesData = req.articlesData;
     ArticlesData.reverse();
     let ApplicantsData = req.applicantsData;
+    console.log('ArticlesData');
+    console.log(ArticlesData);
+    console.log(ArticlesData[0]);
+    for (let i=0; i<3; i++){
+      if (ArticlesData[0].fileNames[i] != null){
+        console.log('파일 다운로드');
+        //s3Controller.s3Download(req, res, ArticlesData[0].fileNames[i].fileName);
+      }
+    }
+
+
     res.render('applicant', {
       Applicants: ApplicantsData,
       Articles: ArticlesData,
     });
   }
 });
+
 
 router.get('/attachTag/:applicantId/:tag/:adminId', (req, res)=>{
   categoryController.attachTag(req, res);

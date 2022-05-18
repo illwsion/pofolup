@@ -12,7 +12,6 @@ const s3 = new AWS.S3({
 });
 
 exports.s3Upload = (req, res, filename) => {
-
   let param = {
     'Bucket': process.env.AWS_BUCKET,
     'Key': 'image/' + filename,
@@ -25,9 +24,30 @@ exports.s3Upload = (req, res, filename) => {
       console.log(err);
     } else {
       //업로드 성공
+
     }
   });
 };
+
+exports.s3Download = (req, res, filename) => {
+  console.log('s3Download');
+  let param = {
+    'Bucket': process.env.AWS_BUCKET,
+    'Key': 'image/' + filename,
+  };
+  s3.getObject(param, (err, data) => {
+    if (err) {
+      console.log('something wrong at s3.download');
+      console.log(err);
+    } else {
+      //다운로드 성공
+      console.log('다운로드 성공');
+      console.log(data);
+      req.file = data.Body.toString();
+      //console.log(req.file);
+    }
+  });
+}
 
 exports.s3Delete = (req, res, filename) => {
   let param = {

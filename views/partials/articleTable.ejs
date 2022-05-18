@@ -1,5 +1,12 @@
-<% for(var i=0; i<Articles.length; i++) { %>
+<form action="/position/apply" method="post" enctype="multipart/form-data">
+  <input type="text" name="username" value= <%= user.username %> >
+  <%= Articles %> <br>
+  <%= Articles[0].fileDesc %> <br>
+  <%= Articles[0].fileNames %> <br>
 
+
+
+<% for(var i=0; i<Articles.length; i++) { %>
   <table class="tg">
     <thead>
       <tr>
@@ -16,9 +23,31 @@
     <tbody>
       <tr>
         <td class="tg-cly1"><%= Articles.length-i %></td>
-        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[0]%>" width="100px" , height="100px" ) alt=""></td>
-        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[1]%>" width="100px" , height="100px" ) alt=""></td>
-        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[2]%>" width="100px" , height="100px" ) alt=""></td>
+        <td class="tg-cly1">
+
+          <% if (Articles[0].fileNames[0] != null) { %>
+              <img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[0].fileNames[0]%>" width="100px" , height="100px" alt="">
+          <% } else {%>
+              <img src="/images/default.png" width="100px" height="100px" alt="">
+          <% } %>
+          <input type="file" name="0" accept=".jpg, .png, .gif"><br>
+        </td>
+        <td class="tg-cly1">
+          <% if (Articles[0].fileNames[1] != null) { %>
+              <img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[0].fileNames[1]%>" width="100px" , height="100px" alt="">
+          <% } else {%>
+              <img src="/images/default.png" width="100px" height="100px" alt="">
+          <% } %>
+          <input type="file" name="1" accept=".jpg, .png, .gif"><br>
+        </td>
+        <td class="tg-cly1">
+          <% if (Articles[0].fileNames[2] != null) { %>
+              <img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[0].fileNames[2]%>" width="100px" , height="100px" alt="">
+          <% } else {%>
+              <img src="/images/default.png" width="100px" height="100px" alt="">
+          <% } %>
+          <input type="file" name="2" accept=".jpg, .png, .gif"><br>
+        </td>
         <td class="tg-cly1">
           <div class="" style="width:300px; height: 100px; overflow: auto"><%= Articles[i].comment%></div>
         </td>
@@ -34,44 +63,9 @@
 
       </tr>
     </tbody>
-    <thead>
-      <tr>
-        <th class="tg-lboi">번호</th>
-        <th class="tg-cly1">파일이름1</th>
-        <th class="tg-cly1">파일이름2</th>
-        <th class="tg-cly1">파일이름3</th>
-        <th class="tg-cly1">추가사항</th>
-        <th class="tg-cly1">url</th>
-        <th class="tg-cly1">생성 날짜</th>
-        <th class="tg-cly1">삭제 버튼</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="tg-cly1"><%= Articles.length-i %></td>
-        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[0]%>" width="100px" , height="100px" ) alt=""></td>
-        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[1]%>" width="100px" , height="100px" ) alt=""></td>
-        <td class="tg-cly1"><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Articles[i].files[2]%>" width="100px" , height="100px" ) alt=""></td>
-        <td class="tg-cly1"></td>
-        <% if (Articles[i].url)   {%>
-        <td class="tg-cly1"><a href="<%= Articles[i].url%>">포트폴리오 링크</a></td>
-        <% } else { %>
-        <td class="tg-cly1">포트폴리오 링크 없음</td>
-        <% } %>
-
-        <td class="tg-cly1"><%= Articles[i].createDate%></td>
-
-        <td class="tg-cly1"> <a href="/deleteArticle/<%= Articles[i]._id %>">게시글 삭제</a> </td>
-
-      </tr>
-    </tbody>
   </table>
 
 <br><br>
+<input type="submit" name="" value="수정하기">
 <% } %>
-
-<script type="text/javascript">
-  function hello() = {
-    alert(hello);
-  }
-</script>
+</form>

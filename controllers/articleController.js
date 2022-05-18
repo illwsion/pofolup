@@ -20,9 +20,9 @@ exports.getAllArticles = (req, res, next) => {
 
 exports.findArticle = (req, res, next) => {
   let targetName;
-  if (req.params.username) {
+  if (req.params.username != undefined) {
     targetName = req.params.username;
-  } else if (req.body.username) {
+  } else if (req.body.username != undefined) {
     targetName = req.body.username;
   } else {
     console.log("no username found");
@@ -42,41 +42,106 @@ exports.findArticle = (req, res, next) => {
 
 };
 
-exports.saveArticle = (req, res, applicantId) => {
-  let fileArray = [];
-  for (var i = 0; i < fileLength; i++) {
-    if (req.files[i] != undefined){
-      fileArray.push(req.files[i][0].filename);
-    }
-  }
+exports.articleInit = (req, res, applicantId) =>{
   let newArticle = new Article({
     applicantId: applicantId,
     category: req.body.category,
     userEmail: req.body.username,
-    files: fileArray,
     comment: req.body.comment,
     url: req.body.url,
     createDate: new Date().getTime(),
   });
-
-  newArticle.save((error, result) => {
-    if (error) {
-      res.send(error);
-    } else {
-      //s3에 이미지 업로드
-      for (var i = 0; i < req.files.length; i++) {
-        s3Controller.s3Upload(req, res, req.files[i][0].filename);
+  newArticle.save((error, article) => {
+    if (error){
+      console.log('article initialize error');
+      console.log(error);
+    }
+    else{
+      let fileArray = [];
+      for (let i=0; i<3; i++){
+        fileArray.push('구도 ' + (i+1));
       }
+      article.fileDesc = fileArray;
+      article.fileNames = new Array(3);
+      article.save();
       Applicant.findById(applicantId, (error, applicant) => {
         if (error) {
           console.log(error);
         } else {
-          applicant.articles.push(result._id);
+          //그림작가 1개만 있을 경우
+          req.body.category = '그림작가';
+
+          applicant.articles.push(article._id);
           if (applicant.categories.indexOf(req.body.category) == -1){
             console.log('카테고리 추가');
             applicant.categories.push(req.body.category);
           }else{
             console.log('카테고리 이미 있음');
+          }
+          applicant.updateDate = new Date().getTime();
+          applicant.save();
+        }
+      });
+    }
+  });
+
+}
+
+exports.createArticle = (req, res, applicantId) => {
+  let newArticle = new Article({
+    applicantId: applicantId,
+    category: req.body.category,
+    userEmail: req.body.username,
+    comment: req.body.comment,
+    url: req.body.url,
+    updateDate: new Date().getTime(),
+  });
+
+  newArticle.save((error, article) => {
+    if (error) {
+      console.log('article save error');
+      console.log(error);
+    } else {
+      let fileArray = [];
+      for (let i=0; i<3; i++){
+        fileArray.push('구도 ' + (i+1));
+      }
+      article.fileDesc = fileArray;
+      article.fileNames = new Array(3);
+
+      //파일 업데이트
+      for (let i=0; i<article.fileDesc.length; i++){
+        //업로드한 파일이 있다면
+        if (req.files[i] != undefined){
+          article.fileNames[i] = req.files[i][0].filename;
+          s3Controller.s3Upload(req, res, req.files[i][0].filename);
+          //원래 있던 것은 삭제
+          if (req.articlesData[0].fileNames[i] != null){
+            s3Controller.s3Delete(req, res, req.articlesData[0].fileNames[i]);
+          }
+          //uploads에 업로드된 파일 삭제?
+        }else if (req.articlesData[0].fileNames[i] != null){
+          //새로 올라오지 않았지만 이미 있을 경우 파일 연결만
+          article.fileNames[i] = req.articlesData[0].fileNames[i];
+        }
+      }
+
+      article.createDate = req.articlesData[0].createDate;
+      article.save();
+
+      Applicant.findById(applicantId, (error, applicant) => {
+        if (error) {
+          console.log(error);
+        } else {
+          //그림작가 1개만 있을 경우
+          req.body.category = '그림작가';
+
+          applicant.articles.push(article._id);
+          if (applicant.categories.indexOf(req.body.category) == -1){
+            //console.log('카테고리 추가');
+            applicant.categories.push(req.body.category);
+          }else{
+            //console.log('카테고리 이미 있음');
           }
           applicant.updateDate = new Date().getTime();
           applicant.save();
@@ -96,38 +161,37 @@ exports.deleteArticle = (req, res, articleId) => {
         return;
       } else {
         //연결된 유저에서 해당 게시글 id 삭제
-        Applicant.findById(article.applicantId, (error, applicant) => {
-          if (error) {
+        Applicant.update({_id: article.applicantId}, {$pull : {articles: article._id}}, (error, applicant)=>{
+          if (error){
+            console.log('error at articles delete');
             console.log(error);
-          } else {
-            if (applicant) {
-              let index = applicant.articles.indexOf(article._id);
-              if (index > -1) {
-                applicant.articles.splice(index, 1);
-                applicant.updateDate = new Date().getTime();
-                applicant.save();
-              }
-            }
+          } else{
+
           }
         });
         //게시글에 연결된 파일들 삭제
-        for (var i = 0; i < article.files.length; i++) {
-          //aws에서 파일 삭제
-          s3Controller.s3Delete(req, res, article.files[i]);
-          //uploads/에서 파일 삭제
-          if (fs.existsSync('./uploads/' + article.files[i])) {
-            fs.unlinkSync('./uploads/' + article.files[i]);
-          } else {
-            //console.log("file doens't exist and skipped");
+        for (var i = 0; i < article.fileNames.length; i++) {
+          if (article.fileNames[i] != null){
+            //aws에서 파일 삭제
+            s3Controller.s3Delete(req, res, article.fileNames[i]);
+
+            //uploads/에서 파일 삭제
+            if (fs.existsSync('./uploads/' + article.files[i])) {
+              fs.unlinkSync('./uploads/' + article.files[i]);
+            } else {
+              //console.log("file doens't exist and skipped");
+            }
+            //console.log(fileArray);
           }
-          //console.log(fileArray);
         }
         //article 삭제
         Article.deleteOne({
           _id: article._id
         }, (error, result) => {
-          console.log('article deleted result');
-          console.log(result);
+          if (error){
+            console.log('error at delete article');
+            console.log(error);
+          }
         });
       }
     }

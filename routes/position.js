@@ -50,14 +50,14 @@ router.post('/apply', nodemailerController.upload.fields([
   {
     name: '2', maxCount: 1
   },
-]), applicantController.findApplicant, async (req, res) => {
-  console.log('uploaded req.file');
-  console.log(req.files);
-  console.log(req.files[0]);
+]), applicantController.findApplicant, articleController.findArticle, (req, res, next) => {
   if (req.isAuthenticated()) {
     if (req.user.username == req.body.username) {
-      articleController.saveArticle(req, res, req.user._id);
+      articleController.deleteArticle(req, res, req.articlesData[0]._id);
+
       nodemailerController.sendApplyMail(req, res);
+
+      articleController.createArticle(req, res, req.user._id);
       res.render('applySuccess');
     } else {
       res.render('errorPage', {
@@ -68,6 +68,10 @@ router.post('/apply', nodemailerController.upload.fields([
   else{
     res.render('loginFailed');
   }
+  next();
+}, (req, res)=>{
+
+
 });
 
 module.exports = router;

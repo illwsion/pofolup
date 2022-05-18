@@ -35,9 +35,9 @@ exports.findApplicant = (req, res, next) => {
   //params, body 양쪽으로 들어와도 검색 가능
   console.log(req.body);
   let targetEmail;
-  if (req.params.username) {
+  if (req.params.username != undefined) {
     targetEmail = req.params.username;
-  } else if (req.body.username) {
+  } else if (req.body.username != undefined) {
     targetEmail = req.body.username;
   } else {
     console.log("no email found");
@@ -124,9 +124,9 @@ exports.updateApplicant = (req, res) => {
 
 };
 
+
 exports.createApplicant = (req, res) => {
-  console.log('req.files');
-  console.log(req.files);
+
   let newApplicant = new Applicant({
     username: req.body.username,
     realname: req.body.realname,
@@ -147,13 +147,15 @@ exports.createApplicant = (req, res) => {
       console.log('error while user register!', error);
     } else {
       //console.log("createApplicant success");
-      //s3에 썸네일 이미지 업로드
+      //s3에 썸네일 이미지, 포트폴리오 파일 업로드
       s3Controller.s3Upload(req, res, req.files[0].filename);
       s3Controller.s3Upload(req, res, req.files[1].filename);
       //verify code 전송
       console.log('created key');
       console.log(applicant.verifyKey);
       nodemailerController.sendVerificationMail(req, res, applicant.username, applicant.verifyKey);
+      //기본 게시글 생성
+      articleController.articleInit(req, res, applicant._id);
     }
   });
   passport.authenticate("local")(req, res, () => {

@@ -11,8 +11,8 @@ const articleSchema = mongoose.Schema({
   },
   category: 'string',
   userEmail: 'string',
-  files: 'array',
-  comment: 'string',
+  fileDesc : 'array',
+  fileNames : 'array',
   url: 'string',
   createDate: 'date',
 }, {
