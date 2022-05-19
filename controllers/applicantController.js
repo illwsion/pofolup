@@ -134,12 +134,15 @@ exports.createApplicant = (req, res) => {
     route: req.body.route,
     file: req.files[0].filename,
     portfolio: req.files[1].filename,
-    url: req.body.url,
     createDate: new Date().getTime(),
     updateDate: new Date().getTime(),
+    url: req.body.url,
     isAdmin: false,
     isVerified: true,
     verifyKey: crypto.randomBytes(16).toString('hex'),
+    articles: new Array(0),
+    tagInfo: new Array(0),
+    categories: ['illustrator'],
   });
 
   Applicant.register(newApplicant, req.body.password, (error, applicant) => {
@@ -156,10 +159,13 @@ exports.createApplicant = (req, res) => {
       nodemailerController.sendVerificationMail(req, res, applicant.username, applicant.verifyKey);
       //기본 게시글 생성
       articleController.articleInit(req, res, applicant._id);
+      //바로 로그인
+      passport.authenticate("local")(req, res, () => {
+        console.log("registered and logged in as: ");
+        console.log(req.user);
+      });
     }
+
   });
-  passport.authenticate("local")(req, res, () => {
-    //console.log("registered and logged in as: ");
-    //console.log(req.user);
-  });
+
 };

@@ -13,6 +13,7 @@ const applicantSchema = mongoose.Schema({
   portfolio: 'string',
   createDate: 'date',
   updateDate: 'date',
+  url: 'string',
   isAdmin: 'bool',
   isVerified: 'bool',
   verifyKey: 'string',
@@ -21,10 +22,7 @@ const applicantSchema = mongoose.Schema({
     ref: "Article"
   }],
   tagInfo: [{
-    taggerId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Applicant"
-    },
+    taggerId: 'string',
     tag: 'string'
   }],
   userTags: 'array',

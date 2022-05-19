@@ -100,11 +100,17 @@ router.get('/position/:pos', (req, res) => {
 
 
 router.post('/adminPage/:category/:pageNum', categoryController.getAllTags, (req, res) => {
-  console.log('post at adminPage');
   let queryString = "/adminPage/" + req.params.category + "/" + req.params.pageNum + "?";
-
   //category별로 hashTags 불러와서 queryString에 넣음
   let query = 'req.body.' + req.Category.hashTags[0];
+
+  if (req.body.targetName+'1' != '1'){
+    console.log('뭔가 입력됐네 post');
+    req.targetName = req.body.targetName;
+  }else{
+    console.log('아무것도 입력 안됨post');
+  }
+
   if (req.body.hashTags != undefined){
     //태그가 있음
     if (typeof(req.body.hashTags) == 'string'){
@@ -121,23 +127,6 @@ router.post('/adminPage/:category/:pageNum', categoryController.getAllTags, (req
       }
     }
   }
-
-
-  /*
-  if (req.body.good_illust == 'true'){
-    console.log('good illust checked');
-    queryString += 'good_illust&';
-  }
-  if (req.body.good_pose == 'true'){
-    queryString += 'good_pose&';
-  }
-  if (req.body.good_age == 'true'){
-    queryString += 'good_age&';
-  }
-  */
-  console.log('만든 queryString');
-  console.log(queryString);
-
   res.redirect(queryString);
 });
 
@@ -147,16 +136,13 @@ router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants
   let CategoryData = req.categoriesData.find((category)=>
     category.categoryName == req.params.category
   );
-
   const queryObject = url.parse(req.url, true).query;
   let hashTags = Object.keys(queryObject);
 
   //주어진 queryObject로
   outer : for (var i=0; i<ApplicantsData.length; i++){
     if(!ApplicantsData[i].categories.includes(req.params.category)){
-      console.log(ApplicantsData[i].username);
       ApplicantsData.splice(i, 1);
-      console.log('applicant cut by category ' + i);
       i--;
       continue;
     }
@@ -213,9 +199,6 @@ router.get('/applicants/:username', isLoggedIn, applicantController.findApplican
     let ArticlesData = req.articlesData;
     ArticlesData.reverse();
     let ApplicantsData = req.applicantsData;
-    console.log('ArticlesData');
-    console.log(ArticlesData);
-    console.log(ArticlesData[0]);
     for (let i=0; i<3; i++){
       if (ArticlesData[0].fileNames[i] != null){
         console.log('파일 다운로드');
@@ -232,9 +215,14 @@ router.get('/applicants/:username', isLoggedIn, applicantController.findApplican
 });
 
 
-router.get('/attachTag/:applicantId/:tag/:adminId', (req, res)=>{
+router.get('/attachTag/:applicantEmail/:tag/:adminId', (req, res)=>{
   categoryController.attachTag(req, res);
 });
+
+router.post('/detachTag/:applicantEmail/:tag/:adminId', (req, res)=>{
+  categoryController.detachTag(req, res);
+});
+
 //로그인 기능
 //router.post()
 
@@ -264,7 +252,7 @@ router.get('/deleteApplicant/:applicantId', isLoggedIn, (req, res) => {
   applicantController.deleteApplicant(req, res, req.params.applicantId);
   if (req.isAuthenticated()) {
     if (req.user.isAdmin) {
-      res.redirect('/adMinPage/illustrator/1');
+      res.redirect('/adminPage/illustrator/1');
     } else {
       res.redirect('/');
     }

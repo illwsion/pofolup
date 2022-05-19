@@ -27,7 +27,7 @@ exports.getAllTags = (req, res, next)=>{
   });
 }
 
-exports.CreateCategory = (req, res, categoryName)=>{
+exports.createCategory = (req, res, categoryName)=>{
   Category.find()
   .where('categoryName').equals(categoryName)
   .exec((error, category)=>{
@@ -39,6 +39,8 @@ exports.CreateCategory = (req, res, categoryName)=>{
       console.log(category);
       if (category.length == 0){
 
+      } else{
+        console.log('이미 존재하는 카테고리입니다');
       }
     }
   });
@@ -47,7 +49,7 @@ exports.CreateCategory = (req, res, categoryName)=>{
   })
 };
 
-exports.AddTag = (req, res, categoryName)=>{
+exports.createTag = (req, res, categoryName)=>{
   Category.find()
     .where('categoryName').equals(categoryName)
     .exec((error, category)=>{
@@ -55,15 +57,20 @@ exports.AddTag = (req, res, categoryName)=>{
         console.log('addtag error');
         console.log(error);
       }else{
-        if (!category.hashTags.includes(req.params.createTag)){
-          category.hashTags.push(req.params.createTag);
-          category.save();
+        console.log('found category at createTag');
+        console.log(category);
+        console.log(category[0].hashTags);
+        console.log(req.body.newhashTag);
+        console.log(req.body.newhashTagName);
+        if (!category[0].hashTags.includes(req.body.newhashTag)){
+          category[0].hashTags.push(req.body.newhashTag);
+          category[0].hashTagsName.push(req.body.newhashTagName);
+          category[0].save();
         }
       }
     });
+  res.redirect('/adminPage/'+categoryName + '/1');
 };
-
-
 
 exports.attachTag = async (req, res)=>{
   let username = "/applicants/";
@@ -83,20 +90,20 @@ exports.attachTag = async (req, res)=>{
     });
 
 
-  await Applicant.findById(req.params.applicantId, (error, applicant)=>{
+  await Applicant.find({username: req.params.applicantEmail}, (error, applicant)=>{
     if (error){
       console.log('error at attachTag');
       console.log(error);
       res.render('errorPage');
     } else{
-      username += applicant.username;
+      username += applicant[0].username;
       let tagInfo = {
         taggerId: req.params.adminId,
         tag: req.params.tag
       };
       let numOfTag = 0;
       let alreadyExist = false;
-      applicant.tagInfo.forEach((tagInfo, i) => {
+      applicant[0].tagInfo.forEach((tagInfo, i) => {
         if (tagInfo.tag == req.params.tag){
           numOfTag++;
           if (tagInfo.taggerId == req.params.adminId){
@@ -105,24 +112,39 @@ exports.attachTag = async (req, res)=>{
         }
       });
       if (!alreadyExist){
-        applicant.tagInfo.push(tagInfo);
-        applicant.updateDate = new Date().getTime();
+        applicant[0].tagInfo.push(tagInfo);
+        applicant[0].updateDate = new Date().getTime();
         //tagInfo 검사해서 과반수 이상이고 이미 없으면 usertags에 추가
         if ((parseInt((numOfAdmin-1)/2) + 1) <= numOfTag + 1){
-          if (applicant.userTags.indexOf(req.params.tag) == -1){
-            applicant.userTags.push(req.params.tag);
+          if (applicant[0].userTags.indexOf(req.params.tag) == -1){
+            applicant[0].userTags.push(req.params.tag);
           }else{
-            console.log('이미 있는 태그');
+            //console.log('이미 있는 태그');
           }
         }
-        applicant.save();
+        applicant[0].save();
       }
       else{
         //console.log('이미 태그를 누른 적 있음');
       }
-      res.redirect(username);
+      res.redirect('/applicants/'+req.params.applicantEmail);
     }
   }).clone();
 
 
+};
+
+exports.detachTag = (req, res)=>{
+  Applicant.update({username: req.params.applicantEmail}, {
+    $pull : {
+      userTags: req.params.tag,
+      tagInfo: {taggerId: req.params.adminId, tag: req.params.tag}
+    }}, (error, applicant)=>{
+    if (error){
+      console.log('error at detachtag');
+      console.log(error);
+    } else{
+      }
+  });
+  res.redirect('/applicants/'+req.params.applicantEmail);
 };

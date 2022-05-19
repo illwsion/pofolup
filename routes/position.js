@@ -10,6 +10,7 @@ const Applicant = require('./../models/applicant');
 const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
 const nodemailerController = require('./../controllers/nodemailerController.js')
+const categoryController = require('./../controllers/categoryController');
 
 
 //스태틱 폴더 지정
@@ -30,9 +31,12 @@ router.post('/register', nodemailerController.upload.array('file'), applicantCon
     //새로운 계정 생성
     applicantController.createApplicant(req, res);
     //nodemailerController.sendMail(req, res);
+    /*
     res.render('applicantRegisterSuccess', {
       userEmail: req.body.username
     });
+    */
+    res.redirect('/applicants/'+req.body.username);
   } else {
     console.log("이미 있는 계정입니다");
     res.redirect('/');
@@ -58,7 +62,8 @@ router.post('/apply', nodemailerController.upload.fields([
       nodemailerController.sendApplyMail(req, res);
 
       articleController.createArticle(req, res, req.user._id);
-      res.render('applySuccess');
+      //res.render('applySuccess');
+      //res.redirect('/applicants/' + req.user.username);
     } else {
       res.render('errorPage', {
         errorDetail: '현재 사용자와 다른 사용자입니다!'
@@ -73,5 +78,12 @@ router.post('/apply', nodemailerController.upload.fields([
 
 
 });
+
+router.post('/createTag/:categoryName', (req, res)=>{
+  console.log("?");
+  categoryController.createTag(req, res, req.params.categoryName);
+});
+
+
 
 module.exports = router;

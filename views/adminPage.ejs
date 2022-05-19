@@ -62,12 +62,6 @@
   </div>
 
   <div>
-    <br>
-    <%=queryString%>
-    <br>
-    <%= queryString.search('good_illust') %>
-    <br>
-
     <!-- 검색 기능 -->
     <form action="/adminPage/<%= category %>/1" method="post">
       <br>
@@ -79,9 +73,14 @@
         <% } %>
       <% } %>
 
-      <br><label>이름으로 검색 : <input type="text" name=""></label>
+      <br><label>이름으로 검색 : <input type="text" name="targetName" value=""></label>
 
       <input type="submit" value="검색">
+    </form>
+    <form action="/position/createTag/<%= category %>" method="post">
+      <label>태그 추가하기(영어)<input type="text" name="newhashTag" required autocomplete="off"></label>
+      <label>태그 추가하기(한글 설명)<input type="text" name="newhashTagName" required autocomplete="off"></label>
+      <input type="submit" value="추가하기">
     </form>
   </div>
 

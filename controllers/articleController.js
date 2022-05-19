@@ -69,7 +69,7 @@ exports.articleInit = (req, res, applicantId) =>{
           console.log(error);
         } else {
           //그림작가 1개만 있을 경우
-          req.body.category = '그림작가';
+          req.body.category = 'illustrator';
 
           applicant.articles.push(article._id);
           if (applicant.categories.indexOf(req.body.category) == -1){

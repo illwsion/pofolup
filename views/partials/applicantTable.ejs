@@ -23,12 +23,6 @@
       <td class="tg-cly1" style="width:20%"><%= Applicants[i].file%><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Applicants[i].file%>" width="50px" , height="50px" ) alt=""> </td>
       <td class="tg-cly1" style="width:10%"><%= Applicants[i].route%></td>
       <td class="tg-cly1" style="width:20%">
-        <span>tagInfo</span><br>
-        <% for (let j=0; j<Applicants[i].tagInfo.length; j++) { %>
-
-          <span><%= Applicants[i].tagInfo[j].taggerId %></span><span><%= Applicants[i].tagInfo[j].tag %></span><br>
-        <% } %>
-        <span>확정된 태그</span><br>
         <% for (let j=0; j<Applicants[i].userTags.length; j++) { %>
           <span><%= Applicants[i].userTags[j] %></span><br>
         <% } %>
