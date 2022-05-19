@@ -43,15 +43,13 @@
   <% if (login == true) { %>
     <% if (user.isAdmin == true) { %>
       <a href="/adMinPage/<%= Applicants[0].categories[0]%>/1">전체 목록 보기</a>
-      <p>tagInfo : </p>
-      <% for (let i=0; i<Applicants[0].tagInfo.length; i++){ %>
-        <p><%= Applicants[0].tagInfo[i].tag%></p>
-      <% } %>
+
 
       <p>tag 부여하기</p>
-      <a href="/attachTag/<%= Applicants[0].username %>/good_illust/<%= user._id%>">그림을 잘 그림</a>
-      <a href="/attachTag/<%= Applicants[0].username %>/good_pose/<%= user._id%>">다양한 포즈를 잘 그림</a>
-      <a href="/attachTag/<%= Applicants[0].username %>/good_age/<%= user._id%>">다양한 연령을 잘 그림</a>
+      <% for (let i=0; i<curCategory.hashTags.length; i++) { %>
+        <a href="/attachTag/<%= Applicants[0].username %>/<%= curCategory.hashTags[i]%>/<%= user._id%>"><%= curCategory.hashTagsName[i]%></a>
+      <% } %>
+
 
     <% } %>
   <% } %>

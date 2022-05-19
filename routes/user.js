@@ -189,8 +189,12 @@ router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants
 });
 
 //유저 상세 페이지
-router.get('/applicants/:username', isLoggedIn, applicantController.findApplicant, articleController.findArticle, (req, res) => {
+router.get('/applicants/:username', isLoggedIn, applicantController.findApplicant, articleController.findArticle, categoryController.getAllCategories,(req, res) => {
   console.log('@@@get /applicants/:username');
+  let CategoryData = req.categoriesData.find((category)=>
+    category.categoryName == 'illustrator'
+  );
+  console.log(CategoryData);
   //관리자도 아니고 내 계정도 아니면 튕겨나감
   if (req.user.username != req.params.username && req.user.isAdmin == false) {
     console.log('다른 사람의 페이지입니다');
@@ -210,6 +214,7 @@ router.get('/applicants/:username', isLoggedIn, applicantController.findApplican
     res.render('applicant', {
       Applicants: ApplicantsData,
       Articles: ArticlesData,
+      curCategory: CategoryData,
     });
   }
 });

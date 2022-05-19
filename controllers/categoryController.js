@@ -57,11 +57,6 @@ exports.createTag = (req, res, categoryName)=>{
         console.log('addtag error');
         console.log(error);
       }else{
-        console.log('found category at createTag');
-        console.log(category);
-        console.log(category[0].hashTags);
-        console.log(req.body.newhashTag);
-        console.log(req.body.newhashTagName);
         if (!category[0].hashTags.includes(req.body.newhashTag)){
           category[0].hashTags.push(req.body.newhashTag);
           category[0].hashTagsName.push(req.body.newhashTagName);
@@ -71,6 +66,23 @@ exports.createTag = (req, res, categoryName)=>{
     });
   res.redirect('/adminPage/'+categoryName + '/1');
 };
+
+exports.deleteTag = (req, res, categoryName)=>{
+  Category.find()
+    .where('categoryName').equals(categoryName)
+    .exec((error, category)=>{
+      if (error){
+        console.log('deleteTag error');
+        console.log(error);
+      }else{
+        let index = category[0].hashTags.indexOf(req.params.tag);
+        category[0].hashTags.splice(index, 1);
+        category[0].hashTagsName.splice(index, 1);
+        category[0].save();
+      }
+    });
+  res.redirect('/adminPage/'+categoryName + '/1');
+}
 
 exports.attachTag = async (req, res)=>{
   let username = "/applicants/";
@@ -113,7 +125,7 @@ exports.attachTag = async (req, res)=>{
       });
       if (!alreadyExist){
         applicant[0].tagInfo.push(tagInfo);
-        applicant[0].updateDate = new Date().getTime();
+        //applicant[0].updateDate = new Date().getTime();
         //tagInfo 검사해서 과반수 이상이고 이미 없으면 usertags에 추가
         if ((parseInt((numOfAdmin-1)/2) + 1) <= numOfTag + 1){
           if (applicant[0].userTags.indexOf(req.params.tag) == -1){

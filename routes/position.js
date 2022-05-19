@@ -80,10 +80,13 @@ router.post('/apply', nodemailerController.upload.fields([
 });
 
 router.post('/createTag/:categoryName', (req, res)=>{
-  console.log("?");
   categoryController.createTag(req, res, req.params.categoryName);
 });
 
+router.get('/deleteTag/:categoryName/:tag', (req, res)=>{
+  console.log("deleteTag");
+  categoryController.deleteTag(req, res, req.params.categoryName);
+});
 
 
 module.exports = router;

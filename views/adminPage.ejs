@@ -82,6 +82,11 @@
       <label>태그 추가하기(한글 설명)<input type="text" name="newhashTagName" required autocomplete="off"></label>
       <input type="submit" value="추가하기">
     </form>
+
+    <p>태그 삭제하기</p>
+    <% for (let i=0; i<curCategory.hashTags.length; i++) { %>
+      <a href="/position/deleteTag/<%= curCategory.categoryName%>/<%= curCategory.hashTags[i]%>"><%= curCategory.hashTagsName[i]%></a>
+    <% } %>
   </div>
 
 
