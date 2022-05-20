@@ -247,6 +247,20 @@ router.post('/userLogin', passport.authenticate('local', {
   }
 });
 
+router.get('/registerSuccess', (req, res)=>{
+  res.render('applicantRegisterSuccess',{
+    userEmail: req.user.username
+  });
+})
+
+router.get('/appointAdmin/:applicantEmail', (req, res)=>{
+  applicantController.appointAdmin(req, res);
+  res.redirect('/applicants/'+req.params.applicantEmail);
+});
+
+router.get('/errorPage', (req, res)=>{
+  res.render('errorPage');
+});
 
 router.get('/deleteArticle/:articleId', isLoggedIn, (req, res) => {
   articleController.deleteArticle(req, res, req.params.articleId);

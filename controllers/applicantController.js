@@ -6,6 +6,11 @@ const articleController = require('./../controllers/articleController');
 const s3Controller = require('./../controllers/s3Controller');
 const nodemailerController = require('./../controllers/nodemailerController');
 
+exports.login = passport.authenticate("local",{
+  successRedirect: '/',
+  failureRedirect: '/errorPage',
+});
+
 exports.getAllApplicants = (req, res, next) => {
   Applicant.find({}, (error, applicants) => {
     if (error) {
@@ -33,7 +38,6 @@ exports.findApplicantById = async (req, res, applicantId)=>{
 //email로 사용자 검색
 exports.findApplicant = (req, res, next) => {
   //params, body 양쪽으로 들어와도 검색 가능
-  console.log(req.body);
   let targetEmail;
   if (req.params.username != undefined) {
     targetEmail = req.params.username;
@@ -55,21 +59,68 @@ exports.findApplicant = (req, res, next) => {
   });
 };
 
+exports.createApplicant = (req, res, next) => {
+  if (req.applicantsData.length == 0) {
+    let newApplicant = new Applicant({
+      username: req.body.username,
+      realname: req.body.realname,
+      position: '그림작가',
+      route: req.body.route,
+      file: req.files[0].filename,
+      portfolio: req.files[1].filename,
+      createDate: new Date().getTime(),
+      updateDate: new Date().getTime(),
+      url: req.body.url,
+      isAdmin: false,
+      isVerified: true,
+      verifyKey: crypto.randomBytes(16).toString('hex'),
+      articles: new Array(0),
+      tagInfo: new Array(0),
+      categories: ['illustrator'],
+    });
+
+    Applicant.register(newApplicant, req.body.password, (error, applicant) => {
+      if (error) {
+        console.log('error while user register!', error);
+        next();
+      } else {
+        //console.log("createApplicant success");
+        //s3에 썸네일 이미지, 포트폴리오 파일 업로드
+        s3Controller.s3Upload(req, res, req.files[0].filename);
+        s3Controller.s3Upload(req, res, req.files[1].filename);
+        //verify code 전송
+        console.log('created key');
+        console.log(applicant.verifyKey);
+        nodemailerController.sendVerificationMail(req, res, applicant.username, applicant.verifyKey);
+        //기본 게시글 생성
+        articleController.articleInit(req, res, applicant._id);
+        next();
+      }
+    });
+
+  }
+  else{
+    console.log('이미 존재하는 사용자입니다')
+    res.render('errorPage',{
+      errorDetail: '이미 존재하는 사용자 이메일입니다'
+    });
+  }
+
+};
+
 exports.verifyApplicant = (req, res, verifyKey) => {
   Applicant.find({verifyKey: verifyKey}, (error, applicant)=>{
-    console.log('found applicant by verifyKey');
-    console.log(applicant);
     if (error){
       console.log('error at finding applicant by verifyKey');
       res.render('errorPage', {
-        errorDetail: '인증 코드에 해당하는 아이디를 찾지 못했습니다'
+        errorDetail: '인증 코드에 해당하는 아이디를 찾지 못했습니다. 관리자에게 문의해주세요'
       });
     }
     else{
       applicant = applicant[0];
       if (applicant == undefined){
         res.render('errorPage', {
-          errorDetail: '인증 코드에 해당하는 아이디를 찾지 못했습니다',
+          errorDetail: '인증 코드에 해당하는 아이디를 찾지 못했습니다. 관리자에게 문의해주세요',
         });
       }
       else{
@@ -77,14 +128,8 @@ exports.verifyApplicant = (req, res, verifyKey) => {
         applicant.save();
         res.redirect('/');
       }
-
-
     }
   });
-};
-
-exports.checkVerify = (req, res, applicantId) => {
-
 };
 
 exports.deleteApplicant = (req, res, applicantId) => {
@@ -124,48 +169,14 @@ exports.updateApplicant = (req, res) => {
 
 };
 
-
-exports.createApplicant = (req, res) => {
-
-  let newApplicant = new Applicant({
-    username: req.body.username,
-    realname: req.body.realname,
-    position: '그림작가',
-    route: req.body.route,
-    file: req.files[0].filename,
-    portfolio: req.files[1].filename,
-    createDate: new Date().getTime(),
-    updateDate: new Date().getTime(),
-    url: req.body.url,
-    isAdmin: false,
-    isVerified: true,
-    verifyKey: crypto.randomBytes(16).toString('hex'),
-    articles: new Array(0),
-    tagInfo: new Array(0),
-    categories: ['illustrator'],
-  });
-
-  Applicant.register(newApplicant, req.body.password, (error, applicant) => {
-    if (error) {
-      console.log('error while user register!', error);
-    } else {
-      //console.log("createApplicant success");
-      //s3에 썸네일 이미지, 포트폴리오 파일 업로드
-      s3Controller.s3Upload(req, res, req.files[0].filename);
-      s3Controller.s3Upload(req, res, req.files[1].filename);
-      //verify code 전송
-      console.log('created key');
-      console.log(applicant.verifyKey);
-      nodemailerController.sendVerificationMail(req, res, applicant.username, applicant.verifyKey);
-      //기본 게시글 생성
-      articleController.articleInit(req, res, applicant._id);
-      //바로 로그인
-      passport.authenticate("local")(req, res, () => {
-        console.log("registered and logged in as: ");
-        console.log(req.user);
-      });
+exports.appointAdmin = (req, res) => {
+  Applicant.update({username: req.params.applicantEmail},{
+    $set: {isAdmin: true}
+  }, (error, applicant)=>{
+    if (error){
+      console.log('error at appointAdmin'+error);
+    } else{
+      console.log('made admin!');
     }
-
   });
-
 };

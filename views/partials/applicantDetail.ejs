@@ -44,6 +44,8 @@
     <% if (user.isAdmin == true) { %>
       <a href="/adMinPage/<%= Applicants[0].categories[0]%>/1">전체 목록 보기</a>
 
+      <p>이 사용자 관리자로 만들기</p>
+      <a href="/appointAdmin/<%= Applicants[0].username %>">관리자 임명</a>
 
       <p>tag 부여하기</p>
       <% for (let i=0; i<curCategory.hashTags.length; i++) { %>
