@@ -43,6 +43,8 @@ router.post('/apply', nodemailerController.upload.fields([
     name: '2', maxCount: 1
   },
 ]), applicantController.findApplicant, articleController.findArticle,(req, res, next) => {
+  console.log('files');
+  console.log(req.files);
   if (req.isAuthenticated()) {
     if (req.user.username == req.body.username) {
       articleController.deleteArticle(req, res, req.articlesData[0]._id);
@@ -51,7 +53,7 @@ router.post('/apply', nodemailerController.upload.fields([
 
       articleController.createArticle(req, res, req.user._id);
       //res.render('applySuccess');
-      //res.redirect('/applicants/' + req.user.username);
+      res.redirect('/applicants/' + req.user.username);
     } else {
       res.render('errorPage', {
         errorDetail: '현재 사용자와 다른 사용자입니다!'

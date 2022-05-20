@@ -11,10 +11,10 @@ const s3 = new AWS.S3({
   region: process.env.AWS_REGION,
 });
 
-exports.s3Upload = (req, res, filename) => {
+exports.s3Upload = (req, res, userEmail, filename) => {
   let param = {
     'Bucket': process.env.AWS_BUCKET,
-    'Key': 'image/' + filename,
+    'Key': 'image/' + userEmail + '/' + filename,
     'ACL': 'public-read',
     'Body': fs.createReadStream(__dirname + '/../uploads/' + filename),
   };
@@ -29,11 +29,11 @@ exports.s3Upload = (req, res, filename) => {
   });
 };
 
-exports.s3Download = (req, res, filename) => {
+exports.s3Download = (req, res, userEmail, filename) => {
   console.log('s3Download');
   let param = {
     'Bucket': process.env.AWS_BUCKET,
-    'Key': 'image/' + filename,
+    'Key': 'image/' + userEmail + '/' + filename,
   };
   s3.getObject(param, (err, data) => {
     if (err) {
@@ -49,10 +49,10 @@ exports.s3Download = (req, res, filename) => {
   });
 }
 
-exports.s3Delete = (req, res, filename) => {
+exports.s3Delete = (req, res, userEmail, filename) => {
   let param = {
     'Bucket': process.env.AWS_BUCKET,
-    'Key': 'image/' + filename,
+    'Key': 'image/' + userEmail + '/' + filename,
   };
   s3.deleteObject(param, (err, data) => {
     if (err) {

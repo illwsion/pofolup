@@ -14,9 +14,7 @@
     <p><%= login %></p>
     <% } else { %>
     <p> <%= user.realname %>님, 안녕하세요 </p>
-    <% if (!user.isAdmin) { %>
-    <a type="button" href="/position/apply">지원하기 페이지</a><br>
-    <% } %>
+
     <p>로그인되어있나? : <%= login %></p>
     <p>관리자? : <%= user.isAdmin %></p>
     <form action="/logout" method="post">

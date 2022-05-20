@@ -114,17 +114,22 @@ exports.createArticle = (req, res, applicantId) => {
         //업로드한 파일이 있다면
         if (req.files[i] != undefined){
           article.fileNames[i] = req.files[i][0].filename;
-          s3Controller.s3Upload(req, res, req.files[i][0].filename);
+          s3Controller.s3Upload(req, res, req.body.username, req.files[i][0].filename);
           //원래 있던 것은 삭제
           if (req.articlesData[0].fileNames[i] != null){
-            s3Controller.s3Delete(req, res, req.articlesData[0].fileNames[i]);
+            s3Controller.s3Delete(req, res, req.body.username, req.articlesData[0].fileNames[i]);
+            console.log(req.articlesData[0].fileNames[i]+'삭제');
           }
           //uploads에 업로드된 파일 삭제?
         }else if (req.articlesData[0].fileNames[i] != null){
           //새로 올라오지 않았지만 이미 있을 경우 파일 연결만
+          console.log('없지만 이미 있던 파일 연결');
           article.fileNames[i] = req.articlesData[0].fileNames[i];
         }
+
       }
+      console.log('fileNames');
+      console.log(article.fileNames);
 
       article.createDate = req.articlesData[0].createDate;
       article.save();
@@ -153,6 +158,7 @@ exports.createArticle = (req, res, applicantId) => {
 
 exports.deleteArticle = (req, res, articleId) => {
   Article.findById(articleId, (error, article) => {
+    let username = null;
     if (error) {
       console.log(error);
     } else {
@@ -161,23 +167,23 @@ exports.deleteArticle = (req, res, articleId) => {
         return;
       } else {
         //연결된 유저에서 해당 게시글 id 삭제
-        Applicant.update({_id: article.applicantId}, {$pull : {articles: article._id}}, (error, applicant)=>{
+        Applicant.updateOne({_id: article.applicantId}, {$pull : {articles: article._id}}, (error, applicant)=>{
           if (error){
             console.log('error at articles delete');
             console.log(error);
           } else{
-
+            username = applicant.username;
           }
         });
         //게시글에 연결된 파일들 삭제
         for (var i = 0; i < article.fileNames.length; i++) {
           if (article.fileNames[i] != null){
             //aws에서 파일 삭제
-            s3Controller.s3Delete(req, res, article.fileNames[i]);
+            s3Controller.s3Delete(req, res, username, article.fileNames[i]);
 
             //uploads/에서 파일 삭제
-            if (fs.existsSync('./uploads/' + article.files[i])) {
-              fs.unlinkSync('./uploads/' + article.files[i]);
+            if (fs.existsSync('./uploads/' + article.fileNames[i])) {
+              fs.unlinkSync('./uploads/' + article.fileNames[i]);
             } else {
               //console.log("file doens't exist and skipped");
             }

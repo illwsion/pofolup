@@ -86,8 +86,8 @@ exports.createApplicant = (req, res, next) => {
       } else {
         //console.log("createApplicant success");
         //s3에 썸네일 이미지, 포트폴리오 파일 업로드
-        s3Controller.s3Upload(req, res, req.files[0].filename);
-        s3Controller.s3Upload(req, res, req.files[1].filename);
+        s3Controller.s3Upload(req, res, req.body.username, req.files[0].filename);
+        s3Controller.s3Upload(req, res, req.body.username, req.files[1].filename);
         //verify code 전송
         console.log('created key');
         console.log(applicant.verifyKey);
@@ -146,8 +146,8 @@ exports.deleteApplicant = (req, res, applicantId) => {
         console.log(applicant.articles.length);
       }
       //썸네일 파일 삭제
-      s3Controller.s3Delete(req, res, applicant.file);
-      s3Controller.s3Delete(req, res, applicant.portfolio);
+      s3Controller.s3Delete(req, res, applicant.username, applicant.file);
+      s3Controller.s3Delete(req, res, applicant.username, applicant.portfolio);
       //유저 삭제
       Applicant.deleteOne({
         _id: applicant._id
@@ -170,7 +170,7 @@ exports.updateApplicant = (req, res) => {
 };
 
 exports.appointAdmin = (req, res) => {
-  Applicant.update({username: req.params.applicantEmail},{
+  Applicant.updateOne({username: req.params.applicantEmail},{
     $set: {isAdmin: true}
   }, (error, applicant)=>{
     if (error){

@@ -147,7 +147,7 @@ exports.attachTag = async (req, res)=>{
 };
 
 exports.detachTag = (req, res)=>{
-  Applicant.update({username: req.params.applicantEmail}, {
+  Applicant.updateOne({username: req.params.applicantEmail}, {
     $pull : {
       userTags: req.params.tag,
       tagInfo: {taggerId: req.params.adminId, tag: req.params.tag}
