@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ko" dir="ltr">
 
 <head>
   <%- include('./partials/head'); %>
+  <!-- 화면 캡처 -->
+  <!-- <script type="text/javascript" src="/js/html2canvas.js"></script> -->
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 
 
 
 <body>
+  <header>
+    <%- include('./partials/header'); %>
+  </header>
+
   <div>
     <% if (login == false) { %>
     <p>아무도 로그인하지 않음</p>
@@ -23,23 +30,46 @@
     <a href="/logout">Logout</a>
     <% } %>
   </div>
-  <header>
-    <%- include('./partials/header'); %>
-  </header>
 
-  <div class="container1">
-    <p>지원자 프로필</p>
-    <%- include('./partials/applicantDetail'); %>
+  <div id="main_capture">
+    <div class="applicant_detail">
+      <p>지원자 프로필</p>
+      <%- include('./partials/applicantDetail'); %>
+    </div>
+
+
+    <div class="article_table">
+      <p>지원 내역</p>
+      <%- include('./partials/articleTable'); %>
+    </div>
   </div>
-
-
-  <div class="container2">
-    <p>지원 내역</p>
-    <%- include('./partials/articleTable'); %>
-  </div>
+  <button onclick="captureProf()">프로필 다운로드</button>
 
 
 
+  <script>
+    function captureProf(){
+      html2canvas(document.getElementById("main_capture"),{
+        allowTaint: false,
+        useCORS: true
+      }).then(canvas => {
+        saveAs(canvas.toDataURL("image/jpg"), "profile.jpg");
+      });
+      function saveAs(url, filename){
+        var link = document.createElement('a');
+        if (typeof link.download === 'string'){
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } else{
+          window.open(url);
+        }
+      }
+    };
+
+  </script>
 
 </body>
 

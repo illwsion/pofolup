@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ko" dir="ltr">
 
 <head>
   <%- include('./partials/head'); %>
@@ -37,7 +37,7 @@
       <p> <%= user.realname %>님, 안녕하세요 </p>
       <p>로그인되어있나? : <%= login %></p>
       <p>관리자? : <%= user.isAdmin %></p>
-      
+
       <a href="/applicants/<%= user.username %>">내 지원내역 보기</a><br>
       <a href="/logout">Logout</a>
       <% if (user.isAdmin) { %>

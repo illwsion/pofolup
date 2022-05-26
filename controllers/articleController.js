@@ -58,11 +58,11 @@ exports.articleInit = (req, res, applicantId) =>{
     }
     else{
       let fileArray = [];
-      for (let i=0; i<3; i++){
+      for (let i=0; i<fileLength; i++){
         fileArray.push('구도 ' + (i+1));
       }
       article.fileDesc = fileArray;
-      article.fileNames = new Array(3);
+      article.fileNames = new Array(fileLength);
       article.save();
       Applicant.findById(applicantId, (error, applicant) => {
         if (error) {
@@ -103,11 +103,11 @@ exports.createArticle = (req, res, applicantId) => {
       console.log(error);
     } else {
       let fileArray = [];
-      for (let i=0; i<3; i++){
+      for (let i=0; i<fileLength; i++){
         fileArray.push('구도 ' + (i+1));
       }
       article.fileDesc = fileArray;
-      article.fileNames = new Array(3);
+      article.fileNames = new Array(fileLength);
 
       //파일 업데이트
       for (let i=0; i<article.fileDesc.length; i++){

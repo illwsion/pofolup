@@ -155,6 +155,7 @@ exports.sendVerificationMail = (req, res, username, verifyKey)=>{
 
 
   //3.이메일 전송
+  /*
   transporter.sendMail(mailOptions, (error, info) => {
     console.log("메일 전송 시도");
     if (error) {
@@ -165,5 +166,5 @@ exports.sendVerificationMail = (req, res, username, verifyKey)=>{
       console.log("이메일 전송 성공");
     }
   });
-
+  */
 };

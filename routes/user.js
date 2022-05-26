@@ -54,9 +54,6 @@ const isVerified = (req, res, next) => {
 
 
 router.get('/', (req, res) => {
-  console.log('@@@get /');
-  console.log('req.user');
-  console.log(req.user);
   res.render('index', {
     user: req.user,
     //csrfToken: req.csrfToken()
@@ -64,7 +61,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/position/:pos', (req, res) => {
-  console.log('@@@get /position/:pos');
   switch (req.params.pos) {
     case 'writer':
       res.sendFile(path.resolve(path.join(__dirname, '/../views/writer.html')));
@@ -105,10 +101,10 @@ router.post('/adminPage/:category/:pageNum', categoryController.getAllTags, (req
   let query = 'req.body.' + req.Category.hashTags[0];
 
   if (req.body.targetName+'1' != '1'){
-    console.log('뭔가 입력됐네 post');
+    //console.log('뭔가 입력됐네 post');
     req.targetName = req.body.targetName;
   }else{
-    console.log('아무것도 입력 안됨post');
+    //console.log('아무것도 입력 안됨post');
   }
 
   if (req.body.hashTags != undefined){
@@ -150,9 +146,7 @@ router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants
       //category 검사해서 맞지 않는 applicant는 삭제
       //Tag에 맞지 않는 ApplicantsData는 삭제
       if (!ApplicantsData[i].userTags.includes(hashTags[j])) {
-        console.log(ApplicantsData[i].username);
         ApplicantsData.splice(i, 1);
-        console.log('applicant cut by hashtag ' + i);
         i--;
         continue outer;
       };
@@ -174,7 +168,6 @@ router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants
   hashTags.forEach((tag, i)=>{
     queryString = queryString + tag + '&';
   });
-  console.log(queryString);
 
   res.render('adminPage', {
     Applicants: ApplicantsData,
@@ -208,7 +201,9 @@ router.get('/applicants/:username', isLoggedIn, applicantController.findApplican
       }
     }
 
-
+    //cors 우회?
+    res.setHeader('Access-Control-Allow-origin', '*');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.render('applicant', {
       Applicants: ApplicantsData,
       Articles: ArticlesData,
@@ -233,8 +228,6 @@ router.post('/userLogin', passport.authenticate('local', {
   failureRedirect: '/loginFailed',
   session: true
 }), applicantController.findApplicant, articleController.findArticle, (req, res) => {
-  console.log('@@@post /userLogin');
-  console.log(req.user);
   //로그인 성공하면 유저, 게시글 정보 불러옴
   var applicantsData = req.applicantsData;
   var articlesData = req.articlesData;

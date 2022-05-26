@@ -11,7 +11,7 @@
     <tr>
       <td class="tg-cly1" style="width:10%"> <%= Applicants[0].realname%> </td>
       <td class="tg-cly1" style="width:10%"> <a href="/applicants/<%= Applicants[0].username%>"><%= Applicants[0].username%></a></td>
-      <td class="tg-cly1" style="width:20%" rowspan="3"><%= Applicants[0].file%><img src="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Applicants[0].username%>/<%= Applicants[0].file%>" width="150px" , height="150px" ) alt=""> </td>
+      <td class="tg-cly1" style="width:20%" rowspan="3"><img src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Applicants[0].file%>" width="150px" , height="150px" ) alt=""> </td>
       <td class="tg-cly1" style="width:10%"><%= Applicants[0].route%></td>
       <td class="tg-cly1" style="width:30%"><%= Applicants[0].createDate%></td>
       <td class="tg-cly1" style="width:10%"> <a href="/deleteApplicant/<%= Applicants[0]._id %>">지원자 삭제</a></td>
@@ -26,7 +26,8 @@
     <tr>
       <td class="tg-cly1" style="width:10%"></td>
       <td class="tg-cly1" style="width:10%"><%= Applicants[0].categories%></td>
-      <td class="tg-cly1" style="width:20%">포트폴리오<a href="https://wonyframe-recruit-website.s3.ap-northeast-2.amazonaws.com/image/<%= Applicants[0].username%>/<%= Applicants[0].portfolio%>"><%= Applicants[0].portfolio%></a> </td>
+
+      <td class="tg-cly1" style="width:20%">포트폴리오<a href="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Applicants[0].portfolio%>"><%= Applicants[0].portfolio%></a> </td>
       <td class="tg-cly1" style="width:20%"><%= Applicants[0].updateDate%></td>
       <td class="tg-cly1" style="width:20%">
         <% for (let i=0; i<Applicants[0].userTags.length; i++) { %>
@@ -42,7 +43,7 @@
 <div>
   <% if (login == true) { %>
     <% if (user.isAdmin == true) { %>
-      <a href="/adMinPage/<%= Applicants[0].categories[0]%>/1">전체 목록 보기</a>
+      <a href="/adminPage/<%= Applicants[0].categories[0]%>/1">전체 목록 보기</a>
 
       <p>이 사용자 관리자로 만들기</p>
       <a href="/appointAdmin/<%= Applicants[0].username %>">관리자 임명</a>
