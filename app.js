@@ -21,7 +21,6 @@
   //mongoose
   const mongoose = require('mongoose');
 
-  const cors = require('cors');
   //router
   const userRouter = require('./routes/user');
   const positionRouter = require('./routes/position');
@@ -39,15 +38,11 @@
   app.set('port', process.env.PORT);
   app.set('view engine', 'ejs');
 
-
-
   //폴더 지정
   app.use(express.static(__dirname + '/public')); //스태틱 폴더 지정
   app.use('/uploads', express.static(__dirname + '/uploads'));
   app.use('/js', express.static(__dirname + '/public/js')); //script 폴더 지정
   app.use('/styles', express.static(__dirname + '/public/styles')); //css 폴더 지정
-
-  app.use(cors());
 
   //배포, 개발 시 설정
   if (process.env.NODE_ENV === 'production') {

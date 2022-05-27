@@ -18,7 +18,7 @@
         <% for(let i=0; i<3; i++){ %>
           <td class="tg-cly1">
             <% if (Articles[0].fileNames[i] != null) { %>
-                <img id= "image_container_<%=i%>" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[i]%>" width="100px" , height="100px" alt="구도 <%= i%>. 새로고침 필요">
+                <img id= "image_container_<%=i%>" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[i]%>" width="100px" , height="100px" alt="구도 <%= i%>. 새로고침 필요" crossorigin="use-credentials">
             <% } else {%>
                 <img id= "image_container_<%=i%>" src="/images/default.png" width="100px" height="100px" alt="">
             <% } %>
