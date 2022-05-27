@@ -21,6 +21,7 @@
   //mongoose
   const mongoose = require('mongoose');
 
+  const cors = require('cors');
   //router
   const userRouter = require('./routes/user');
   const positionRouter = require('./routes/position');
@@ -46,7 +47,7 @@
   app.use('/js', express.static(__dirname + '/public/js')); //script 폴더 지정
   app.use('/styles', express.static(__dirname + '/public/styles')); //css 폴더 지정
 
-
+  app.use(cors());
 
   //배포, 개발 시 설정
   if (process.env.NODE_ENV === 'production') {
@@ -104,8 +105,8 @@
   //mongoose
   //Conneting
   mongoose
-    //.connect("mongodb://mongo:27017/recruit", {
-    .connect("mongodb://127.0.0.1:27017/recruit", {
+    //.connect("mongodb://mongo:27017/pofolup", {
+    .connect("mongodb://127.0.0.1:27017/pofolup", {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })

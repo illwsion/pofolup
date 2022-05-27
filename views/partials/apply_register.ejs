@@ -1,4 +1,128 @@
-<form action="/position/register" method="post" enctype="multipart/form-data">
+<form action="/position/register" method="post" enctype="multipart/form-data" class="register_form">
+<!--
+  <div class="">
+    <label for="file">프로필 이미지(썸네일)</label><br>
+    <img id= "image_container" src="/images/default_main.png" width="500px" height="500px" alt="">
+    <!-- <input type="file" name="file" required accept=".jpg, .png, .gif"><br>
+    <input type="file" id="image" onchange="setThumbnail(event);" name="file" accept=".jpg, .png, .gif"><br>
+
+  </div>
+
+
+
+  <div class="">
+    <ul class = "register_ul">
+      <li id="register_li_1">
+        <div class="register_info_key">아이디</div>
+        <div class="">
+          <input class="register_info_value" id="riv1" type="email" name="username" id="username" required><br>
+        </div>
+      </li>
+      <li id="register_li_2">
+        <div class="register_info_key">비밀번호</div>
+        <input class="register_info_value" type="password" name="password" id="password" required>
+        <div class="register_info_key">확인</div>
+        <input class="register_info_value" type="password" name="password2" id="password" required>
+      </li>
+      <li id= "register_li_3">
+        <label>
+          <div class="register_info_key">이름</div>
+          <input class="register_info_value" type="text" name="realname" id="name" required>
+          주민등록상 본명
+        </label>
+      </li>
+    </ul>
+
+    <div class="register_form_line">
+
+
+    </div>
+    <div style="height:20px"></div>
+
+    <div class="register_form_line">
+      <div class="register_info_key">비밀번호</div>
+      <input class="register_info_value" type="password" name="password" id="password" required>
+      <div class="register_info_key">확인</div>
+      <input class="register_info_value" type="password" name="password2" id="password" required>
+    </div>
+    <div style="height:20px"></div>
+
+    <div class="register_form_line">
+      <label>
+        <div class="register_info_key">이름</div>
+        <input class="register_info_value" type="text" name="realname" id="name" required>
+        주민등록상 본명
+      </label>
+    </div>
+    <div style="height:20px"></div>
+
+    <div class="register_form_line">
+      <label>
+        <div class="register_info_key">성별</div>
+        <input class="register_info_value" type="text" name="realname" id="name" required>
+      </label>
+    </div>
+    <div style="height:20px"></div>
+
+    <div class="register_form_line">
+      <label>
+        <div class="register_info_key">생년월일</div>
+        <input class="register_info_value" type="text" name="realname" id="name" required>
+      </label>
+    </div>
+    <div style="height:20px"></div>
+
+    <div class="register_form_line">
+      <label>
+        이메일
+        <input class="register_info_value" type="text" name="realname" id="name" required>
+      </label>
+    </div>
+    <div style="height:20px"></div>
+
+    <div class="register_form_line">
+      <label>
+        핸드폰 번호
+        <input class="register_info_value" type="text" name="realname" id="name" required>
+      </label>
+    </div>
+    <div style="height:20px"></div>
+
+    <div class="register_form_line">
+    </div>
+    <label>
+      그림 스타일
+      <input class="register_info_value" type="text" name="realname" id="name" required>
+    </label>
+
+    <div style="height:20px"></div>
+
+    <div class="register_form_line">
+    </div>
+    <label>
+      추가 포트폴리오
+      <input class="register_info_value" type="text" name="realname" id="name" required>
+    </label>
+
+    <div style="height:20px"></div>
+
+    <div class="register_form_line">
+    </div>
+    <label>
+      포트폴리오 링크
+      <input class="register_info_value" type="text" name="realname" id="name" required>
+    </label>
+
+    <div style="height:20px"></div>
+
+    <div class="register_form_line">
+    </div>
+  </div>
+-->
+  <div class="" style="height:300px">
+
+  </div>
+
 
   <div>
     <label for="realname">이름</label><br>
@@ -40,3 +164,15 @@
   <input type="submit" value="회원가입">
 
 </form>
+
+<script>
+  //파일 업로드 시 미리보기
+  function setThumbnail(event, num){
+    let reader = new FileReader();
+
+    reader.onload = (event)=>{
+      document.getElementById("image_container").src = event.target.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+</script>

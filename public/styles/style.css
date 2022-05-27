@@ -1,19 +1,75 @@
 html {
-  background-color : #90b9e2;
+  background-color : #ffffff;
   font-family: 'Noto Sans KR', sans-serif;
 }
 
 body {
   width: 80%;
   margin: 0 auto;
-  background-color: #98928a;
+  background-color: #ffffff;
   padding: 0 20px 20px 20px;
-  border: 5px solid black;
+  /*border: 5px solid black;*/
 }
 
 img {
   display: block;
   margin: 0 auto;
+}
+
+#username{
+  padding: 25px 390px 25px 10px;
+  border: 1px #000000;
+  margin: 0 40px 0 40px;
+  font-size: 20pt;
+}
+#password{
+  padding: 25px 390px 25px 10px;
+  border: 1px #000000;
+}
+
+.register_ui{
+  position: relative;
+}
+
+#register_li_1{
+  top:0, left:0
+}
+#register_li_2{
+  top:50, left:0
+}
+#register_li_3{
+  top:100, left:0
+}
+.register_info_key{
+  display: inline-block;
+  width: 125px;
+  background: #d0d0d0;
+  border: 1px solid black;
+  margin: 0 0 0 0;
+  padding: 5px 5px 5px 5px;
+  float: left;
+}
+
+.register_info_value{
+  display: inline-block;
+  width: 300px;
+  height: 40px;
+  border: 1px solid black;
+  background: #ffffff;
+  float: none;
+}
+
+#riv1{
+  top:0, left:0;
+}
+
+li{
+  height:50px;
+}
+
+.register_form_line{
+  width: 800px;
+  height: 40px;
 }
 
 .header_navbar{
@@ -31,11 +87,12 @@ img {
   color: green;
 }
 
-.inner_container1{
+.register_form{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
+  width: 1600px;
 }
-.inner_container2{
+.profile_info{
   display: grid;
   grid-template-columns: 2fr 1fr;
 }

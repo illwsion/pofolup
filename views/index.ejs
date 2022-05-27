@@ -3,52 +3,55 @@
 
 <head>
   <%- include('./partials/head'); %>
+  <style>
+    div{
+      border: 1px solid #ccc;
+    }
+    #container{
+      width: 800px;
+      padding: 20px;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 
 <body>
-  <header>
-    <%- include('./partials/header'); %>
-  </header><br>
+  <div id="container">
+    <div id="contents">
+      <div style="height:290px">290</div>
+      <img src="images/0.png" alt="pofolup logo" height="100" width="600">
+      <div style="height:33px">33</div>
+      <div>Illustrator PortFolio Collection <br> WONYFRAME</div>
+      <div style="height:90px">90</div>
 
-  <div class="container1">
-    <div class="main_banner">
-      <img src="images/0.png" alt="" height="" width="">
-    </div>
-  </div>
-
-  <div class="container2">
-
-    <div>
       <% if (login == false) { %>
-      <p>아무도 로그인하지 않음</p>
-      <p><%= login %></p>
-      <p>이미 지원했다면?</p>
-      <form action="/userLogin" method="post">
-        <label for="username">이메일</label><br>
-        <input type="text" name="username" id="username" required><br>
-        <label for="password">비밀번호</label><br>
-        <input type="password" name="password" id="password" required><br><br><br>
-        <input type="submit" value="로그인">
-      </form>
-      <a type="button" href="/position/register">회원가입 페이지</a><br>
+        <!-- 아무도 로그인되어있지 않음 -->
+        <div><form action="/userLogin" method="post">
+          <input type="text" name="username" id="username" required placeholder="Email" style="border:2px solid black">
 
+          <div style="height:25px">25</div>
+          <input type="password" name="password" id="password" required placeholder="Password" style="border:2px solid black">
+          <div style="height:25px">25</div>
+          <a type="button" href="/position/register">회원가입</a>
+          <input type="submit" value="로그인">
+        </form></div>
       <% } else { %>
-      <!-- 누군가 로그인되어있을 때 -->
-      <p> <%= user.realname %>님, 안녕하세요 </p>
-      <p>로그인되어있나? : <%= login %></p>
-      <p>관리자? : <%= user.isAdmin %></p>
-
-      <a href="/applicants/<%= user.username %>">내 지원내역 보기</a><br>
-      <a href="/logout">Logout</a>
-      <% if (user.isAdmin) { %>
-      <br><a href="/adminPage/illustrator/1">전체 데이터베이스 보기</a>
+        <!-- 누군가 로그인되어있을 때 -->
+        <p> <%= user.realname %>님, 안녕하세요 </p>
+        <a href="/applicants/<%= user.username %>">내 지원내역 보기</a><br>
+        <a href="/logout">Logout</a>
+        <% if (user.isAdmin) { %>
+        <br><a href="/adminPage/illustrator/1">전체 데이터베이스 보기</a>
+        <% } %>
       <% } %>
-      <% } %>
+      <div style="height:200px"></div>
     </div>
+
+    <div id="footer">
+      <%- include('./partials/footer'); %>
+    </div>
+
   </div>
-  <footer>
-    <%- include('./partials/footer'); %>
-  </footer>
 </body>
 
 

@@ -3,18 +3,30 @@
 
 <head>
   <%- include('./partials/head'); %>
+  <style>
+    div{
+      border: 1px solid #ccc;
+    }
+    #container{
+      width: 1500px;
+      padding: 20px;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 
 <body>
-  <header>
-    <%- include('./partials/header'); %>
-  </header><br>
-  <div>
-    <%- include('./partials/apply_register'); %>
+  <div id="container">
+    <div id="header">
+      <%- include('./partials/header'); %>
+    </div>
+    <div id="contents">
+      <%- include('./partials/apply_register'); %>
+    </div>
+    <div id="footer">
+      <%- include('./partials/footer'); %>
+    </div>
   </div>
-  <footer>
-    <%- include('./partials/footer'); %>
-  </footer>
 </body>
 
 </html>
