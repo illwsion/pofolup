@@ -43,8 +43,6 @@ router.post('/apply', nodemailerController.upload.fields([
     name: '2', maxCount: 1
   },
 ]), applicantController.findApplicant, articleController.findArticle,(req, res, next) => {
-  console.log('files');
-  console.log(req.files);
   if (req.isAuthenticated()) {
     if (req.user.username == req.body.username) {
       articleController.deleteArticle(req, res, req.articlesData[0]._id);

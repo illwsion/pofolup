@@ -2420,7 +2420,7 @@ var CanvasRenderer = function () {
             this.ctx.scale(this.options.scale, this.options.scale);
             this.ctx.translate(-options.x, -options.y);
             this.ctx.textBaseline = 'bottom';
-            options.logger.log('Canvas renderer initialized (' + options.width + 'x' + options.height + ' at ' + options.x + ',' + options.y + ') with scale ' + this.options.scale);
+            //options.logger.log('Canvas renderer initialized (' + options.width + 'x' + options.height + ' at ' + options.x + ',' + options.y + ') with scale ' + this.options.scale);
         }
     }, {
         key: 'clip',
@@ -3516,7 +3516,7 @@ var renderElement = exports.renderElement = function renderElement(element, opti
                 resourceLoader = _ref3[2];
 
             if (true) {
-                logger.log('Document cloned, using computed rendering');
+                //logger.log('Document cloned, using computed rendering');
             }
 
             var stack = (0, _NodeParser.NodeParser)(clonedElement, resourceLoader, logger);
@@ -3529,7 +3529,7 @@ var renderElement = exports.renderElement = function renderElement(element, opti
             return resourceLoader.ready().then(function (imageStore) {
                 var fontMetrics = new _Font.FontMetrics(clonedDocument);
                 if (true) {
-                    logger.log('Starting renderer');
+                    //logger.log('Starting renderer');
                 }
 
                 var defaultView = clonedDocument.defaultView;
@@ -3613,7 +3613,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var NodeParser = exports.NodeParser = function NodeParser(node, resourceLoader, logger) {
     if (true) {
-        logger.log('Starting node parsing');
+        //logger.log('Starting node parsing');
     }
 
     var index = 0;
@@ -3624,7 +3624,7 @@ var NodeParser = exports.NodeParser = function NodeParser(node, resourceLoader, 
     parseNodeTree(node, container, stack, resourceLoader, index);
 
     if (true) {
-        logger.log('Finished parsing node tree');
+        //logger.log('Finished parsing node tree');
     }
 
     return stack;
@@ -5540,7 +5540,7 @@ var Renderer = function () {
             var target = this.target.getTarget();
             if (true) {
                 return target.then(function (output) {
-                    _this5.options.logger.log('Render completed');
+                    //_this5.options.logger.log('Render completed');
                     return output;
                 });
             }
@@ -6824,7 +6824,7 @@ var ResourceLoader = function () {
             var _this4 = this;
 
             if (true) {
-                this.logger.log('Added image ' + key.substring(0, 256));
+                //this.logger.log('Added image ' + key.substring(0, 256));
             }
 
             var imageLoadHandler = function imageLoadHandler(supportsDataImages) {
@@ -6896,7 +6896,7 @@ var ResourceLoader = function () {
             });
             return Promise.all(values).then(function (images) {
                 if (true) {
-                    _this5.logger.log('Finished loading ' + images.length + ' images', images);
+                    //_this5.logger.log('Finished loading ' + images.length + ' images', images);
                 }
                 return new ResourceStore(keys, images);
             });

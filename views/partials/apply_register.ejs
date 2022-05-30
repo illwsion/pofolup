@@ -1,167 +1,137 @@
-<form action="/position/register" method="post" enctype="multipart/form-data" class="register_form">
-<!--
-  <div class="">
-    <label for="file">프로필 이미지(썸네일)</label><br>
+<form id="register_form" action="/position/register" method="post" enctype="multipart/form-data">
+
+  <div id="profile_mainimage">
     <img id= "image_container" src="/images/default_main.png" width="500px" height="500px" alt="">
-    <!-- <input type="file" name="file" required accept=".jpg, .png, .gif"><br>
-    <input type="file" id="image" onchange="setThumbnail(event);" name="file" accept=".jpg, .png, .gif"><br>
+    <div class="upload_button">
+      <label for="image">파일 선택</label>
+      <input type="file" id="image" onchange="setThumbnail(event);" name="file" accept=".jpg, .png, .gif" required><br>
+    </div>
+
 
   </div>
 
 
+  <div id="profile_information">
 
-  <div class="">
-    <ul class = "register_ul">
-      <li id="register_li_1">
-        <div class="register_info_key">아이디</div>
-        <div class="">
-          <input class="register_info_value" id="riv1" type="email" name="username" id="username" required><br>
+    <ul>
+      <li class="profile_info">
+        <div class="profile_info_key">
+          <p>이 메 일</p>
+        </div>
+        <div class="profile_info_value">
+          <input type="email" id="username" name="username" required>
+        </div>
+        <div class="profile_info_desc">
+          <p>실제 사용하는 이메일</p>
         </div>
       </li>
-      <li id="register_li_2">
-        <div class="register_info_key">비밀번호</div>
-        <input class="register_info_value" type="password" name="password" id="password" required>
-        <div class="register_info_key">확인</div>
-        <input class="register_info_value" type="password" name="password2" id="password" required>
+
+      <li class="profile_info">
+        <div class="profile_info_key">
+          <p>비 밀 번 호</p>
+        </div>
+        <div class="profile_info_value_pw">
+          <input type="password" id="password" name="password" required>
+          <p>확인</p>
+          <input type="password" id="password_check" name="password_check" required>
+        </div>
+        <div class="profile_info_desc">
+          <p>영문, 숫자를 이용한 6글자 이상</p>
+        </div>
       </li>
-      <li id= "register_li_3">
-        <label>
-          <div class="register_info_key">이름</div>
-          <input class="register_info_value" type="text" name="realname" id="name" required>
-          주민등록상 본명
-        </label>
+
+      <li class="profile_info">
+        <div class="profile_info_key">
+          <p>이 름</p>
+        </div>
+        <div class="profile_info_value">
+          <input id="name" type="text" name="realname" required>
+        </div>
+        <div class="profile_info_desc">
+          <p>주민등록상 본명</p>
+        </div>
       </li>
+
+      <li class="profile_info">
+        <div class="profile_info_key">
+          <p>성 별</p>
+        </div>
+        <div class="profile_info_value">
+          <input type="radio" name="sex" value="여성"><p>여성</p>
+          <input type="radio" name="sex" value="남성"><p>남성</p>
+          <input type="radio" name="sex" value="기타"><p>기타</p>
+        </div>
+        <div class="profile_info_desc">
+          <p>주민등록상 성별</p>
+        </div>
+      </li>
+
+      <li class="profile_info">
+        <div class="profile_info_key">
+          <p>생 년 월 일</p>
+        </div>
+        <div class="profile_info_value">
+          <!-- 나중에 input type 수정 필요 -->
+          <input type="text" name="birth" required>
+        </div>
+        <div class="profile_info_desc">
+          <p>주민등록상 생년월일 ex)20000101</p>
+        </div>
+      </li>
+
+      <li class="profile_info">
+        <div class="profile_info_key">
+          <p>핸 드 폰 번 호</p>
+        </div>
+        <div class="profile_info_value">
+          <!-- 나중에 input type 수정 필요 -->
+          <input type="text" name="phone" required>
+        </div>
+        <div class="profile_info_desc">
+          <p>하이픈(-) 제외 번호만 입력</p>
+        </div>
+      </li>
+
+      <li class="profile_info_style">
+        <div class="profile_info_key">
+          <p>그 림 스 타 일</p>
+        </div>
+        <div class="profile_info_value">
+          <!-- 나중에 input type 수정 필요 -->
+          <textarea name="style" rows="8" cols="80" maxlength="300"></textarea>
+        </div>
+        <div class="profile_info_desc">
+          <p>본인의 그림 스타일, 강점,<br>자신있는 장르 등을 설명해주세요.<br>(300자 이내)</p>
+        </div>
+      </li>
+
+      <li class="profile_info">
+        <div class="profile_info_key">
+          <p></p>
+        </div>
+        <div id="user_agreement">
+          <div class="">
+            <input type="checkbox" name="" value="true" required>
+            <p>[<a href="#">사이트 이용약관</a>]을 확인하고 동의합니다.</p><br>
+            <input type="checkbox" name="" value="true" required>
+            <p>[<a href="#">개인정보취급방침</a>]을 확인하고 동의합니다.</p>
+          </div>
+          <input class="upload_button" type="submit" name="" value="회원가입">
+        </div>
+        <div class="profile_info_desc">
+          <p></p>
+        </div>
+      </li>
+
+
     </ul>
 
-    <div class="register_form_line">
-
-
-    </div>
-    <div style="height:20px"></div>
-
-    <div class="register_form_line">
-      <div class="register_info_key">비밀번호</div>
-      <input class="register_info_value" type="password" name="password" id="password" required>
-      <div class="register_info_key">확인</div>
-      <input class="register_info_value" type="password" name="password2" id="password" required>
-    </div>
-    <div style="height:20px"></div>
-
-    <div class="register_form_line">
-      <label>
-        <div class="register_info_key">이름</div>
-        <input class="register_info_value" type="text" name="realname" id="name" required>
-        주민등록상 본명
-      </label>
-    </div>
-    <div style="height:20px"></div>
-
-    <div class="register_form_line">
-      <label>
-        <div class="register_info_key">성별</div>
-        <input class="register_info_value" type="text" name="realname" id="name" required>
-      </label>
-    </div>
-    <div style="height:20px"></div>
-
-    <div class="register_form_line">
-      <label>
-        <div class="register_info_key">생년월일</div>
-        <input class="register_info_value" type="text" name="realname" id="name" required>
-      </label>
-    </div>
-    <div style="height:20px"></div>
-
-    <div class="register_form_line">
-      <label>
-        이메일
-        <input class="register_info_value" type="text" name="realname" id="name" required>
-      </label>
-    </div>
-    <div style="height:20px"></div>
-
-    <div class="register_form_line">
-      <label>
-        핸드폰 번호
-        <input class="register_info_value" type="text" name="realname" id="name" required>
-      </label>
-    </div>
-    <div style="height:20px"></div>
-
-    <div class="register_form_line">
-    </div>
-    <label>
-      그림 스타일
-      <input class="register_info_value" type="text" name="realname" id="name" required>
-    </label>
-
-    <div style="height:20px"></div>
-
-    <div class="register_form_line">
-    </div>
-    <label>
-      추가 포트폴리오
-      <input class="register_info_value" type="text" name="realname" id="name" required>
-    </label>
-
-    <div style="height:20px"></div>
-
-    <div class="register_form_line">
-    </div>
-    <label>
-      포트폴리오 링크
-      <input class="register_info_value" type="text" name="realname" id="name" required>
-    </label>
-
-    <div style="height:20px"></div>
-
-    <div class="register_form_line">
-    </div>
-  </div>
--->
-  <div class="" style="height:300px">
-
   </div>
 
 
-  <div>
-    <label for="realname">이름</label><br>
-    <input type="text" name="realname" id="name" required><br>
-    <label for="username">이메일</label><br>
-    <input type="email" name="username" id="username" required><br>
-    <label for="password">비밀번호</label><br>
-    <input type="password" name="password" id="password" required><br><br><br>
-  </div>
 
 
-  <div>
-    <label for="route">본 공고를 처음 접한 경호를 선택해주세요</label><br>
-    <input type="radio" name="route" value="워니프레임 홈페이지">
-    <label for="route">워니프레임 홈페이지</label>
-    <input type="radio" name="route" value="카카오톡">
-    <label for="route">카카오톡</label>
-    <input type="radio" name="route" value="디스코드">
-    <label for="route">디스코드</label>
-    <input type="radio" name="route" value="인스타그램">
-    <label for="route">인스타그램</label><br><br><br>
-  </div>
 
-  <div>
-    <label for="file">프로필 이미지(썸네일)</label><br>
-    <input type="file" name="file" required accept=".jpg, .png, .gif"><br>
-    <label for="file">포트폴리오(pdf 파일)</label><br>
-    <input type="file" name="file" required accept=".pdf"><br>
-  </div><br>
-
-  <div>
-    <label for="user_agreement"></label>
-    <p><textarea name="agreement" rows="8" cols="80">개인정보 수집 및 이용동의</textarea></p>
-    <p>위 내용을 확인하였으며 동의합니다.</p>
-    <input type="checkbox" name="user_agreement" required>
-  </div>
-
-
-  <input type="submit" value="회원가입">
 
 </form>
 

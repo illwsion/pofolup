@@ -65,12 +65,12 @@ exports.createApplicant = (req, res, next) => {
       username: req.body.username,
       realname: req.body.realname,
       position: '그림작가',
-      route: req.body.route,
+      sex: req.body.sex,
+      birth: req.body.birth,
+      phone: req.body.phone,
       file: req.files[0].filename,
-      portfolio: req.files[1].filename,
       createDate: new Date().getTime(),
       updateDate: new Date().getTime(),
-      url: req.body.url,
       isAdmin: false,
       isVerified: true,
       verifyKey: crypto.randomBytes(16).toString('hex'),
@@ -85,9 +85,8 @@ exports.createApplicant = (req, res, next) => {
         next();
       } else {
         //console.log("createApplicant success");
-        //s3에 썸네일 이미지, 포트폴리오 파일 업로드
+        //s3에 썸네일 이미지 업로드
         s3Controller.s3Upload(req, res, req.body.username, req.files[0].filename);
-        s3Controller.s3Upload(req, res, req.body.username, req.files[1].filename);
         //verify code 전송
         console.log('created key');
         console.log(applicant.verifyKey);
@@ -147,7 +146,6 @@ exports.deleteApplicant = (req, res, applicantId) => {
       }
       //썸네일 파일 삭제
       s3Controller.s3Delete(req, res, applicant.username, applicant.file);
-      s3Controller.s3Delete(req, res, applicant.username, applicant.portfolio);
       //유저 삭제
       Applicant.deleteOne({
         _id: applicant._id

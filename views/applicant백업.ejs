@@ -11,20 +11,10 @@
 
 
 <body>
-  <body>
-    <div id="container">
-      <div id="header">
-        <%- include('./partials/header'); %>
-      </div>
-      <div id="contents">
 
-      </div>
-      <div id="footer">
-        <%- include('./partials/footer'); %>
-      </div>
-    </div>
-  </body>
-
+  <header>
+    <%- include('./partials/header'); %>
+  </header>
   <span id="usernameforcapture" style="display:none;" value="<%= Applicants[0].realname %>"><%= Applicants[0].realname %></span>
   <div>
     <% if (login == false) { %>

@@ -18,7 +18,7 @@
         <% for(let i=0; i<3; i++){ %>
           <td class="tg-cly1">
             <% if (Articles[0].fileNames[i] != null) { %>
-                <img id= "image_container_<%=i%>" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[i]%>" width="100px" , height="100px" alt="구도 <%= i%>. 새로고침 필요" crossorigin="use-credentials">
+                <img id= "image_container_<%=i%>" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[i]%>" width="100px" , height="100px" alt="구도 <%= i%>. 새로고침 필요">
             <% } else {%>
                 <img id= "image_container_<%=i%>" src="/images/default.png" width="100px" height="100px" alt="">
             <% } %>
@@ -44,6 +44,8 @@
     </tbody>
   </table>
     <p>이미지가 보이지 않을 시 새로고침을 해주세요</p>
+    <p>포트폴리오 선택 제출을 위한 임시 칸</p>
+    <input type="text" name="file" required value= <%= Articles[0].url %>><br>
 <br><br>
 <% if (!user.isAdmin) { %>
 <input type="submit" name="" value="저장하기">

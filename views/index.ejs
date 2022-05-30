@@ -3,14 +3,16 @@
 
 <head>
   <%- include('./partials/head'); %>
+  <link href="/styles/index.css" rel="stylesheet" type="text/css">
   <style>
     div{
       border: 1px solid #ccc;
     }
-    #container{
-      width: 800px;
-      padding: 20px;
-      margin: 0 auto;
+    img{
+      border: 1px solid #ccc;
+    }
+    form{
+      border: 1px solid #23ab24;
     }
   </style>
 </head>
@@ -18,33 +20,38 @@
 <body>
   <div id="container">
     <div id="contents">
-      <div style="height:290px">290</div>
-      <img src="images/0.png" alt="pofolup logo" height="100" width="600">
-      <div style="height:33px">33</div>
-      <div>Illustrator PortFolio Collection <br> WONYFRAME</div>
-      <div style="height:90px">90</div>
+      <img id="main-logo" src="images/0.png" alt="pofolup main_logo">
+      <img id="sub-logo" src="images/0.png" alt="pofolup sub_logo">
 
       <% if (login == false) { %>
         <!-- 아무도 로그인되어있지 않음 -->
-        <div><form action="/userLogin" method="post">
-          <input type="text" name="username" id="username" required placeholder="Email" style="border:2px solid black">
-
-          <div style="height:25px">25</div>
-          <input type="password" name="password" id="password" required placeholder="Password" style="border:2px solid black">
-          <div style="height:25px">25</div>
-          <a type="button" href="/position/register">회원가입</a>
-          <input type="submit" value="로그인">
-        </form></div>
+        <div class="form-wrap">
+          <form action="/userLogin" method="post">
+            <input type="text" name="username" id="username" required placeholder="  Email">
+            <input type="password" name="password" id="password" required placeholder="  Password">
+            <div id="register_login">
+              <a id="register_link" type="button" href="/position/register">회원가입</a>
+              <input id="login_button" type="submit" value="로그인" class="loginButton">
+            </div>
+          </form>
+      </div>
       <% } else { %>
-        <!-- 누군가 로그인되어있을 때 -->
+        <form action="/logout" method="post">
+          <input type="submit" value="Log out">
+        </form>
+        <!-- 누군가 로그인되어있을 때
         <p> <%= user.realname %>님, 안녕하세요 </p>
         <a href="/applicants/<%= user.username %>">내 지원내역 보기</a><br>
         <a href="/logout">Logout</a>
         <% if (user.isAdmin) { %>
         <br><a href="/adminPage/illustrator/1">전체 데이터베이스 보기</a>
         <% } %>
+      -->
       <% } %>
-      <div style="height:200px"></div>
+
+      <div style="height:60px"></div>
+
+
     </div>
 
     <div id="footer">

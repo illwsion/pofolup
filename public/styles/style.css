@@ -1,6 +1,13 @@
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html {
   background-color : #ffffff;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'NanumSquareRound';
 }
 
 body {
@@ -11,103 +18,46 @@ body {
   /*border: 5px solid black;*/
 }
 
-img {
+/* header */
+#header{
+  height: 220px;
+  margin-bottom: 60px;
+}
+
+#main-logo{
+  height: 100px;
+  width: 600px;
+  max-width: 100%;
   display: block;
-  margin: 0 auto;
+  margin: 20px 500px 33px 500px;
 }
 
-#username{
-  padding: 25px 390px 25px 10px;
-  border: 1px #000000;
-  margin: 0 40px 0 40px;
-  font-size: 20pt;
-}
-#password{
-  padding: 25px 390px 25px 10px;
-  border: 1px #000000;
+
+#sub-logo{
+  height: 60px;
+  width: 400px;
+  margin: 0px 600px 10px 600px;
+  max-width: 100%;
+  display: block;
 }
 
-.register_ui{
-  position: relative;
+
+
+/* footer */
+#footer_nav{
+  height:30px;
 }
 
-#register_li_1{
-  top:0, left:0
-}
-#register_li_2{
-  top:50, left:0
-}
-#register_li_3{
-  top:100, left:0
-}
-.register_info_key{
+#footer_nav li, #footer_nav p, #footer_nav a{
   display: inline-block;
-  width: 125px;
-  background: #d0d0d0;
-  border: 1px solid black;
-  margin: 0 0 0 0;
-  padding: 5px 5px 5px 5px;
-  float: left;
+  font-size: 8pt;
 }
 
-.register_info_value{
-  display: inline-block;
-  width: 300px;
-  height: 40px;
-  border: 1px solid black;
-  background: #ffffff;
-  float: none;
+#footer_info{
+  height:150px;
+  font-size:15px;
 }
-
-#riv1{
-  top:0, left:0;
+#footer_copyright{
+  float:right;
+  color:#a7a7a7;
 }
-
-li{
-  height:50px;
-}
-
-.register_form_line{
-  width: 800px;
-  height: 40px;
-}
-
-.header_navbar{
-
-}
-
-.header_category{
-  color: #60d9e0;
-  border: 1px solid black;
-  width: 300px;
-}
-
-
-.a:hober{
-  color: green;
-}
-
-.register_form{
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  width: 1600px;
-}
-.profile_info{
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-}
-
-
-.pg {
-  border-style: solid;
-  border-width: thin;
-}
-
-
-.tg  {border-collapse:collapse;border-spacing:0; background-color:#ffffff;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  overflow:hidden;padding:10px 5px;word-break:normal;width:500px;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-cly1{text-align:left;vertical-align:top}
-.tg .tg-lboi{border-color:inherit;text-align:left;vertical-align:middle}
