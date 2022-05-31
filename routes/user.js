@@ -54,10 +54,18 @@ const isVerified = (req, res, next) => {
 
 
 router.get('/', (req, res) => {
-  res.render('index', {
-    user: req.user,
-    //csrfToken: req.csrfToken()
-  });
+  if (req.isAuthenticated()) {
+    if (req.user.isAdmin){
+      res.redirect('/adminPage/illustrator/1');
+    }else{
+      res.redirect('/applicants/' + req.user.username);
+    }
+  }else{
+    res.render('index', {
+      user: req.user,
+      //csrfToken: req.csrfToken()
+    });
+  }
 });
 
 router.get('/position/:pos', (req, res) => {

@@ -11,6 +11,7 @@ const applicantSchema = mongoose.Schema({
   sex: 'string',
   birth: 'string',
   phone: 'string',
+  style: 'string',
   status: 'string',
   file: 'string',
   createDate: 'date',

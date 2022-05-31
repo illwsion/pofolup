@@ -3,6 +3,26 @@
 
 <head>
   <%- include('./partials/head'); %>
+
+  <% if (!user.isAdmin) { %>
+    <link href="/styles/applicant.css" rel="stylesheet" type="text/css">
+  <% } else { %>
+    <link href="/styles/applicant_admin.css" rel="stylesheet" type="text/css">
+  <% } %>
+  <link href="/styles/article.css" rel="stylesheet" type="text/css">
+<!--
+  <style>
+    div{
+      border: 1px solid #ccc;
+    }
+    img{
+      border: 1px solid #ccc;
+    }
+    form{
+      border: 1px solid #23ab24;
+    }
+  </style>
+-->
   <!-- 화면 캡처 -->
   <script type="text/javascript" src="/js/html2canvas.js"></script>
   <!-- <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> -->
@@ -17,7 +37,18 @@
       <%- include('./partials/header'); %>
     </div>
     <div id="contents">
-      <p>hello</p>
+      <div id="applicant_detail">
+        <p>지원자 프로필</p>
+        <% if (!user.isAdmin) { %>
+          <%- include('./partials/applicantDetail'); %>
+        <% } else { %>
+          <%- include('./partials/applicantDetail_admin'); %>
+        <% } %>
+
+      </div>
+      <div id="article_table">
+        <%- include('./partials/articleTable'); %>
+      </div>
     </div>
     <div id="footer">
       <%- include('./partials/footer'); %>
@@ -30,47 +61,6 @@
   </form>
   <a href="/logout">Logout</a>
 
-  <div id="main_capture">
-    <div class="applicant_detail">
-      <p>지원자 프로필</p>
-      <%- include('./partials/applicantDetail'); %>
-    </div>
-
-
-    <div class="article_table">
-      <p>지원 내역</p>
-      <%- include('./partials/articleTable'); %>
-    </div>
-  </div>
-  <button onclick="captureProf()">프로필 다운로드</button>
-
-
-
-  <script>
-    function captureProf(){
-      let filename = document.getElementById("usernameforcapture").innerHTML;
-      filename += "_프로필.jpg";
-      html2canvas(document.getElementById("main_capture"),{
-        allowTaint: false,
-        useCORS: true
-      }).then(canvas => {
-
-        saveAs(canvas.toDataURL("image/jpg"), filename);
-      });
-      function saveAs(url, filename){
-        var link = document.createElement('a');
-        if (typeof link.download === 'string'){
-          link.href = url;
-          link.download = filename;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        } else{
-          window.open(url);
-        }
-      }
-    };
-  </script>
 
 </body>
 

@@ -1,0 +1,180 @@
+/* articleTable.ejs */
+#article_upload{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#article_notice{
+  display: flex;
+  background-color: #f3f3f3;
+}
+#article_notice_notice{
+  width: 10%;
+  font-size: 20pt;
+  margin: 0 50px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+#article_notice_content li{
+  font-size: 12pt;
+}
+
+.article_upload_title{
+  font-size: 20pt;
+  display: flex;
+  justify-content: center;
+}
+.article_upload_desc{
+  display: flex;
+  flex-direction: column;
+
+  font-size: 10pt;
+}
+
+.article_upload_desc p{
+  display: flex;
+  justify-content: center;
+  margin: 2px;;
+}
+
+.article_upload_image{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.article_image img{
+  width:520px;
+  height: 520px;
+  margin-bottom: 15px;
+}
+
+.upload_button{
+  display: flex;
+  justify-content: space-between;
+}
+.upload_button label{
+  font-size: 15pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: right;
+  width: 100px;
+  height: 40px;
+  color: #000000;
+  background-color: #ffffff;
+  padding: 0;
+  line-height: normal;
+  border: 1px solid #000000;
+}
+.upload_button input[type="file"]{
+  display: none;
+}
+.upload_button p{
+  font-size: 15pt;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+.upload_button h6{
+  font-size: 15pt;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+/* article - applicant */
+#article_upload_url{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
+  margin-bottom: 45px;
+}
+
+#article_upload_url ul{
+  list-style-type: none;
+}
+
+#article_upload_url li:before{
+  content: none;
+  font-size: 60px;
+  vertical-align: middle;
+}
+
+#url_input{
+  width: 800px;
+  height: 50px;
+  margin-bottom: 15px;
+}
+
+/* article - admin */
+#article_url{
+  display: flex;
+  justify-content: center;
+}
+#article_url p{
+  margin-left: 20px;
+  font-size: 20pt;
+}
+#article_url a{
+  margin-left: 20px;
+  font-size: 20pt;
+}
+
+#article_attachTag{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#article_attachTag p{
+  font-size: 20pt;
+}
+#article_attachTag_list{
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+#article_attachTag_list a{
+  margin: 0 5px;
+}
+
+#article_upload_button{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#article_upload_button_desc{
+  display:flex;
+  justify-content: center;
+
+}
+#article_upload_button_desc p{
+  margin:0;
+}
+
+#article_upload_button label{
+  font-size: 25pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: right;
+  width: 350px;
+  height: 50px;
+  color: #ffffff;
+  background-color: #000000;
+  padding: 0;
+  line-height: normal;
+  border: 1px solid #000000;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+#article_upload_button input[type="submit"]{
+  display: none;
+}

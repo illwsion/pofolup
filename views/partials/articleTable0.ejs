@@ -1,0 +1,66 @@
+<form action="/position/apply" method="post" enctype="multipart/form-data">
+  <input hidden type="text" name="username" value= <%= user.username %> >
+
+<% for(var i=0; i<Articles.length; i++) { %>
+  <table class="tg">
+    <thead>
+      <tr>
+        <th class="tg-cly1">파일이름1</th>
+        <th class="tg-cly1">파일이름2</th>
+        <th class="tg-cly1">파일이름3</th>
+        <th class="tg-cly1">추가사항</th>
+        <th class="tg-cly1">url</th>
+        <th class="tg-cly1">생성 날짜</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <% for(let i=0; i<3; i++){ %>
+          <td class="tg-cly1">
+            <% if (Articles[0].fileNames[i] != null) { %>
+                <img id= "image_container_<%=i%>" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[i]%>" width="100px" , height="100px" alt="구도 <%= i%>. 새로고침 필요">
+            <% } else {%>
+                <img id= "image_container_<%=i%>" src="/images/default.png" width="100px" height="100px" alt="">
+            <% } %>
+            <% if (!user.isAdmin) { %>
+            <input type="file" id="image" onchange="setThumbnail(event, <%=i%>);" name="<%= i %>" accept=".jpg, .png, .gif"><br>
+            <% } %>
+          </td>
+        <% } %>
+        <td class="tg-cly1">
+          <div class="" style="width:300px; height: 100px; overflow: auto"><%= Articles[i].comment%></div>
+        </td>
+        <% if (Articles[i].url)   {%>
+        <td class="tg-cly1"><a href="<%= Articles[i].url%>">포트폴리오 링크</a></td>
+        <% } else { %>
+        <td class="tg-cly1">포트폴리오 링크 없음</td>
+        <% } %>
+
+        <td class="tg-cly1"><%= Articles[i].createDate%></td>
+
+        <!-- <td class="tg-cly1"> <a href="/deleteArticle/<%= Articles[i]._id %>">게시글 삭제</a> </td> -->
+
+      </tr>
+    </tbody>
+  </table>
+    <p>이미지가 보이지 않을 시 새로고침을 해주세요</p>
+    <p>포트폴리오 선택 제출을 위한 임시 칸</p>
+    <input type="text" name="file" required value= <%= Articles[0].url %>><br>
+<br><br>
+<% if (!user.isAdmin) { %>
+<input type="submit" name="" value="저장하기">
+<% } %>
+<% } %>
+</form>
+
+<script>
+  //파일 업로드 시 미리보기
+  function setThumbnail(event, num){
+    let reader = new FileReader();
+
+    reader.onload = (event)=>{
+      document.getElementById("image_container_"+ num).src = event.target.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+</script>

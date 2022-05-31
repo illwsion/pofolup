@@ -127,18 +127,19 @@ exports.attachTag = async (req, res)=>{
         applicant[0].tagInfo.push(tagInfo);
         //applicant[0].updateDate = new Date().getTime();
         //tagInfo 검사해서 과반수 이상이고 이미 없으면 usertags에 추가
-        if ((parseInt((numOfAdmin-1)/2) + 1) <= numOfTag + 1){
-          if (applicant[0].userTags.indexOf(req.params.tag) == -1){
-            applicant[0].userTags.push(req.params.tag);
-          }else{
-            //console.log('이미 있는 태그');
-          }
-        }
-        applicant[0].save();
+
       }
       else{
         //console.log('이미 태그를 누른 적 있음');
       }
+      if ((parseInt((numOfAdmin-1)/2) + 1) <= numOfTag + 1){
+        if (applicant[0].userTags.indexOf(req.params.tag) == -1){
+          applicant[0].userTags.push(req.params.tag);
+        }else{
+          //console.log('이미 있는 태그');
+        }
+      }
+      applicant[0].save();
       res.redirect('/applicants/'+req.params.applicantEmail);
     }
   }).clone();

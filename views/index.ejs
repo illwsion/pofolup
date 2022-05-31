@@ -36,6 +36,7 @@
           </form>
       </div>
       <% } else { %>
+        <a href="/applicants/<%= user.username %>">내 지원내역 보기</a><br>
         <form action="/logout" method="post">
           <input type="submit" value="Log out">
         </form>

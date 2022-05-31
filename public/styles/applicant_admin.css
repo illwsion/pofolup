@@ -20,25 +20,22 @@
   display: flex;
   width: 50%;
 }
-#detail_info_middle{
-  width: 5px;
-  background-color: black;
-  border: 0;
-  padding: 0;
-  margin: 0;
+#detail_info_mainimage{
+  width: 100%
 }
 #detail_info_mainimage img{
-  width: 280px;
-  height: 280px;
-  margin-right: 50px;
+  width: 780px;
+  height: 780px;
+  margin-right: 20px;
 }
 #detail_info_info{
   font-family: 'NanumSquareRound';
   font-size: 40pt;
   line-height: normal;
 }
-#detail_info_info p{
+#detail_info_right_title p{
   margin: 0;
+  font-size: 30px;
 }
 #detail_info_info ul{
   margin-top: 20px;
@@ -59,8 +56,25 @@
 #detail_info_right{
   width: 50%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+
 }
+
+#detail_status{
+  display: flex;
+  width: auto;
+  height: 80px;
+  border: 1px #000000 solid;
+}
+
+
+#detail_status_admincheck{
+  width: 30%;
+  margin: 0px 35px;
+  display: flex;
+  align-items: center;
+}
+
 #detail_info_style{
   margin-left: 20px;
   width:620px;
@@ -68,41 +82,46 @@
   overflow: auto;
 }
 
-
-#detail_status{
+#detail_info_tags{
   display: flex;
-  width: 1600px;
-  height: 80px;
-  margin-bottom: 70px;
-  border: 1px #000000 solid;
+
 }
 
-#detail_status_mystatus{
-  font-size: 22pt;
-  width: 10%;
-  margin: 0px 35px;
+.userTags{
   display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0 5px;
 }
-#detail_status_radio{
-  width: 60%;
-  display: flex;
-  align-items: center;
+.userTags p{
+  font-size: 10pt;
 }
-#detail_status_radio input[type="radio"]{
-  height: 1em;
-  width: 10%;
-  margin: 5px;
-}
-#detail_status_radio label{
-  width: 50%;
+.userTags label{
   font-size: 15pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: right;
+  width: 100px;
+  height: 40px;
+  color: #000000;
+  background-color: #ffffff;
+  padding: 0;
+  line-height: normal;
+  border: 1px solid #000000;
+}
+.userTags input{
+  display: none;
+}
+.userTags label{
+  width: 15px;
+  height: 15px;
+}
+.userTags img{
+  height: 15px;
+  width: 15px;
 }
 
-#detail_status_admincheck{
-  width: 30%;
-  margin: 0px 35px;
-  display: flex;
-  align-items: center;
+
+
+#detail_info_update p{
+  font-size: 15pt;
 }

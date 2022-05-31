@@ -57,6 +57,10 @@ body {
   font-size: 8pt;
 }
 
+#footer_nav ul{
+  padding-left: 10px;
+}
+
 #footer_info{
   height:150px;
   font-size:15px;

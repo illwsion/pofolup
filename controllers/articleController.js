@@ -4,7 +4,7 @@ const applicantController = require('./../controllers/applicantController');
 const s3Controller = require('./../controllers/s3Controller');
 const fs = require('fs');
 const passport = require('passport');
-let fileLength = 3;
+let fileLength = 6;
 
 
 exports.getAllArticles = (req, res, next) => {
@@ -110,7 +110,7 @@ exports.createArticle = (req, res, applicantId) => {
       article.fileNames = new Array(fileLength);
 
       //파일 업데이트
-      for (let i=0; i<article.fileDesc.length; i++){
+      for (let i=0; i<fileLength; i++){
         //업로드한 파일이 있다면
         if (req.files[i] != undefined){
           article.fileNames[i] = req.files[i][0].filename;

@@ -68,6 +68,7 @@ exports.createApplicant = (req, res, next) => {
       sex: req.body.sex,
       birth: req.body.birth,
       phone: req.body.phone,
+      style: req.body.style,
       file: req.files[0].filename,
       createDate: new Date().getTime(),
       updateDate: new Date().getTime(),

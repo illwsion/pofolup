@@ -42,6 +42,15 @@ router.post('/apply', nodemailerController.upload.fields([
   {
     name: '2', maxCount: 1
   },
+  {
+    name: '3', maxCount: 1
+  },
+  {
+    name: '4', maxCount: 1
+  },
+  {
+    name: '5', maxCount: 1
+  },
 ]), applicantController.findApplicant, articleController.findArticle,(req, res, next) => {
   if (req.isAuthenticated()) {
     if (req.user.username == req.body.username) {

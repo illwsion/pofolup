@@ -1,63 +1,226 @@
-<form action="/position/apply" method="post" enctype="multipart/form-data">
-  <input hidden type="text" name="username" value= <%= user.username %> >
+<form id="article_upload" action="/position/apply" method="post" enctype="multipart/form-data">
+  <input hidden type="text" name="username" value= <%= Applicants[0].username %> >
+  <% if (!user.isAdmin) { %>
+  <div id="article_notice">
+    <div id="article_notice_notice">
+      <p>Notice</p>
+    </div>
 
-<% for(var i=0; i<Articles.length; i++) { %>
-  <table class="tg">
-    <thead>
-      <tr>
-        <th class="tg-cly1">파일이름1</th>
-        <th class="tg-cly1">파일이름2</th>
-        <th class="tg-cly1">파일이름3</th>
-        <th class="tg-cly1">추가사항</th>
-        <th class="tg-cly1">url</th>
-        <th class="tg-cly1">생성 날짜</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <% for(let i=0; i<3; i++){ %>
-          <td class="tg-cly1">
-            <% if (Articles[0].fileNames[i] != null) { %>
-                <img id= "image_container_<%=i%>" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[i]%>" width="100px" , height="100px" alt="구도 <%= i%>. 새로고침 필요">
-            <% } else {%>
-                <img id= "image_container_<%=i%>" src="/images/default.png" width="100px" height="100px" alt="">
-            <% } %>
-            <% if (!user.isAdmin) { %>
-            <input type="file" id="image" onchange="setThumbnail(event, <%=i%>);" name="<%= i %>" accept=".jpg, .png, .gif"><br>
-            <% } %>
-          </td>
+    <div id="article_notice_content">
+      <ul>
+        <li>
+          포폴업은 동일한 조건에서 공평한 판단을 위해 지정된 조건의 포트폴리오 수집하고 있습니다. 조건 항목이 업로드되어야 최종 제출이 가능하며, 협업 조건을 만족시킬 수 있습니다.
+        </li>
+        <li>
+          포트폴리오와 프로필은 언제든지 자유롭게 수정이 가능하며, 수정 제출된 포트폴리오는 언제든지 담당자가 재확인할 수 있습니다.
+        </li>
+        <li>
+          악의적이거나 장난식의 등록, 잦은 수정, 도용, 트레이싱 등의 경우 통보 없이 계정이 삭제될 수 있습니다.
+        </li>
+        <li>
+          포트폴리오 업로드 기간은 제한이 없으며, [<a href="#">개인정보이용약관</a>]에 명시된 보관 기간에 따라 미등록 된 프로필은 삭제될 수 있습니다.
+        </li>
+        <li>
+          작업물의 저작권은 작가 개인에게 있으며, 포폴업은 협업 판단을 위한 자료로만 쓰입니다. 또한, 타인에 의한 도용을 방지하기 위해 포트폴리오는 관리자와 업로드한 본인만 확인할 수 있습니다.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <% } %>
+  <p class="article_upload_title">Portfolio Upload</p>
+  <% if (!user.isAdmin) { %>
+  <div class="article_upload_desc">
+      <p>[*필수] 본인의 그림체로 예시와 똑같은 구도로 인물을 그려 업로드해 주세요.</p>
+      <p>구성에 맞지 않는 그림을 제출할 시, 포트폴리오가 삭제될 수 있습니다.</p>
+  </div>
+
+  <% } %>
+  <div class="article_upload_image">
+    <div class="article_image">
+      <% if (Articles[0].fileNames[0] != null) { %>
+          <img id= "image_container_0" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[0]%>" width="100px" , height="100px" alt="구도 0. 새로고침 필요">
+      <% } else {%>
+          <img id= "image_container_0" src="/images/default_main.png" alt="">
+      <% } %>
+
+      <div class="upload_button">
+        <p>[남성 정면]</p>
+        <% if (!user.isAdmin) { %>
+          <input type="file" id="image0" onchange="setThumbnail(event, 0);" name="0" accept=".jpg, .png, .gif"><br>
+          <label for="image0">파일 선택</label>
         <% } %>
-        <td class="tg-cly1">
-          <div class="" style="width:300px; height: 100px; overflow: auto"><%= Articles[i].comment%></div>
-        </td>
-        <% if (Articles[i].url)   {%>
-        <td class="tg-cly1"><a href="<%= Articles[i].url%>">포트폴리오 링크</a></td>
-        <% } else { %>
-        <td class="tg-cly1">포트폴리오 링크 없음</td>
+      </div>
+    </div>
+    <div class="article_image">
+      <% if (Articles[0].fileNames[1] != null) { %>
+          <img id= "image_container_1" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[1]%>" width="100px" , height="100px" alt="구도 1. 새로고침 필요">
+      <% } else {%>
+          <img id= "image_container_1" src="/images/default_main.png" alt="">
+      <% } %>
+      <div class="upload_button">
+        <p>[남성 좌향 45도]</p>
+        <% if (!user.isAdmin) { %>
+          <input type="file" id="image1" onchange="setThumbnail(event, 1);" name="1" accept=".jpg, .png, .gif"><br>
+          <label for="image1">파일 선택</label>
         <% } %>
 
-        <td class="tg-cly1"><%= Articles[i].createDate%></td>
+      </div>
+    </div>
+    <div class="article_image">
+      <% if (Articles[0].fileNames[2] != null) { %>
+          <img id= "image_container_2" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[2]%>" width="100px" , height="100px" alt="구도 2. 새로고침 필요">
+      <% } else {%>
+          <img id= "image_container_2" src="/images/default_main.png" alt="">
+      <% } %>
+      <div class="upload_button">
+        <p>[남성 우향 측면]</p>
+        <% if (!user.isAdmin) { %>
+          <input type="file" id="image2" onchange="setThumbnail(event, 2);" name="2" accept=".jpg, .png, .gif"><br>
+          <label for="image2">파일 선택</label>
+        <% } %>
 
-        <!-- <td class="tg-cly1"> <a href="/deleteArticle/<%= Articles[i]._id %>">게시글 삭제</a> </td> -->
+      </div>
+    </div>
+  </div>
+  <% if (!user.isAdmin) { %>
 
-      </tr>
-    </tbody>
-  </table>
-    <p>이미지가 보이지 않을 시 새로고침을 해주세요</p>
-    <p>포트폴리오 선택 제출을 위한 임시 칸</p>
-    <input type="text" name="file" required value= <%= Articles[0].url %>><br>
-<br><br>
-<% if (!user.isAdmin) { %>
-<input type="submit" name="" value="저장하기">
-<% } %>
-<% } %>
+  <p class="article_upload_title">Select Upload</p>
+  <div class="article_upload_desc">
+    <p>1. 자신있는 각도의 여자 캐릭터 그림을 올려주세요.</p>
+    <p>2. 아래의 주제 중 원하는 주제 2개를 선택해서 일러스트를 올려주세요.</p>
+    <p>주제 1: 0000000000 | 주제 2: 0000000000</p>
+    <p>주제 3: 0000000000 | 주제 4: 0000000000 <br></p>
+  </div>
+  <% } %>
+
+  <div class="article_upload_image">
+    <div class="article_image">
+      <% if (Articles[0].fileNames[3] != null) { %>
+          <img id= "image_container_3" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[3]%>" width="100px" , height="100px" alt="구도 3. 새로고침 필요">
+      <% } else {%>
+          <img id= "image_container_3" src="/images/default_main.png" alt="">
+      <% } %>
+      <div class="upload_button">
+        <p>[여자 자유 각도]</p>
+        <% if (!user.isAdmin) { %>
+          <input type="file" id="image3" onchange="setThumbnail(event, 3);" name="3" accept=".jpg, .png, .gif"><br>
+          <label for="image3">파일 선택</label>
+        <% } %>
+      </div>
+    </div>
+    <div class="article_image">
+      <% if (Articles[0].fileNames[4] != null) { %>
+          <img id= "image_container_4" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[4]%>" width="100px" , height="100px" alt="구도 4. 새로고침 필요">
+      <% } else {%>
+          <img id= "image_container_4" src="/images/default_main.png" alt="">
+      <% } %>
+      <div class="upload_button">
+        <p>[선택형 1]</p>
+        <% if (!user.isAdmin) { %>
+          <input type="file" id="image4" onchange="setThumbnail(event, 4);" name="4" accept=".jpg, .png, .gif"><br>
+          <label for="image4">파일 선택</label>
+        <% } %>
+      </div>
+    </div>
+    <div class="article_image">
+      <% if (Articles[0].fileNames[5] != null) { %>
+          <img id= "image_container_5" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[5]%>" width="100px" , height="100px" alt="구도 5. 새로고침 필요">
+      <% } else {%>
+          <img id= "image_container_5" src="/images/default_main.png" alt="">
+      <% } %>
+      <div class="upload_button">
+        <p>[선택형 2]</p>
+        <% if (!user.isAdmin) { %>
+          <input type="file" id="image5" onchange="setThumbnail(event, 5);" name="5" accept=".jpg, .png, .gif"><br>
+          <label for="image5">파일 선택</label>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <% if (!user.isAdmin) { %>
+  <div id="article_upload_url">
+    <p class="article_upload_title">(선택)포트폴리오 URL</p>
+    <input id="url_input" type="text" name="url" value="<%= Articles[0].url %>">
+    <ul>
+      <li>
+        - 포트폴리오는 PDF형태로 개인의 구글 드라이브를 이용하여 URL로 제출해주세요.
+      </li>
+      <li>
+        - 포트폴리오의 용량은 20MB 이하로 제출 부탁드립니다.
+      </li>
+      <li>
+        - 단순 이미지 파일, ZIP 형태의 포트폴리오는 확인하지 않습니다.
+      </li>
+    </ul>
+  </div>
+  <div id="article_upload_button">
+    <div id="article_upload_button_desc">
+      <p>[6개의 이미지를 전부 등록하면 최종 제출이 완료딥니다. (임시 저장 가능)]</p>
+    </div>
+    <label for="article_submit">저장하기</label>
+    <input type="submit" id="article_submit">
+  </div>
+  <% } %>
 </form>
+
+
+<% if (!user.isAdmin) { %>
+  <!-- 관리자가 아닐 경우 -->
+
+<% } else{ %>
+  <!-- 관리자일 경우 -->
+  <div id="article_url">
+    <% if (Articles[0].url != undefined) {%>
+        <a href="<%= Articles[0].url %>" target="_blank">포트폴리오 다운로드</a>
+    <% } else { %>
+        <p>포트폴리오 url 없음</p>
+    <% } %>
+  </div>
+  <div id="article_attachTag">
+    <p>tag 부여하기</p>
+    <div id="article_attachTag_list">
+      <% for (let i=0; i<curCategory.hashTags.length; i++) { %>
+        <a href="/attachTag/<%= Applicants[0].username %>/<%= curCategory.hashTagsName[i]%>/<%= user._id%>"><%= curCategory.hashTagsName[i]%></a>
+      <% } %>
+    </div>
+  </div>
+
+<% } %>
+
+
+<script>
+  //화면 캡쳐
+  function captureProf(){
+    let filename = document.getElementById("usernameforcapture").innerHTML;
+    filename += "_프로필.jpg";
+    html2canvas(document.getElementById("article_upload"),{
+      allowTaint: false,
+      useCORS: true
+    }).then(canvas => {
+
+      saveAs(canvas.toDataURL("image/jpg"), filename);
+    });
+    function saveAs(url, filename){
+      var link = document.createElement('a');
+      if (typeof link.download === 'string'){
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else{
+        window.open(url);
+      }
+    }
+  };
+</script>
+
 
 <script>
   //파일 업로드 시 미리보기
   function setThumbnail(event, num){
     let reader = new FileReader();
-
+    console.log("image_container_"+num);
     reader.onload = (event)=>{
       document.getElementById("image_container_"+ num).src = event.target.result;
     };
