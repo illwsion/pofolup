@@ -11,36 +11,24 @@
 
 
 <body>
-  <body>
-    <div id="container">
-      <div id="header">
-        <%- include('./partials/header'); %>
-      </div>
-      <div id="contents">
 
-      </div>
-      <div id="footer">
-        <%- include('./partials/footer'); %>
-      </div>
+  <div id="container">
+    <div id="header">
+      <%- include('./partials/header'); %>
     </div>
-  </body>
+    <div id="contents">
+      <p>hello</p>
+    </div>
+    <div id="footer">
+      <%- include('./partials/footer'); %>
+    </div>
+  </div>
 
   <span id="usernameforcapture" style="display:none;" value="<%= Applicants[0].realname %>"><%= Applicants[0].realname %></span>
-  <div>
-    <% if (login == false) { %>
-    <p>아무도 로그인하지 않음</p>
-    <p><%= login %></p>
-    <% } else { %>
-    <p> <%= user.realname %>님, 안녕하세요 </p>
-
-    <p>로그인되어있나? : <%= login %></p>
-    <p>관리자? : <%= user.isAdmin %></p>
-    <form action="/logout" method="post">
-      <input type="submit" value="Log out">
-    </form>
-    <a href="/logout">Logout</a>
-    <% } %>
-  </div>
+  <form action="/logout" method="post">
+    <input type="submit" value="Log out">
+  </form>
+  <a href="/logout">Logout</a>
 
   <div id="main_capture">
     <div class="applicant_detail">
@@ -85,9 +73,5 @@
   </script>
 
 </body>
-
-<footer>
-  <%- include('./partials/footer'); %>
-</footer>
 
 </html>

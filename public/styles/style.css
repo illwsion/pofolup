@@ -44,6 +44,10 @@ body {
 
 
 /* footer */
+#footer{
+  margin-top: 60px;
+}
+
 #footer_nav{
   height:30px;
 }
