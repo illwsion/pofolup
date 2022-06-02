@@ -120,13 +120,13 @@ router.post('/adminPage/:category/:pageNum', categoryController.getAllTags, (req
     //태그가 있음
     if (typeof(req.body.hashTags) == 'string'){
       //태그가 1개임
-      if (req.Category.hashTagsName.includes(req.body.hashTags)){
+      if (req.Category.hashTags.includes(req.body.hashTags)){
         queryString += req.body.hashTags + '&';
       }
     }else{
       //태그가 2개 이상임
       for (let i=0; i<req.body.hashTags.length; i++){
-        if (req.Category.hashTagsName.includes(req.body.hashTags[i])){
+        if (req.Category.hashTags.includes(req.body.hashTags[i])){
           queryString += req.body.hashTags[i] + '&';
         }
       }

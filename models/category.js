@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 const categorySchema = mongoose.Schema({
   categoryName: 'string',
   hashTags: 'array',
-  hashTagsName: 'array',
 }, {
   collection: 'category'
 });

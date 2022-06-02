@@ -59,7 +59,6 @@ exports.createTag = (req, res, categoryName)=>{
       }else{
         if (!category[0].hashTags.includes(req.body.newhashTag)){
           category[0].hashTags.push(req.body.newhashTag);
-          category[0].hashTagsName.push(req.body.newhashTagName);
           category[0].save();
         }
       }
