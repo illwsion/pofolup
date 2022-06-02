@@ -1,0 +1,188 @@
+#container{
+  width: 1600px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+#contents{
+  width: 100%;
+  display: flex;
+}
+
+
+#sidebar{
+  width: 350px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#applicant_list_container{
+  width: auto;
+}
+
+#sidebar_search input[type=text]{
+  width: 280px;
+  height: 40px;
+  border: 1px solid #a0a0a0;
+  font-size: 20pt;
+  color: black;
+}
+#sidebar_search input[type=text]::placeholder{
+  font-family: 'NanumSquareRound';
+  color: #a6a6a6;
+}
+
+#sidebar_category{
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+
+}
+.sidebar_category{
+  font-family: 'NanumSquareRound';
+  font-size: 20pt;
+  margin-top: 30px;
+  color: black;
+  text-decoration: none;
+}
+
+.sidebar_hashtag{
+  margin-left: 30px;
+  margin-top: 20px;
+  font-size: 15pt;
+}
+.sidebar_hashtag input[type=checkbox]{
+
+}
+
+#sidebar_addtag{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#sidebar_deletetag{
+  margin-top: 50px;
+}
+#sidebar_deletetag a{
+  font-size: 10pt;
+  color: black;
+  text-decoration: none;
+  border: 1px solid #a6a6a6;
+  border-radius: 3px;
+  padding: 2px;
+}
+
+.checkboxframe{
+
+}
+
+
+.applicant_list_profile{
+  width: 1230px;
+  height: 300px;
+  padding: 10px;
+  display: flex;
+}
+
+.applicant_list_profile_mainimg img{
+  width: 280px;
+  height: 280px;
+}
+
+.applicant_list_detail{
+  display: flex;
+  flex-direction: column;
+  width: 1100px;
+}
+
+.applicant_list_info_name{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #a0a0a0
+}
+.applicant_list_info_name_left{
+  display: flex;
+}
+.applicant_list_info_name_left a{
+  font-size: 30pt;
+  margin-right: 20px;
+  color: black;
+  text-decoration: none;
+}
+.applicant_list_info_name_left p{
+  font-size: 20pt;
+  margin: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.applicant_list_info_name_right{
+  font-size: 15pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.applicant_list_info_name_right a{
+  text-decoration: none;
+  color: black;
+}
+
+.applicant_list_info_status{
+  height: 40px;
+}
+.applicant_list_info_status p{
+  display: flex;
+  align-items: center;
+  margin: 0;
+  margin-left: 10px;
+}
+
+.applicant_list_info_tag{
+  display: flex;
+}
+.applicant_list_info_tag p{
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 5px;
+  border: 1px solid #a6a6a6;
+  border-radius: 10px;
+  margin: 0px 10px;
+  border:
+}
+
+
+
+
+.applicant_list_profile_subimgs{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.applicant_list_profile_subimgs img{
+  width: 145px;
+  height: 145px;
+}
+
+#applicant_list_pagination{
+  display: flex;
+  justify-content: center;
+}
+
+#paging{
+  width: 800px;
+  margin-top: 35px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#paging a{
+  font-family: 'NanumSquareRound';
+  font-size: 18pt;
+  text-decoration: none;
+}

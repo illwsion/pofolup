@@ -28,6 +28,10 @@
   </div>
   <% } %>
   <p class="article_upload_title">Portfolio Upload</p>
+  <div id="article_update">
+      <p><%= Applicants[0].updateDate %></p>
+  </div>
+
   <% if (!user.isAdmin) { %>
   <div class="article_upload_desc">
       <p>[*필수] 본인의 그림체로 예시와 똑같은 구도로 인물을 그려 업로드해 주세요.</p>

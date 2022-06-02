@@ -54,7 +54,9 @@ body {
 
 #footer_nav li, #footer_nav p, #footer_nav a{
   display: inline-block;
-  font-size: 8pt;
+  font-size: 10pt;
+  text-decoration: none;
+  color: black;
 }
 
 #footer_nav ul{

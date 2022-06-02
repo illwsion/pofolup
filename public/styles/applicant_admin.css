@@ -93,6 +93,9 @@
 }
 .userTags p{
   font-size: 10pt;
+  border: 1px solid #b0b0b0;
+  border-radius: 4px;
+  padding: 4px;
 }
 .userTags label{
   font-size: 15pt;
@@ -115,13 +118,22 @@
   width: 15px;
   height: 15px;
 }
+
+
+
 .userTags img{
   height: 15px;
   width: 15px;
 }
 
-
-
 #detail_info_update p{
   font-size: 15pt;
+}
+
+#admin_manage a{
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 2px;
+  text-decoration: none;
+  color: black;
 }

@@ -51,7 +51,7 @@
 </div>
 
 
-<div>
+<div id="admin_manage">
   <% if (login == true) { %>
     <% if (user.isAdmin == true) { %>
       <a href="/adminPage/<%= Applicants[0].categories[0]%>/1">전체 목록 보기</a>
@@ -60,7 +60,7 @@
       <a href="/appointAdmin/<%= Applicants[0].username %>">관리자 임명</a> <br>
 
       <br><br><br>
-      <button onclick="captureProf()">포트폴리오 다운로드</button>
+      <button onclick="captureProf()">포트폴리오 이미지 다운로드</button>
       <br><br><br>
       <a href="/deleteApplicant/<%= Applicants[0]._id %>">지원자 삭제</a>
     <% } %>

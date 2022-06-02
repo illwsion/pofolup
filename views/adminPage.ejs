@@ -2,99 +2,108 @@
 <html lang="ko" dir="ltr">
 
 <head>
+  <link href="/styles/adminpage.css" rel="stylesheet" type="text/css">
   <%- include('./partials/head'); %>
+<!--
+  <style>
+    div{
+      border: 1px solid #ccc;
+    }
+    img{
+      border: 1px solid #ccc;
+    }
+    form{
+      border: 1px solid #23ab24;
+    }
+  </style>
+-->
 </head>
 
-<header>
-  <%- include('./partials/header'); %>
-</header>
-
 <body>
-  <div>
+  <div id="container">
+    <div id="header">
+      <%- include('./partials/header'); %>
+    </div>
+    <div id="contents">
+      <div id="sidebar">
+        <form action="/adminPage/<%= category %>/1" method="post">
+          <div id="sidebar_search">
+            <input type="text" name="targetName" value="" placeholder="Search" autocomplete="off">
+            <input type="submit" value="검색">
+          </div>
+          <div id="sidebar_category">
+            <% for (let i=0; i < Categories.length; i++) { %>
+              <a class="sidebar_category" href="/adminPage/<%= Categories[i].categoryName %>/1">---<%= Categories[i].categoryName%></a>
+            <% } %>
+            <a class="sidebar_category" href="/adminPage/<%= category %>/1">---Scrap List</a>
+            <p class="sidebar_category">---#HashTag Category</p>
+          </div>
+          <div id="sidebar_hashtags">
+            <% for (let i=0; i<curCategory.hashTags.length; i++) { %>
+              <% if (queryString.search(curCategory.hashTagsName[i]) != -1) { %>
+                <div class="sidebar_hashtag">
+                  <label for="cb<%= i %>" class="checkboxframe"></label>
+                  <label><input id="cb<%= i %>" type="checkbox" name= hashTags value="<%= curCategory.hashTagsName[i] %>" checked><%= curCategory.hashTagsName[i] %></label>
+                </div>
+              <% } else { %>
+                <div class="sidebar_hashtag">
+                  <label for="cb<%= i %>" class="checkboxframe"></label>
+                  <label><input id="cb<%= i %>" type="checkbox" name= hashTags value="<%= curCategory.hashTagsName[i] %>" ><%= curCategory.hashTagsName[i] %></label>
+                </div>
+              <% } %>
+            <% } %>
+          </div>
+        </form>
+        <div id="sidebar_addtag">
+          <form action="/position/createTag/<%= category %>" method="post">
+            <label>태그 추가하기(영어)<input type="text" name="newhashTag" required autocomplete="off"></label><br>
+            <label>태그 추가하기(한글 설명)<input type="text" name="newhashTagName" required autocomplete="off"></label>
+            <input type="submit" value="추가하기">
+          </form>
+        </div>
+        <div id="sidebar_deletetag">
+          <p>태그 삭제하기</p>
+          <% for (let i=0; i<curCategory.hashTags.length; i++) { %>
+            <a href="/position/deleteTag/<%= curCategory.categoryName%>/<%= curCategory.hashTags[i]%>"><%= curCategory.hashTagsName[i]%></a>
+          <% } %>
+        </div>
+      </div>
+      <div id="applicant_list_container">
 
-  </div>
-  <div>
-    <% if (login == false) { %>
-    <p>아무도 로그인하지 않음</p>
-    <p><%= login %></p>
-    <% } else { %>
-    <p> <%= user.realname %>님, 안녕하세요 </p>
-    <p>로그인되어있나? : <%= login %></p>
-    <p>관리자? : <%= user.isAdmin %></p>
-    <form action="/logout" method="post">
-      <input type="submit" value="Log out">
-    </form>
-    <a href="/logout">Logout</a>
-    <% } %>
-  </div>
+        <div id="applicant_list">
+          <%- include('./partials/applicantTable'); %>
+        </div>
+        <div id="applicant_list_pagination">
+          <div id="paging">
+            <% if (pageNum > 1) { %>
+               <a class="pg" href="/adminPage/<%= category %>/1<%=queryString%>">처음</a>
+            <% } %>
+            <% if (pageNum > 10) { %>
+               <a href="/adminPage/<%= category %>/<%= parseInt((pageNum-1)/10)*10 %><%=queryString%>">이전</a>
+            <% } %>
+            <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
+              <% if (i <= maxPage) { %>
+                <a href="/adminPage/<%= category %>/<%= i %><%=queryString%>">[<%= i %>]</a>
+              <% } %>
+            <% } %>
+            <% if (pageNum <= parseInt(maxPage/10)*10) { %>
+               <a href="/adminPage/<%= category %>/<%= parseInt((pageNum-1)/10)*10+11 %><%=queryString%>">다음</a>
+            <% } %>
+            <% if (pageNum != maxPage) { %>
+               <a href="/adminPage/<%= category %>/<%=maxPage%><%=queryString%>">맨끝</a>
+            <% } %>
+          </div>
+        </div>
 
-  <div>
-    <% for (let i=0; i < Categories.length; i++) { %>
-      <a href="/adminPage/<%= Categories[i].categoryName %>/1"><%= Categories[i].categoryName%></a>
-    <% } %>
-  </div>
-
-  <div>
-    <h1> <%= curCategory.categoryName%> 지원자 데이터베이스</h1>
-    <%- include('./partials/applicantTable'); %>
-  </div>
-  <div class="paging_div">
-    <p>페이징. 총 <%= maxPage %>개의 페이지가 있음</p>
-    <div class="paging">
-      <% if (pageNum > 1) { %>
-         <a class="pg" href="/adminPage/<%= category %>/1<%=queryString%>" class="pg">처음</a>
-      <% } %>
-      <% if (pageNum > 10) { %>
-         <a href="/adminPage/<%= category %>/<%= parseInt((pageNum-1)/10)*10 %><%=queryString%>" class="pg">이전</a>
-      <% } %>
-      <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
-        <% if (i <= maxPage) { %>
-          <a href="/adminPage/<%= category %>/<%= i %><%=queryString%>" class="pg"><%= i %></a>
-        <% } %>
-      <% } %>
-      <% if (pageNum <= parseInt(maxPage/10)*10) { %>
-         <a href="/adminPage/<%= category %>/<%= parseInt((pageNum-1)/10)*10+11 %><%=queryString%>" class="pg">다음</a>
-      <% } %>
-      <% if (pageNum != maxPage) { %>
-         <a href="/adminPage/<%= category %>/<%=maxPage%><%=queryString%>" class="pg">맨끝</a>
-      <% } %>
+      </div>
+    </div>
+    <div id="footer">
+      <%- include('./partials/footer'); %>
     </div>
   </div>
-
-  <div>
-    <!-- 검색 기능 -->
-    <form action="/adminPage/<%= category %>/1" method="post">
-      <br>
-      <% for (let i=0; i<curCategory.hashTags.length; i++) { %>
-        <% if (queryString.search(curCategory.hashTags[i]) != -1) { %>
-          <label><input type="checkbox" name= hashTags value=<%= curCategory.hashTags[i] %> checked><%= curCategory.hashTagsName[i] %></label>
-        <% } else { %>
-          <label><input type="checkbox" name= hashTags value=<%= curCategory.hashTags[i] %> ><%= curCategory.hashTagsName[i] %></label>
-        <% } %>
-      <% } %>
-
-      <br><label>이름으로 검색 : <input type="text" name="targetName" value=""></label>
-
-      <input type="submit" value="검색">
-    </form>
-    <form action="/position/createTag/<%= category %>" method="post">
-      <label>태그 추가하기(영어)<input type="text" name="newhashTag" required autocomplete="off"></label>
-      <label>태그 추가하기(한글 설명)<input type="text" name="newhashTagName" required autocomplete="off"></label>
-      <input type="submit" value="추가하기">
-    </form>
-
-    <p>태그 삭제하기</p>
-    <% for (let i=0; i<curCategory.hashTags.length; i++) { %>
-      <a href="/position/deleteTag/<%= curCategory.categoryName%>/<%= curCategory.hashTags[i]%>"><%= curCategory.hashTagsName[i]%></a>
-    <% } %>
-  </div>
-
-
-
-
-  <footer>
-    <%- include('./partials/footer'); %>
-  </footer>
+  <form action="/logout" method="post">
+    <input type="submit" value="Log out">
+  </form>
 </body>
 
 

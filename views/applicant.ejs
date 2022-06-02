@@ -38,7 +38,6 @@
     </div>
     <div id="contents">
       <div id="applicant_detail">
-        <p>지원자 프로필</p>
         <% if (!user.isAdmin) { %>
           <%- include('./partials/applicantDetail'); %>
         <% } else { %>
@@ -59,7 +58,6 @@
   <form action="/logout" method="post">
     <input type="submit" value="Log out">
   </form>
-  <a href="/logout">Logout</a>
 
 
 </body>

@@ -100,14 +100,15 @@ router.get('/position/:pos', (req, res) => {
       }
       break;
   }
-})
+});
 
 
 router.post('/adminPage/:category/:pageNum', categoryController.getAllTags, (req, res) => {
   let queryString = "/adminPage/" + req.params.category + "/" + req.params.pageNum + "?";
   //category별로 hashTags 불러와서 queryString에 넣음
   let query = 'req.body.' + req.Category.hashTags[0];
-
+  console.log('해시태그')
+  console.log(req.body.hashTags);
   if (req.body.targetName+'1' != '1'){
     //console.log('뭔가 입력됐네 post');
     req.targetName = req.body.targetName;
@@ -119,13 +120,13 @@ router.post('/adminPage/:category/:pageNum', categoryController.getAllTags, (req
     //태그가 있음
     if (typeof(req.body.hashTags) == 'string'){
       //태그가 1개임
-      if (req.Category.hashTags.includes(req.body.hashTags)){
+      if (req.Category.hashTagsName.includes(req.body.hashTags)){
         queryString += req.body.hashTags + '&';
       }
     }else{
       //태그가 2개 이상임
       for (let i=0; i<req.body.hashTags.length; i++){
-        if (req.Category.hashTags.includes(req.body.hashTags[i])){
+        if (req.Category.hashTagsName.includes(req.body.hashTags[i])){
           queryString += req.body.hashTags[i] + '&';
         }
       }
@@ -142,8 +143,9 @@ router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants
   );
   const queryObject = url.parse(req.url, true).query;
   let hashTags = Object.keys(queryObject);
-
   //주어진 queryObject로
+  console.log('해시태그');
+  console.log(hashTags);
   outer : for (var i=0; i<ApplicantsData.length; i++){
     if(!ApplicantsData[i].categories.includes(req.params.category)){
       ApplicantsData.splice(i, 1);
@@ -170,6 +172,10 @@ router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants
 
   if (req.params.pageNum > maxPage)
     req.params.pageNum = maxPage;
+  if (req.params.pageNum == 0)
+    req.params.pageNum = 1;
+  if (maxPage ==0) maxPage++;
+
   ApplicantsData = ApplicantsData.slice((req.params.pageNum - 1) * pageSize, req.params.pageNum * pageSize);
 
   let queryString = "?";
