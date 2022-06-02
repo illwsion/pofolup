@@ -148,6 +148,7 @@ exports.createArticle = (req, res, applicantId) => {
           }else{
             //console.log('카테고리 이미 있음');
           }
+          applicant.fileNames = article.fileNames;
           applicant.updateDate = new Date().getTime();
           applicant.save();
         }

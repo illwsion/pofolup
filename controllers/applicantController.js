@@ -89,8 +89,6 @@ exports.createApplicant = (req, res, next) => {
         //s3에 썸네일 이미지 업로드
         s3Controller.s3Upload(req, res, req.body.username, req.files[0].filename);
         //verify code 전송
-        console.log('created key');
-        console.log(applicant.verifyKey);
         nodemailerController.sendVerificationMail(req, res, applicant.username, applicant.verifyKey);
         //기본 게시글 생성
         articleController.articleInit(req, res, applicant._id);
