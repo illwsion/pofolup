@@ -55,11 +55,8 @@ router.post('/apply', nodemailerController.upload.fields([
   if (req.isAuthenticated()) {
     if (req.user.username == req.body.username) {
       articleController.deleteArticle(req, res, req.articlesData[0]._id);
-
-      nodemailerController.sendApplyMail(req, res);
-
       articleController.createArticle(req, res, req.user._id);
-      //res.render('applySuccess');
+
       res.redirect('/applicants/' + req.user.username);
     } else {
       res.render('errorPage', {

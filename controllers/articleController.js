@@ -1,6 +1,7 @@
 const Applicant = require('./../models/applicant');
 const Article = require('./../models/article');
 const applicantController = require('./../controllers/applicantController');
+const nodemailerController = require('./../controllers/nodemailerController.js')
 const s3Controller = require('./../controllers/s3Controller');
 const fs = require('fs');
 const passport = require('passport');
@@ -138,6 +139,20 @@ exports.createArticle = (req, res, applicantId) => {
         if (error) {
           console.log(error);
         } else {
+
+          //6개 등록했을 경우 최종제출 tag 부여
+          let fullApply = true;
+          for (let i=0;i<6;i++){
+            if (article.fileNames[i] == null){
+              fullApply = false;
+            }
+          }
+          if (fullApply){
+            if (!applicant.userTags.includes('최종제출')){
+              applicant.userTags.push('최종제출');
+              nodemailerController.sendApplyMail(req, res);
+            }
+          }
           //그림작가 1개만 있을 경우
           req.body.category = '그림작가';
 

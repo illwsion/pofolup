@@ -44,7 +44,25 @@
     <label><input type="radio" name="status" value="언제든지 바로 일할 수 있어요">언제든지 바로 일할 수 있어요</label>
     <label><input type="radio" name="status" value="지금은 좀 바빠요">지금은 좀 바빠요</label>
   </div>
+  <input onclick="apiTest()" type="button" name="" value="실험용">
   <div id="detail_status_admincheck">
 
   </div>
 </div>
+
+<script type="text/javascript">
+  function apiTest(){
+    const option = {
+      headers: {
+        'Accept': 'application/json'
+      }
+    }
+    fetch("https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={API key}", option)
+    .then((response) => {
+      return response.json()
+    })
+    .then((json)=>{
+      console.log(json);
+    })
+  }
+</script>
