@@ -309,34 +309,20 @@ router.get("/logout", function(req, res) {
 
 router.get('/notice/:content', (req, res) => {
   switch (req.params.content) {
-    case 'notices':
-      res.render('notices');
+    case 'noticeBoard':
+      res.render('noticeBoard');
       break;
-    case 'termsAndPolicies':
+    case 'terms':
+      res.render('terms');
+      break;
+    case 'privacy':
+      res.render('privary');
+      break;
+    case 'pm':
       res.render('termsAndPolicies');
       break;
     case 'pm':
-      res.sendFile(path.resolve(path.join(__dirname, '/../views/pm.html')));
-      break;
-    case 'apply':
-      //로그인되어있어야 가능
-      if (req.isAuthenticated()) {
-        if (req.user.isVerified) {
-          res.render('apply');
-        } else {
-          res.render('applicantVerify');
-        }
-      } else {
-        res.redirect('/');
-      }
-      break;
-    case 'register':
-      //로그인 안되어있어야 가능
-      if (req.isAuthenticated()) {
-        res.redirect('/');
-      } else {
-        res.render('applicantRegister');
-      }
+      res.render('termsAndPolicies');
       break;
   }
 })

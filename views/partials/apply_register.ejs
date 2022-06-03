@@ -55,9 +55,9 @@
           <p>성 별</p>
         </div>
         <div class="profile_info_value">
-          <input type="radio" name="sex" value="여성"><p>여성</p>
-          <input type="radio" name="sex" value="남성"><p>남성</p>
-          <input type="radio" name="sex" value="기타"><p>기타</p>
+          <input type="radio" name="sex" value="여성"><p class="profile_info_sex_p">여성</p>
+          <input type="radio" name="sex" value="남성"><p class="profile_info_sex_p">남성</p>
+          <input type="radio" name="sex" value="기타"><p class="profile_info_sex_p">기타</p>
         </div>
         <div class="profile_info_desc">
           <p>주민등록상 성별</p>
@@ -90,6 +90,19 @@
         </div>
       </li>
 
+      <li class="profile_info">
+        <div class="profile_info_key">
+          <p>상 태</p>
+        </div>
+        <div class="profile_info_value" id="profile_info_status">
+          <input type="radio" name="status" value="언제든지 바로 일할 수 있어요"><p>언제든지 바로 일할 수 있어요</p>
+          <input type="radio" name="status" value="지금은 좀 바빠요"><p>지금은 좀 바빠요</p>
+        </div>
+        <div class="profile_info_desc">
+          <p>현재 상태</p>
+        </div>
+      </li>
+
       <li class="profile_info_style">
         <div class="profile_info_key">
           <p>그 림 스 타 일</p>
@@ -114,7 +127,7 @@
             <input type="checkbox" name="" value="true" required>
             <p>[<a href="#">개인정보취급방침</a>]을 확인하고 동의합니다.</p>
           </div>
-          <input class="upload_button" type="submit" name="" value="회원가입">
+          <input onclick="registerTest()" class="upload_button" type="button" name="" value="회원가입">
         </div>
         <div class="profile_info_desc">
           <p></p>
@@ -125,11 +138,6 @@
     </ul>
 
   </div>
-
-
-
-
-
 
 </form>
 
@@ -142,5 +150,28 @@
       document.getElementById("image_container").src = event.target.result;
     };
     reader.readAsDataURL(event.target.files[0]);
+  }
+</script>
+
+<script type="text/javascript">
+  function registerTest(){
+    let pw1 = document.getElementById('password').value;
+    let pw2 = document.getElementById('password_check').value;
+    if (pw1.length < 6){
+      alert('비밀번호는 6글자 이상이어야 합니다');
+      return false;
+    }
+    if (pw1 != pw2){
+      alert('비밀번호가 다릅니다');
+      return false;
+    }else{
+      submitForm();
+      return true;
+    }
+  }
+
+  function submitForm(){
+    let form = document.getElementById('register_form');
+    form.submit();
   }
 </script>
