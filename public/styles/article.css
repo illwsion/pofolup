@@ -57,12 +57,13 @@
 .article_image img{
   width:520px;
   height: 520px;
-  margin-bottom: 15px;
+  margin: 0 10px 15px 10px;
 }
 
 .upload_button{
   display: flex;
   justify-content: space-between;
+  margin-left: 10px;
 }
 .upload_button label{
   font-size: 15pt;
@@ -147,10 +148,15 @@
 #article_attachTag_list{
   width: 80%;
   display: flex;
-  justify-content: space-between;
+
 }
 #article_attachTag_list a{
   margin: 0 5px;
+  text-decoration: none;
+  color: black;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 3px;
 }
 
 #article_upload_button{

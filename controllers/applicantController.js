@@ -1,4 +1,6 @@
+const mongoose = require('mongoose');
 const Applicant = require('./../models/applicant');
+const Pofolup = require('./../models/Pofolup');
 const passport = require('passport');
 const crypto = require('crypto');
 //mongoose
@@ -6,10 +8,23 @@ const articleController = require('./../controllers/articleController');
 const s3Controller = require('./../controllers/s3Controller');
 const nodemailerController = require('./../controllers/nodemailerController');
 
+
 exports.login = passport.authenticate("local",{
   successRedirect: '/',
   failureRedirect: '/errorPage',
 });
+
+
+exports.getTotalUser = (req, res, next) => {
+  Pofolup.find({}, (error, pofolupDB)=>{
+    if (error){
+      console.log('error at getTotalUser! '+error)
+    }else{
+      req.totalUser = pofolupDB[0].totalUser;
+    }
+    next();
+  });
+};
 
 exports.getAllApplicants = (req, res, next) => {
   Applicant.find({}, (error, applicants) => {
@@ -61,7 +76,15 @@ exports.findApplicant = (req, res, next) => {
 
 exports.createApplicant = (req, res, next) => {
   if (req.applicantsData.length == 0) {
+    //현재 인원 수
+    let currentUser = req.totalUser;
+
+    console.log('currentUser');
+    console.log(currentUser);
+    currentUser = ('000000'+currentUser).slice(-6);
+    console.log(currentUser);
     let newApplicant = new Applicant({
+      applicantNumber: currentUser,
       username: req.body.username,
       realname: req.body.realname,
       position: '그림작가',
@@ -85,6 +108,13 @@ exports.createApplicant = (req, res, next) => {
         console.log('error while user register!', error);
         next();
       } else {
+        //인원수+1
+        Pofolup.updateOne({}, {$inc:{totalUser:1}}, (error, pofolupDB)=>{
+          if (error){
+            console.log(error);
+          }else{
+          }
+        })
         //console.log("createApplicant success");
         //s3에 썸네일 이미지 업로드
         s3Controller.s3Upload(req, res, req.body.username, req.files[0].filename);
@@ -163,7 +193,28 @@ exports.deleteApplicant = (req, res, applicantId) => {
 
 //사용자 정보 수정 어떻게 할 것인지 고민
 exports.updateApplicant = (req, res) => {
+  let filename;
+  if (req.files[0] != undefined){
+    filename = req.files[0].filename;
+    s3Controller.s3Delete(req, res, req.user.username, req.user.file);
+    s3Controller.s3Upload(req, res, req.body.username, req.files[0].filename);
+  }else{
+    filename = req.user.file;
+  }
+  //s3Controller.s3Upload(req, res, req.body.username, req.files[0].filename);
 
+  Applicant.updateOne({username: req.params.username},{$set:{
+    realname: req.body.realname,
+    phone: req.body.phone,
+    status: req.body.status,
+    style: req.body.style,
+    file: filename,
+  }}, (error, result)=>{
+    if (error){
+      console.log('error at updateApplicant'+error);
+    }else{
+    }
+  });
 };
 
 exports.appointAdmin = (req, res) => {

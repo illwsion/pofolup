@@ -26,6 +26,9 @@
     </div>
     <div id="contents">
       <div id="sidebar">
+        <form action="/logout" method="post">
+          <input type="submit" value="Log out">
+        </form>
         <form action="/adminPage/<%= category %>/1" method="post">
           <div id="sidebar_search">
             <input type="text" name="targetName" value="" placeholder="Search" autocomplete="off">
@@ -80,11 +83,13 @@
             <% if (pageNum > 10) { %>
                <a href="/adminPage/<%= category %>/<%= parseInt((pageNum-1)/10)*10 %><%=queryString%>">이전</a>
             <% } %>
-            <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
-              <% if (i <= maxPage) { %>
-                <a href="/adminPage/<%= category %>/<%= i %><%=queryString%>">[<%= i %>]</a>
+            <div>
+              <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
+                <% if (i <= maxPage) { %>
+                  <a href="/adminPage/<%= category %>/<%= i %><%=queryString%>">[<%= i %>]</a>
+                <% } %>
               <% } %>
-            <% } %>
+            </div>
             <% if (pageNum <= parseInt(maxPage/10)*10) { %>
                <a href="/adminPage/<%= category %>/<%= parseInt((pageNum-1)/10)*10+11 %><%=queryString%>">다음</a>
             <% } %>
@@ -100,9 +105,6 @@
       <%- include('./partials/footer'); %>
     </div>
   </div>
-  <form action="/logout" method="post">
-    <input type="submit" value="Log out">
-  </form>
 </body>
 
 

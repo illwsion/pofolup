@@ -15,6 +15,7 @@ const csrfProtection = csrf({
 const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
 const categoryController = require('./../controllers/categoryController');
+const nodemailerController = require('./../controllers/nodemailerController.js')
 const s3Controller = require('./../controllers/s3Controller');
 
 
@@ -165,7 +166,7 @@ router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants
 
   let pageSize = 4;
   let maxPage = parseInt(ApplicantsData.length / pageSize);
-  if (ApplicantsData % pageSize != 0) {
+  if (ApplicantsData.length % pageSize != 0) {
     maxPage++;
   }
   ApplicantsData.reverse();
@@ -285,13 +286,43 @@ router.get('/deleteApplicant/:applicantId', isLoggedIn, (req, res) => {
   }
 });
 
+router.post('/changeStatus', (req, res)=>{
+  Applicant.updateOne({username: req.body.username}, {$set: {status: req.body.status}}, (error, applicant)=>{
+    if (error){
+      console.log(error);
+    }else{
+    }
+  })
+  res.send('ok');
+});
+
 
 router.get('/checkVerify/:verifyKey', (req, res) => {
   applicantController.verifyApplicant(req, res, req.params.verifyKey);
 });
 
-router.get('/updateApplicant', isLoggedIn, (req, res) => {
+router.get('/updateApplicant/:username', isLoggedIn, applicantController.findApplicant,  categoryController.getAllCategories, (req, res) => {
+  let CategoryData = req.categoriesData.find((category)=>
+    category.categoryName == 'illustrator'
+  );
+  //관리자도 아니고 내 계정도 아니면 튕겨나감
+  if (req.user.username != req.params.username && req.user.isAdmin == false) {
+    console.log('다른 사람의 페이지입니다');
+    res.redirect('/');
+  } else {
+    let ApplicantsData = req.applicantsData;
+    //cors 우회?
 
+    res.render('applicantUpdate', {
+      Applicants: ApplicantsData,
+      curCategory: CategoryData,
+    });
+  }
+});
+
+router.post('/updateApplicant/:username', nodemailerController.upload.array('file'), applicantController.findApplicant, (req, res)=>{
+  applicantController.updateApplicant(req, res);
+  res.redirect('/applicants/' + req.user.username);
 });
 
 router.get('/loginFailed', (req, res) => {
@@ -310,19 +341,19 @@ router.get("/logout", function(req, res) {
 router.get('/notice/:content', (req, res) => {
   switch (req.params.content) {
     case 'noticeBoard':
-      res.render('noticeBoard');
+      res.render('notice_noticeBoard');
       break;
     case 'terms':
-      res.render('terms');
+      res.render('notice_terms');
       break;
     case 'privacy':
-      res.render('privary');
+      res.render('notice_privacy');
       break;
-    case 'pm':
-      res.render('termsAndPolicies');
+    case 'policy':
+      res.render('notice_policy');
       break;
-    case 'pm':
-      res.render('termsAndPolicies');
+    case 'contact':
+      res.render('notice_contact');
       break;
   }
 })

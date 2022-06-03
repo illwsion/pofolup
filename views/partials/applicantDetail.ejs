@@ -32,6 +32,10 @@
         <%= Applicants[0].style%>
       </div>
       <div id="update_info">
+        <form action="/logout" method="post">
+          <input type="submit" value="Log out">
+        </form>
+        <a href="/updateApplicant/<%= user.username %>">정보 수정하기</a><br>
         정보수정 버튼
       </div>
   </div>
@@ -41,28 +45,41 @@
     <p><b>My Status</b></p>
   </div>
   <div id="detail_status_radio">
-    <label><input type="radio" name="status" value="언제든지 바로 일할 수 있어요">언제든지 바로 일할 수 있어요</label>
-    <label><input type="radio" name="status" value="지금은 좀 바빠요">지금은 좀 바빠요</label>
+    <input id="hiddenEmail" hidden type="text" name="username" value="<%= Applicants[0].username %>">
+    <% if (Applicants[0].status == "언제든지 바로 일할 수 있어요") { %>
+      <label><input id="status1" type="radio" onchange="changeStatus()" name="status" value="언제든지 바로 일할 수 있어요" checked>언제든지 바로 일할 수 있어요</label>
+      <label><input id="status2" type="radio" onchange="changeStatus()" name="status" value="지금은 좀 바빠요">지금은 좀 바빠요</label>
+    <% } else { %>
+      <label><input id="status1" type="radio" onchange="changeStatus()" name="status" value="언제든지 바로 일할 수 있어요">언제든지 바로 일할 수 있어요</label>
+      <label><input id="status2" type="radio" onchange="changeStatus()" name="status" value="지금은 좀 바빠요" checked>지금은 좀 바빠요</label>
+    <% } %>
   </div>
-  <input onclick="apiTest()" type="button" name="" value="실험용">
   <div id="detail_status_admincheck">
 
   </div>
 </div>
 
 <script type="text/javascript">
-  function apiTest(){
-    const option = {
-      headers: {
-        'Accept': 'application/json'
+    function changeStatus(){
+      let radio1 = document.getElementById('status1');
+      let radio2 = document.getElementById('status2');
+
+      let statusvalue;
+      if (radio1.checked){
+        statusvalue = radio1.value;
+      }else{
+        statusvalue = radio2.value;
       }
-    }
-    fetch("https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={API key}", option)
-    .then((response) => {
-      return response.json()
-    })
-    .then((json)=>{
-      console.log(json);
-    })
-  }
+
+      fetch("http://127.0.0.1:8080/changeStatus", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: document.getElementById('hiddenEmail').value,
+          status: statusvalue
+        }),
+      });
+    };
 </script>

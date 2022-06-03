@@ -149,7 +149,7 @@
 
 .profile_info_style{
   display: flex;
-  height: 80px;
+  height: 260px;
   margin: 0;
   margin-bottom: 15px;
 }
@@ -165,13 +165,13 @@
   display: inline-flex;
   font-size: 8pt;
   line-height: 0;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 #user_agreement p{
   display: inline-block;
 }
-#user_agreement input[type="button"]{
+#user_agreement input[type="submit"]{
   font-family: 'NanumSquareRound';
   font-size: 15pt;
   display: flex;

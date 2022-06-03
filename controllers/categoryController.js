@@ -76,7 +76,6 @@ exports.deleteTag = (req, res, categoryName)=>{
       }else{
         let index = category[0].hashTags.indexOf(req.params.tag);
         category[0].hashTags.splice(index, 1);
-        category[0].hashTagsName.splice(index, 1);
         category[0].save();
       }
     });

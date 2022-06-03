@@ -5,6 +5,7 @@ const Article = require('./article');
 
 //defining schema
 const applicantSchema = mongoose.Schema({
+  applicantNumber: 'string',
   username: 'string',
   realname: 'string',
   position: 'string',

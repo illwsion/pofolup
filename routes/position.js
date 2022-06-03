@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/register', nodemailerController.upload.array('file'), applicantController.findApplicant, applicantController.createApplicant, passport.authenticate("local",{
+router.post('/register', nodemailerController.upload.array('file'), applicantController.findApplicant, applicantController.getTotalUser, applicantController.createApplicant, passport.authenticate("local",{
   successRedirect: '/registerSuccess',
   failureRedirect: '/'
 }), (req, res) => {

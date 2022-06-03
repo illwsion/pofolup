@@ -3,66 +3,178 @@
 
 <head>
   <%- include('./partials/head'); %>
+
+  <link href="/styles/update.css" rel="stylesheet" type="text/css">
+<!--
+  <style>
+    div{
+      border: 1px solid #ccc;
+    }
+    img{
+      border: 1px solid #ccc;
+    }
+    form{
+      border: 1px solid #23ab24;
+    }
+  </style>
+-->
+<script>
+  //파일 업로드 시 미리보기
+  function setThumbnail(event, num){
+    let reader = new FileReader();
+
+    reader.onload = (event)=>{
+      document.getElementById("image_container").src = event.target.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+</script>
+<script type="text/javascript">
+    function changeStatus(){
+      let radio1 = document.getElementById('status1');
+      let radio2 = document.getElementById('status2');
+
+      let statusvalue;
+      if (radio1.checked){
+        statusvalue = radio1.value;
+      }else{
+        statusvalue = radio2.value;
+      }
+
+      fetch("http://127.0.0.1:8080/changeStatus", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: document.getElementById('hiddenEmail').value,
+          status: statusvalue
+        }),
+      });
+    };
+</script>
 </head>
 
-
-
 <body>
-  <form action="/" method="post" enctype="multipart/form-data">
-    <!-- 추후 그림작가 말고 다른 분야도 모집할 시
-    <div>
-      <label for="position">지원 분야</label><br>
-      <input type="radio" name="position" value="글작가" required>
-      <label for="position">글작가</label>
-      <input type="radio" name="position" value="그림작가">
-      <label for="position">그림작가</label>
-      <input type="radio" name="position" value="기획자">
-      <label for="position">기획자</label><br><br><br>
+
+  <div id="container">
+    <div id="header">
+      <%- include('./partials/header'); %>
     </div>
-    -->
+    <div id="contents">
+
+      <form id="register_form" action="/updateApplicant/<%= Applicants[0].username %>" method="post" enctype="multipart/form-data">
+        <div id="profile_mainimage">
+          <img id= "image_container" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Applicants[0].file%>" width="500px" height="500px" alt="">
+          <div class="upload_button">
+            <label for="image">파일 선택</label>
+            <input type="file" id="image" onchange="setThumbnail(event);" name="file" accept=".jpg, .png, .gif"><br>
+          </div>
+        </div>
 
 
-    <div>
-      <label for="realname">이름</label><br>
-      <input type="text" name="realname" id="name" value="<%= user.realname %>" required readonly><br>
-      <label for="username">이메일</label><br>
-      <input type="email" name="username" id="username" value="<%= user.username %>" required readonly><br>
+        <div id="profile_information">
+
+          <ul>
+            <li class="profile_info">
+              <div class="profile_info_key">
+                <p>이 메 일</p>
+              </div>
+              <div class="profile_info_value">
+                <input type="email" id="username" name="username" required value="<%=Applicants[0].username%>" readonly>
+              </div>
+              <div class="profile_info_desc">
+                <p>실제 사용하는 이메일</p>
+              </div>
+            </li>
+
+            <li class="profile_info">
+              <div class="profile_info_key">
+                <p>이 름</p>
+              </div>
+              <div class="profile_info_value">
+                <input id="name" type="text" name="realname" required value="<%= Applicants[0].realname %>">
+              </div>
+              <div class="profile_info_desc">
+                <p>주민등록상 본명</p>
+              </div>
+            </li>
+
+
+            <li class="profile_info">
+              <div class="profile_info_key">
+                <p>핸 드 폰 번 호</p>
+              </div>
+              <div class="profile_info_value">
+                <!-- 나중에 input type 수정 필요 -->
+                <input type="text" name="phone" required value="<%= Applicants[0].phone %>">
+              </div>
+              <div class="profile_info_desc">
+                <p>하이픈(-) 제외 번호만 입력</p>
+              </div>
+            </li>
+
+            <li class="profile_info">
+              <div class="profile_info_key">
+                <p>상 태</p>
+              </div>
+              <div class="profile_info_value" id="profile_info_status">
+                <% if (Applicants[0].status == "언제든지 바로 일할 수 있어요") { %>
+                  <input type="radio" name="status" value="언제든지 바로 일할 수 있어요" checked><p>언제든지 바로 일할 수 있어요</p>
+                  <input type="radio" name="status" value="지금은 좀 바빠요"><p>지금은 좀 바빠요</p>
+                <% } else { %>
+                  <input type="radio" name="status" value="언제든지 바로 일할 수 있어요"><p>언제든지 바로 일할 수 있어요</p>
+                  <input type="radio" name="status" value="지금은 좀 바빠요" checked><p>지금은 좀 바빠요</p>
+                <% } %>
+              </div>
+              <div class="profile_info_desc">
+                <p>현재 상태</p>
+              </div>
+            </li>
+
+            <li class="profile_info_style">
+              <div class="profile_info_key">
+                <p>그 림 스 타 일</p>
+              </div>
+              <div class="profile_info_value">
+                <!-- 나중에 input type 수정 필요 -->
+                <textarea name="style" rows="8" cols="80" maxlength="300"><%= Applicants[0].style %></textarea>
+              </div>
+              <div class="profile_info_desc">
+                <p>본인의 그림 스타일, 강점,<br>자신있는 장르 등을 설명해주세요.<br>(300자 이내)</p>
+              </div>
+            </li>
+
+            <li class="profile_info">
+              <div class="profile_info_key">
+                <p></p>
+              </div>
+              <div id="user_agreement">
+                <input  type="submit" class="upload_button" name="" value="수정하기">
+              </div>
+              <div class="profile_info_desc">
+                <p></p>
+              </div>
+            </li>
+
+
+          </ul>
+
+        </div>
+
+      </form>
     </div>
-
-
-
-    <div>
-      <label for="file">구도 1</label><br>
-      <input type="file" name="file" required accept=".jpg, .png, .gif"><br>
-      <label for="file">구도 2</label><br>
-      <input type="file" name="file" required accept=".jpg, .png, .gif"><br>
-      <label for="file">구도 3</label><br>
-      <input type="file" name="file" required accept=".jpg, .png, .gif"><br>
-      <label for="url">포트폴리오</label><br>
-      <input type="url" name="url"><br>
-      <label for="comment">기타 하고싶은 말</label><br>
-      <input type="text" name="comment"><br>
-    </div><br>
-
-    <div>
-      <label for="user_agreement"></label>
-      <p><textarea name="agreement" rows="8" cols="80" readonly>개인정보 수집 및 이용동의</textarea></p>
-      <p>위 내용을 확인하였으며 동의합니다.</p>
-      <input type="checkbox" name="user_agreement" required>
+    <div id="footer">
+      <%- include('./partials/footer'); %>
     </div>
+  </div>
 
-
-    <input type="submit" value="수정하기">
-
+  <span id="usernameforcapture" style="display:none;" value="<%= Applicants[0].realname %>"><%= Applicants[0].realname %></span>
+  <form action="/logout" method="post">
+    <input type="submit" value="Log out">
   </form>
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/locale/ko.min.js" integrity="sha512-3kMAxw/DoCOkS6yQGfQsRY1FWknTEzdiz8DOwWoqf+eGRN45AmjS2Lggql50nCe9Q6m5su5dDZylflBY2YjABQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 </body>
-
-<footer>
-  <%- include('./partials/footer'); %>
-</footer>
 
 </html>

@@ -178,11 +178,12 @@
   width: 800px;
   margin-top: 35px;
   display: flex;
-  justify-content: space-between;
+
 }
 
 #paging a{
   font-family: 'NanumSquareRound';
   font-size: 18pt;
   text-decoration: none;
+  margin: 0 8px;
 }
