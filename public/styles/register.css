@@ -11,6 +11,7 @@
 
 #register_form{
   display: flex;
+  flex-direction: row-reverse;
 }
 
 #profile_mainimage{

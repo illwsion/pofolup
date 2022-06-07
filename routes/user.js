@@ -321,6 +321,10 @@ router.get('/updateApplicant/:username', isLoggedIn, applicantController.findApp
 });
 
 router.post('/updateApplicant/:username', nodemailerController.upload.array('file'), applicantController.findApplicant, (req, res)=>{
+  console.log('req.body');
+  console.log(req.body);
+  console.log('req.user');
+  console.log(req.user);
   applicantController.updateApplicant(req, res);
   res.redirect('/applicants/' + req.user.username);
 });

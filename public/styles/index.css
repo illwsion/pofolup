@@ -2,6 +2,15 @@
   width: 1600px;
   padding: 20px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#contents{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 img{
@@ -13,18 +22,20 @@ img{
   width: 600px;
   max-width: 100%;
   display: block;
-  margin: 290px 500px 33px 500px;
+  margin: 290px 0px 33px 0px;
 }
 
 
 #sub-logo{
   height: 60px;
   width: 400px;
-  margin: 0px 600px 90px 600px;
+  margin: 0px 0px 90px 0px;
   max-width: 100%;
   display: block;
 }
+
 .form-wrap{
+  width: 100%;
   display: flex;
   justify-content: center;
   background_color: white;

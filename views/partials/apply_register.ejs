@@ -1,14 +1,4 @@
 <form id="register_form" action="/position/register" method="post" enctype="multipart/form-data">
-
-  <div id="profile_mainimage">
-    <img id= "image_container" src="/images/default_main.png" width="500px" height="500px" alt="">
-    <div class="upload_button">
-      <label for="image">파일 선택</label>
-      <input type="file" id="image" onchange="setThumbnail(event);" name="file" accept=".jpg, .png, .gif" required><br>
-    </div>
-  </div>
-
-
   <div id="profile_information">
 
     <ul>
@@ -43,7 +33,7 @@
           <p>이 름</p>
         </div>
         <div class="profile_info_value">
-          <input id="name" type="text" name="realname" required>
+          <input id="realname" type="text" name="realname" required>
         </div>
         <div class="profile_info_desc">
           <p>주민등록상 본명</p>
@@ -55,7 +45,7 @@
           <p>성 별</p>
         </div>
         <div class="profile_info_value">
-          <input type="radio" name="sex" value="여성"><p class="profile_info_sex_p">여성</p>
+          <input type="radio" name="sex" value="여성" checked><p class="profile_info_sex_p">여성</p>
           <input type="radio" name="sex" value="남성"><p class="profile_info_sex_p">남성</p>
           <input type="radio" name="sex" value="기타"><p class="profile_info_sex_p">기타</p>
         </div>
@@ -70,7 +60,7 @@
         </div>
         <div class="profile_info_value">
           <!-- 나중에 input type 수정 필요 -->
-          <input type="text" name="birth" required>
+          <input id="birth" type="text" name="birth" required>
         </div>
         <div class="profile_info_desc">
           <p>주민등록상 생년월일 ex)20000101</p>
@@ -83,7 +73,7 @@
         </div>
         <div class="profile_info_value">
           <!-- 나중에 input type 수정 필요 -->
-          <input type="text" name="phone" required>
+          <input id="phone" type="text" name="phone" required>
         </div>
         <div class="profile_info_desc">
           <p>하이픈(-) 제외 번호만 입력</p>
@@ -95,7 +85,7 @@
           <p>상 태</p>
         </div>
         <div class="profile_info_value" id="profile_info_status">
-          <input type="radio" name="status" value="언제든지 바로 일할 수 있어요"><p>언제든지 바로 일할 수 있어요</p>
+          <input type="radio" name="status" value="언제든지 바로 일할 수 있어요" checked><p>언제든지 바로 일할 수 있어요</p>
           <input type="radio" name="status" value="지금은 좀 바빠요"><p>지금은 좀 바빠요</p>
         </div>
         <div class="profile_info_desc">
@@ -122,9 +112,9 @@
         </div>
         <div id="user_agreement">
           <div class="">
-            <input type="checkbox" name="" value="true" required>
+            <input id="ag1" type="checkbox" name="" value="true" required>
             <p>[<a href="/notice/terms" target="_blank">사이트 이용약관</a>]을 확인하고 동의합니다.</p><br>
-            <input type="checkbox" name="" value="true" required>
+            <input id="ag2" type="checkbox" name="" value="true" required>
             <p>[<a href="/notice/policy" target="_blank">개인정보취급방침</a>]을 확인하고 동의합니다.</p>
           </div>
           <input onclick="registerTest()" class="upload_button" type="button" name="" value="회원가입">
@@ -138,7 +128,13 @@
     </ul>
 
   </div>
-
+  <div id="profile_mainimage">
+    <img id= "image_container" src="/images/default_main.png" width="500px" height="500px" alt="">
+    <div class="upload_button">
+      <label for="image">파일 선택</label>
+      <input type="file" id="image" onchange="setThumbnail(event);" name="file" accept=".jpg, .png, .gif" required><br>
+    </div>
+  </div>
 </form>
 
 <script>
@@ -155,18 +151,66 @@
 
 <script type="text/javascript">
   function registerTest(){
+    let sendOK = true;
+    let username = document.getElementById('username').value;
     let pw1 = document.getElementById('password').value;
     let pw2 = document.getElementById('password_check').value;
-    if (pw1.length < 6){
-      alert('비밀번호는 6글자 이상이어야 합니다');
-      return false;
+    let realname = document.getElementById('realname').value;
+    let birth = document.getElementById('birth').value;
+    let phone = document.getElementById('phone').value;
+    let ag1 = document.getElementById('ag1').checked;
+    let ag2 = document.getElementById('ag2').checked;
+    let image = document.getElementById('image').value;
+
+    let alertMessage = "";
+
+    if (image.length == 0){
+      alertMessage += '프로필 사진을 첨부해주세요\n'
+      sendOK = false;
     }
-    if (pw1 != pw2){
-      alert('비밀번호가 다릅니다');
-      return false;
-    }else{
+
+    if (username.length == 0){
+      alertMessage += '이메일을 입력해 주세요\n'
+      sendOK = false;
+    }else if (!username.includes('@')){
+      alertMessage += '이메일 형식을 지켜주세요\n'
+      sendOK = false;
+    }
+
+    if (pw1.length < 6){
+      alertMessage += '비밀번호는 6글자 이상이어야 합니다\n'
+      sendOK = false;
+    }else if (pw1 != pw2){
+      alertMessage += '비밀번호가 다릅니다\n'
+      sendOK = false;
+    }
+
+    if (realname.length == 0){
+      alertMessage += '이름을 입력해 주세요\n'
+      sendOK = false;
+    }
+
+    if (birth.length != 8){
+      alertMessage += '생년월일은 YYYYMMDD 형식이어야 합니다 \n ex)20000101\n'
+      sendOK = false;
+    }
+    if (phone.length != 11){
+      alertMessage += '핸드폰 번호 양식을 맞춰주세요\n'
+      sendOK = false;
+    }
+
+    if (!ag1){
+      alertMessage += '사이트 이용약관에 동의하셔야 합니다\n'
+      sendOK = false;
+    }else if (!ag2){
+      alertMessage += '개인정보취급방침에 동의하셔야 합니다\n'
+      sendOK = false;
+    }
+
+    if (sendOK == true){
       submitForm();
-      return true;
+    }else{
+      alert(alertMessage);
     }
   }
 

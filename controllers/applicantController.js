@@ -205,8 +205,8 @@ exports.updateApplicant = (req, res) => {
 
   Applicant.updateOne({username: req.params.username},{$set:{
     realname: req.body.realname,
+    birth: req.body.birth,
     phone: req.body.phone,
-    status: req.body.status,
     style: req.body.style,
     file: filename,
   }}, (error, result)=>{
