@@ -13,9 +13,19 @@
             <% if (Applicants[i].isAdmin) { %>
               <p>&nbsp&nbsp&nbsp&nbsp관리자</p>
             <% } %>
+            <% if (curAdmin.scrapList.includes(Applicants[i]._id)) { %>
+              <p>★</p>
+            <% } %>
+            <input id="applicantId<%=i%>" type="text" hidden name="" value="<%= Applicants[i]._id %>">
           </div>
           <div class="applicant_list_info_name_right">
-            <a href="#">즐겨찾기 등록(함수 수정 필요)</a>
+
+            <% if (curAdmin.scrapList.includes(Applicants[i]._id)) { %>
+              <input type="button" onclick="unscrapApplicant(<%=i%>)" name="" value="즐겨찾기 해제">
+            <% } else{ %>
+              <input type="button" onclick="scrapApplicant(<%=i%>)" name="" value="즐겨찾기 등록">
+            <% } %>
+
             &nbsp&nbsp|&nbsp&nbsp
             <a href="/deleteApplicant/<%= Applicants[i]._id %>">삭제</a>
           </div>
@@ -43,3 +53,30 @@
   </div>
 <hr>
 <%}%>
+
+<script type="text/javascript">
+    function scrapApplicant(i){
+      alert('즐겨찾기에 등록했습니다');
+      let applicantId = document.getElementById('applicantId'+i).value;
+      fetch("http://127.0.0.1:8080/scrapApplicant/"+applicantId, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+        }),
+      });
+    };
+    function unscrapApplicant(i){
+      alert('즐겨찾기에서 삭제했습니다');
+      let applicantId = document.getElementById('applicantId'+i).value;
+      fetch("http://127.0.0.1:8080/unscrapApplicant/"+applicantId, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+        }),
+      });
+    };
+</script>

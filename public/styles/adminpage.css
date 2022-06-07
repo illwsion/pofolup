@@ -22,16 +22,40 @@
   width: auto;
 }
 
+#sidebar_search{
+  display: flex;
+  justify-content: space-between;
+}
+
 #sidebar_search input[type=text]{
   width: 280px;
   height: 40px;
   border: 1px solid #a0a0a0;
   font-size: 20pt;
   color: black;
+  padding: 0;
 }
 #sidebar_search input[type=text]::placeholder{
   font-family: 'NanumSquareRound';
   color: #a6a6a6;
+}
+
+#sidebar_search input[type=submit]{
+  font-family: 'NanumSquareRound';
+  font-size: 15pt;
+  display: flex;
+  float: right;
+  width: 50px;
+  height: 40px;
+  color: #ffffff;
+  background-color: #000000;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  line-height: normal;
+  margin-right: 0px;
+  border-width: 0;
+  cursor: pointer;
 }
 
 #sidebar_category{
@@ -58,10 +82,42 @@
 }
 
 #sidebar_addtag{
+  width: 50%;
   margin-top: 50px;
   display: flex;
   flex-direction: column;
+}
+
+#sidebar_addtag form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#sidebar_addtag input[type=text]{
+  width: 146px;
+  height: 40px;
+  font-size: 20pt;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+#sidebar_addtag input[type=submit]{
+  font-family: 'NanumSquareRound';
+  font-size: 15pt;
+  display: flex;
+  float: right;
+  width: 150px;
+  height: 48px;
+  color: #ffffff;
+  background-color: #000000;
+  justify-content: center;
   align-items: center;
+  padding: 0;
+  line-height: normal;
+  margin-right: 0px;
+  border-width: 0;
+  cursor: pointer;
 }
 
 #sidebar_deletetag{

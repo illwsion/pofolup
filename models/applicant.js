@@ -31,6 +31,10 @@ const applicantSchema = mongoose.Schema({
   }],
   userTags: 'array',
   categories: 'array',
+  scrapList: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Applicant"
+  }],
 }, {
   collection: 'applicant'
 });

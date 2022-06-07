@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <link href="/styles/adminpage.css" rel="stylesheet" type="text/css">
+  <%- include('./partials/head'); %>
+</head>
+
+<body>
+  <div id="container">
+    <div id="header">
+      <%- include('./partials/header'); %>
+    </div>
+    <div id="contents">
+      <div id="sidebar">
+        <form id="logoutButton" action="/logout" method="post">
+          <input type="submit" value="Log out">
+        </form>
+        <form action="/adminPage/<%= category %>/1" method="post">
+          <div id="sidebar_search">
+            <input type="text" name="targetName" value="" placeholder="Search" autocomplete="off">
+            <input type="submit" value="검색">
+          </div>
+          <div id="sidebar_category">
+            <% for (let i=0; i < Categories.length; i++) { %>
+              <a class="sidebar_category" href="/adminPage/<%= Categories[i].categoryName %>/1">---<%= Categories[i].categoryName%></a>
+            <% } %>
+            <a class="sidebar_category" href="/scrapList/illustrator/1">---Scrap List</a>
+            <p class="sidebar_category">---#HashTag Category</p>
+          </div>
+
+        </form>
+
+      </div>
+      <div id="applicant_list_container">
+
+        <div id="applicant_list">
+          <%- include('./partials/applicantTable'); %>
+        </div>
+        <div id="applicant_list_pagination">
+          <div id="paging">
+            <% if (pageNum > 1) { %>
+               <a class="pg" href="/scrapList/<%= category %>/1<%=queryString%>">처음</a>
+            <% } %>
+            <% if (pageNum > 10) { %>
+               <a href="/scrapList/<%= category %>/<%= parseInt((pageNum-1)/10)*10 %><%=queryString%>">이전</a>
+            <% } %>
+            <div>
+              <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
+                <% if (i <= maxPage) { %>
+                  <a href="/scrapList/<%= category %>/<%= i %><%=queryString%>">[<%= i %>]</a>
+                <% } %>
+              <% } %>
+            </div>
+            <% if (pageNum <= parseInt(maxPage/10)*10) { %>
+               <a href="/scrapList/<%= category %>/<%= parseInt((pageNum-1)/10)*10+11 %><%=queryString%>">다음</a>
+            <% } %>
+            <% if (pageNum != maxPage) { %>
+               <a href="/scrapList/<%= category %>/<%=maxPage%><%=queryString%>">맨끝</a>
+            <% } %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div id="footer">
+      <%- include('./partials/footer'); %>
+    </div>
+  </div>
+</body>
+
+
+</html>

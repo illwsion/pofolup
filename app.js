@@ -22,8 +22,8 @@
   const mongoose = require('mongoose');
 
   //router
-  const userRouter = require('./routes/user');
-  const positionRouter = require('./routes/position');
+  const adminRouter = require('./routes/admin');
+  const applicantRouter = require('./routes/applicant');
   const applicantController = require('./controllers/applicantController');
   dotenv.config({
     path: path.resolve(__dirname, "./.env")
@@ -121,8 +121,8 @@
   });
 
   //라우터
-  app.use('/', userRouter);
-  app.use('/position', positionRouter);
+  app.use('/', adminRouter);
+  app.use('/', applicantRouter);
 
   //에러 페이지
   app.all('*', (req, res) => {
