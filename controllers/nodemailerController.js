@@ -175,6 +175,10 @@ exports.sendVerificationMail = (req, res, username, verifyKey)=>{
 
 exports.sendContactMail = (req, res)=>{
   let emailTemplate;
+  console.log('sendContactMail');
+  console.log(req.body);
+  console.log('env');
+  console.log(process.env);
   ejs.renderFile('views/mail_contact.ejs',{
     companyname: req.body.companyname,
     enquirename: req.body.enquirename,
@@ -191,6 +195,17 @@ exports.sendContactMail = (req, res)=>{
     }
   });
 
+  //1. 메일 설정
+  let transporter = nodemailer.createTransport({
+    service: 'Naver',
+    host: process.env.senderHOST,
+    port: process.env.senderPORT,
+    auth: {
+      user: process.env.senderID,
+      pass: process.env.senderPW
+    }
+  });
+
   //2.메일 내용 설정
   let mailOptions = {
     from: process.env.senderID,
@@ -201,7 +216,11 @@ exports.sendContactMail = (req, res)=>{
 
 
   //3.이메일 전송
-
+  console.log('이메일 설정');
+  console.log('mailOptions@@@@@@@@@@@@@@@');
+  console.log(mailOptions);
+  console.log('transporter@@@@@@@@@@@@@@');
+  console.log(transporter);
   transporter.sendMail(mailOptions, (error, info) => {
     console.log("메일 전송 시도");
     if (error) {
@@ -212,5 +231,5 @@ exports.sendContactMail = (req, res)=>{
       console.log("이메일 전송 성공");
     }
   });
-  
+
 };

@@ -1,33 +1,38 @@
 <!DOCTYPE html>
-<html lang="ko" dir="ltr">
+<html lang="ko" dir="ltr" style="background-color: #ffffff;font-family: 'NanumSquareRound';">
 
 <head>
-  <%- include('./partials/head'); %>
-  <link href="/styles/index.css" rel="stylesheet" type="text/css">
+
+
 
 </head>
 
-<body>
+<body style="width: 80%;margin: 0 auto;background-color: #ffffff;padding: 0 20px 20px 20px;">
   <div id="container">
-    <div id="header">
-      <%- include('./partials/header'); %>
+    <div id="header" style="height: 220px;margin-bottom: 60px;display: flex;flex-direction: column;align-items: center;">
+      <img id="header-main-logo" src="https://domnc9j4gfidk.cloudfront.net/image/pofolup/02_Top_13.jpg" alt="pofolup main_logo" style="height: 100px;width: 600px;max-width: 100%;display: block;margin: 20px 0px 33px 0px;">
+      <img id="header-sub-logo" src="https://domnc9j4gfidk.cloudfront.net/image/pofolup/02_Top_30.jpg" alt="pofolup sub_logo" style="height: 60px;width: 400px;margin: 0px 0px 10px 0px;max-width: 100%;display: block;">
+      <hr id="headerline" style="margin-left: 0;margin-right: 0;width: 1650px;">
     </div>
     <div id="content">
-      <p>기업명 : <%= companyname %></p>
-      <p>담당자 : <%= enquirename %></p>
-      <p>연락처 : <%= phone %></p>
-      <p>이메일 : <%= email %></p>
-      <p>문의종류 : <%= item %></p>
-      <p>문의내용 : <%= companyname %></p>
 
-      <%= enquirename %>
-      <%= phone %>
-      <%= email %>
-      <%= item %>
+      <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">기업명 : <%= companyname %></p>
+      <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">담당자 : <%= enquirename %></p>
+      <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">연락처 : <%= phone %></p>
+      <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">이메일 : <%= email %></p>
+      <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">문의종류 : <%= item %></p>
+      <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">문의내용 : <%= companyname %></p>
     </div>
 
-    <div id="footer">
-      <%- include('./partials/footer'); %>
+    <div id="footer" style="margin-top: 60px;">
+      <hr>
+      <div id="footer_info" style="height: 150px;font-size: 15px;">
+        <p id="footer_copyright" style="float: right;color: #a7a7a7;">Copyright ⓒ WONYFRAME</p>
+        <br><br><br>
+        <p class="footer_company">(주)워니프레임 ㅣ Business License : 836-81-00882</p>
+        <p class="footer_company">Address : 서울시 동작구 동작대로7길 48 새한빌딩 503 ㅣ CS : +82 2-523-4142</p>
+      </div>
+
     </div>
 
   </div>

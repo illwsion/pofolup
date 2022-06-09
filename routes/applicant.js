@@ -259,9 +259,7 @@ router.get('/notice/:content', (req, res) => {
 });
 
 router.post('/notice/contact', (req, res)=>{
-  console.log('posted');
-  console.log(req.body);
-  nodemailerController.sendContactMail(req, res);
+  //nodemailerController.sendContactMail(req, res);
   res.render('mail_contact',{
     companyname: req.body.companyname,
     enquirename: req.body.enquirename,
