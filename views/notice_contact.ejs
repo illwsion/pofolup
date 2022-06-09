@@ -3,6 +3,8 @@
 
 <head>
   <%- include('./partials/head'); %>
+  <link href="/styles/notice.css" rel="stylesheet" type="text/css">
+  <link href="/styles/register.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -13,7 +15,199 @@
     </div>
 
     <div id="contents">
-      <p>제휴문의</p>
+      <div id="notice_header">
+        <h2>제휴문의</h2>
+      </div>
+      <div id="notice_contact">
+        <form id="contact_form" action="/notice/contact" method="post">
+          <ul>
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>기업명</p>
+              </div>
+              <div class="contact_info_value">
+                <input type="text" id="companyname" name="companyname" required>
+              </div>
+            </li>
+
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>담당자 이름</p>
+              </div>
+              <div class="contact_info_value">
+                <input type="text" id="enquirename" name="enquirename" required>
+              </div>
+            </li>
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>연락처</p>
+              </div>
+              <div class="contact_info_value">
+                <!-- 나중에 input type 수정 필요 -->
+                <input id="phone" type="text" name="phone" required>
+              </div>
+            </li>
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>이메일</p>
+              </div>
+              <div class="contact_info_value">
+                <input type="email" id="email" name="email" required>
+              </div>
+            </li>
+
+
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>문의종류 | 복수 선택 가능</p>
+              </div>
+              <div class="contact_info_value">
+                <div class="contact_info_item">
+                  <input type="checkbox" name="item" value="이모티콘"><p class="contact_info_item_p">이모티콘</p>
+                </div>
+                <div class="contact_info_item">
+                  <input type="checkbox" name="item" value="이모티콘"><p class="contact_info_item_p">이모티콘</p>
+                </div>
+                <div class="contact_info_item">
+                  <input type="checkbox" name="item" value="기타"><p class="contact_info_item_p">기타</p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>문의 내용</p>
+              </div>
+              <div class="contact_info_value">
+                <textarea id="content" name="content" rows="8" cols="80" maxlength="500" required></textarea>
+              </div>
+            </li>
+
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p></p>
+              </div>
+              <div id="contact_send">
+                <input onclick="registerTest()" class="upload_button" type="button" name="" value="보내기">
+              </div>
+              <div class="contact_info_desc">
+                <p></p>
+              </div>
+            </li>
+          </ul>
+        </form>
+      </div>
+
+      <div class="popup-wrap" id="popup">
+        <div class="popup">
+          <div class="popup-header">
+            <img src="/images/0.png" alt="">
+          </div>
+          <div class="popup-body">
+            <div class="popup-content">
+              <div class="popup-content-titlebox">
+                <h1></h1>
+              </div>
+              <div class="popup-content-contentbox">
+                <p>제휴문의가 전송되었습니다!</p>
+              </div>
+            </div>
+          </div>
+          <div class="popup-footer">
+            <span class="popup-button confirm" id="popup_confirm">확인</span>
+          </div>
+        </div>
+      </div>
+
+      <script>
+      //회원가입 팝업
+      window.onload = function(){
+        function openPopup(){
+          console.log('openPopup');
+          document.querySelector('.popup-wrap').style.display = 'flex';
+        }
+
+        function confirmPopup(){
+          console.log('confirmPopup');
+          submitForm();
+        }
+        function closePopup(){
+          console.log('closePopup');
+          document.querySelector('.popup-wrap').style.display = 'none';
+        }
+        //document.getElementById('popup_open').addEventListener('click', openPopup);
+        document.getElementById('popup_confirm').addEventListener('click', confirmPopup);
+        //document.getElementById('popup_close').addEventListener('click', closePopup);
+      }
+      </script>
+
+      <script type="text/javascript">
+        function openPopup(){
+          console.log('openPopup');
+          document.querySelector('.popup-wrap').style.display = 'flex';
+        }
+
+        function registerTest(){
+          let sendOK = true;
+          let companyname = document.getElementById('companyname').value;
+          let enquirename = document.getElementById('enquirename').value;
+          let phone = document.getElementById('phone').value;
+          let email = document.getElementById('email').value;
+          let checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+          let content = document.getElementById('content').value;
+          let items = [];
+          for (let i=0; i<checkboxes.length; i++){
+            items.push(checkboxes[i].value);
+          }
+          let alertMessage = "";
+
+          if (companyname.length == 0){
+            alertMessage += '기업명을 입력해주세요\n'
+            sendOK = false;
+          }
+
+          if (enquirename.length == 0){
+            alertMessage += '담당자 이름을 입력해주세요\n'
+            sendOK = false;
+          }
+
+          if (phone.length == 0){
+            alertMessage += '연락처를 입력해주세요\n'
+            sendOK = false;
+          }
+
+          if (email.length == 0){
+            alertMessage += '이메일을 입력해 주세요\n'
+            sendOK = false;
+          }else if (!email.includes('@')){
+            alertMessage += '이메일 형식을 지켜주세요\n'
+            sendOK = false;
+          }
+          if (items.length == 0){
+            alertMessage += '문의 종류를 선택해주세요\n'
+            sendOK = false;
+          }
+
+          if (content.length == 0){
+            alertMessage += '문의 내용을 입력해주세요\n'
+            sendOK = false;
+          }
+
+          if (sendOK == true){
+            openPopup();
+          }else{
+            alert(alertMessage);
+          }
+        }
+
+        function submitForm(){
+          console.log('폼 전송');
+          let form = document.getElementById('contact_form');
+          form.submit();
+        }
+      </script>
+
 
     </div>
 

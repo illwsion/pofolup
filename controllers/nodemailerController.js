@@ -61,15 +61,13 @@ exports.upload = multer({
 exports.sendApplyMail = (req, res) => {
   //메일 html
   let emailTemplate;
-  ejs.renderFile('views/applyAlarmMail.ejs',
+  ejs.renderFile('views/mail_applyAlarm.ejs',
   {
     verifyKey: 'verifyKey',
     req: req
   }, (error, data)=>{
     if (error){
-      console.log('why?')
-      console.log('ejs.renderFile err');
-      console.log(error);
+      console.log('ejs.renderFile err'+error);
     }
     else{
       emailTemplate = data;
@@ -142,7 +140,7 @@ exports.sendApplyMail = (req, res) => {
 
 exports.sendVerificationMail = (req, res, username, verifyKey)=>{
   let emailTemplate;
-  ejs.renderFile('views/verificationMail.ejs', {verifyKey: verifyKey}, (error, data)=>{
+  ejs.renderFile('views/mail_verification.ejs', {verifyKey: verifyKey}, (error, data)=>{
     if (error){
       console.log('ejs.renderFile err');
     }
@@ -173,4 +171,46 @@ exports.sendVerificationMail = (req, res, username, verifyKey)=>{
     }
   });
   */
+};
+
+exports.sendContactMail = (req, res)=>{
+  let emailTemplate;
+  ejs.renderFile('views/mail_contact.ejs',{
+    companyname: req.body.companyname,
+    enquirename: req.body.enquirename,
+    phone: req.body.phone,
+    email: req.body.email,
+    item: req.body.item,
+    content: req.body.content,
+  }, (error,data)=>{
+    if (error){
+      console.log('ejs.renderFile err');
+    }
+    else{
+      emailTemplate = data;
+    }
+  });
+
+  //2.메일 내용 설정
+  let mailOptions = {
+    from: process.env.senderID,
+    to: process.env.receiverID,
+    subject: '[포폴업] 제휴 문의메일',
+    html : emailTemplate,
+  };
+
+
+  //3.이메일 전송
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    console.log("메일 전송 시도");
+    if (error) {
+      console.log(error);
+      console.log("이메일 전송 실패");
+    } else {
+      console.log('Email sent: ' + info.response);
+      console.log("이메일 전송 성공");
+    }
+  });
+  
 };

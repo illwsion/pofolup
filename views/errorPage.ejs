@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" dir="ltr">
 
 <head>
   <%- include('./partials/head'); %>
+  <link href="/styles/index.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>
-  <header>
-    <%- include('./partials/header'); %>
-  </header>
+  <div id="container">
+    <div id="header">
+      <%- include('./partials/header'); %>
+    </div>
+    <div id="contents">
+      <% if (errorDetail != undefined) { %>
+      <p>에러 내용</p>
+      <p><%= errorDetail %></p>
+      <% } %>
+    </div>
 
-  <p>에러가 발생했습니다!</p>
-  <% if (errorDetail != undefined) { %>
-  <p>에러 내용</p>
-  <p><%= errorDetail %></p>
-  <% } %>
+    <div id="footer">
+      <%- include('./partials/footer'); %>
+    </div>
 
-  <footer>
-    <%- include('./partials/footer'); %>
-  </footer>
+  </div>
 </body>
-
 
 
 </html>

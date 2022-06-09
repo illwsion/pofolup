@@ -250,8 +250,26 @@ router.get('/notice/:content', (req, res) => {
     case 'termsAndPolicy':
       res.render('notice_termsAndPolicy');
       break;
+    default:
+      res.render('errorPage',{
+        errorDetail: '없는 페이지입니다'
+      });
+      break;
   }
 });
 
+router.post('/notice/contact', (req, res)=>{
+  console.log('posted');
+  console.log(req.body);
+  nodemailerController.sendContactMail(req, res);
+  res.render('mail_contact',{
+    companyname: req.body.companyname,
+    enquirename: req.body.enquirename,
+    phone: req.body.phone,
+    email: req.body.email,
+    item: req.body.item,
+    content: req.body.content,
+  });
+});
 
 module.exports = router;
