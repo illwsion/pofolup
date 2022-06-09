@@ -63,7 +63,7 @@
           <input id="birth" type="text" name="birth" required>
         </div>
         <div class="profile_info_desc">
-          <p>주민등록상 생년월일 ex)20000101</p>
+          <p>주민등록상 생년월일 <br> ex)20000101</p>
         </div>
       </li>
 
@@ -76,7 +76,7 @@
           <input id="phone" type="text" name="phone" required>
         </div>
         <div class="profile_info_desc">
-          <p>하이픈(-) 제외 번호만 입력</p>
+          <p>하이픈(-) 제외 번호만 입력 <br> ex)01011112222</p>
         </div>
       </li>
 
@@ -89,7 +89,7 @@
           <input type="radio" name="status" value="지금은 좀 바빠요"><p>지금은 좀 바빠요</p>
         </div>
         <div class="profile_info_desc">
-          <p>현재 상태</p>
+          <p></p>
         </div>
       </li>
 
@@ -137,6 +137,29 @@
   </div>
 </form>
 
+<div class="popup-wrap" id="popup">
+  <div class="popup">
+    <div class="popup-header">
+      <img src="/images/0.png" alt="">
+    </div>
+    <div class="popup-body">
+      <div class="popup-content">
+        <div class="popup-content-titlebox">
+          <h1></h1>
+        </div>
+        <div class="popup-content-contentbox">
+          <p>회원가입이 완료되었습니다!</p>
+          <p>입력하신 이메일로 인증 url이 전송되었습니다.</p>
+          <p>이메일로 전송된 url로 접속해주세요</p>
+        </div>
+      </div>
+    </div>
+    <div class="popup-footer">
+      <span class="popup-button confirm" id="popup_confirm">확인</span>
+    </div>
+  </div>
+</div>
+
 <script>
   //파일 업로드 시 미리보기
   function setThumbnail(event, num){
@@ -149,7 +172,35 @@
   }
 </script>
 
+<script>
+//회원가입 팝업
+window.onload = function(){
+  function openPopup(){
+    console.log('openPopup');
+    document.querySelector('.popup-wrap').style.display = 'flex';
+  }
+
+  function confirmPopup(){
+    console.log('confirmPopup');
+    submitForm();
+  }
+  function closePopup(){
+    console.log('closePopup');
+    document.querySelector('.popup-wrap').style.display = 'none';
+  }
+  //document.getElementById('popup_open').addEventListener('click', openPopup);
+  document.getElementById('popup_confirm').addEventListener('click', confirmPopup);
+  //document.getElementById('popup_close').addEventListener('click', closePopup);
+}
+
+</script>
+
 <script type="text/javascript">
+  function openPopup(){
+    console.log('openPopup');
+    document.querySelector('.popup-wrap').style.display = 'flex';
+  }
+
   function registerTest(){
     let sendOK = true;
     let username = document.getElementById('username').value;
@@ -195,7 +246,7 @@
       sendOK = false;
     }
     if (phone.length != 11){
-      alertMessage += '핸드폰 번호 양식을 맞춰주세요\n'
+      alertMessage += '핸드폰 번호 양식을 맞춰주세요\n ex)01011112222\n'
       sendOK = false;
     }
 
@@ -208,7 +259,7 @@
     }
 
     if (sendOK == true){
-      submitForm();
+      openPopup();
     }else{
       alert(alertMessage);
     }

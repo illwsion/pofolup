@@ -32,11 +32,10 @@
         <%= Applicants[0].style%>
       </div>
       <div id="update_info">
-        <form action="/logout" method="post">
-          <input type="submit" value="Log out">
+        <form id="logoutButton" action="/logout" method="post">
+          <input type="submit" value="로그아웃">
         </form>
-        <a href="/updateApplicant/<%= user.username %>">정보 수정하기</a><br>
-        정보수정 버튼
+        <a href="/updateApplicant/<%= user.username %>">정보수정</a>
       </div>
   </div>
 </div>

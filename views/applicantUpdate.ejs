@@ -57,6 +57,7 @@
     }
 
     if (sendOK == true){
+      alert('수정되었습니다');
       submitForm();
     }else{
       alert(alertMessage);
@@ -116,7 +117,7 @@
                 <input id="birth" type="text" name="birth" required value="<%=Applicants[0].birth%>">
               </div>
               <div class="profile_info_desc">
-                <p>주민등록상 생년월일 ex)20000101</p>
+                <p>주민등록상 생년월일<br> ex)20000101</p>
               </div>
             </li>
 
@@ -130,7 +131,7 @@
                 <input id="phone" type="text" name="phone" required value="<%= Applicants[0].phone %>">
               </div>
               <div class="profile_info_desc">
-                <p>하이픈(-) 제외 번호만 입력</p>
+                <p>하이픈(-) 제외 번호만 입력<br> ex)01011112222</p>
               </div>
             </li>
 

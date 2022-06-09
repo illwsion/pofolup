@@ -71,7 +71,7 @@ router.get('/register', (req, res)=>{
 });
 
 router.post('/register', nodemailerController.upload.array('file'), applicantController.findApplicant, applicantController.getTotalUser, applicantController.createApplicant, passport.authenticate("local",{
-  successRedirect: '/registerSuccess',
+  successRedirect: '/',
   failureRedirect: '/'
 }), (req, res) => {
 

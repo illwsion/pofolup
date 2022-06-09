@@ -4,6 +4,7 @@
 <head>
   <%- include('./partials/head'); %>
   <link href="/styles/index.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>
@@ -20,6 +21,7 @@
             <input type="password" name="password" id="password" required placeholder="  Password">
             <div id="register_login">
               <a id="register_link" type="button" href="/register">회원가입</a>
+              <p>&nbsp|&nbsp</p>
               <input id="login_button" type="submit" value="로그인" class="loginButton">
             </div>
           </form>
@@ -29,18 +31,7 @@
         <form action="/logout" method="post">
           <input type="submit" value="Log out">
         </form>
-        <!-- 누군가 로그인되어있을 때
-        <p> <%= user.realname %>님, 안녕하세요 </p>
-        <a href="/applicants/<%= user.username %>">내 지원내역 보기</a><br>
-        <a href="/logout">Logout</a>
-        <% if (user.isAdmin) { %>
-        <br><a href="/adminPage/illustrator/1">전체 데이터베이스 보기</a>
-        <% } %>
-      -->
       <% } %>
-
-      <div style="height:60px"></div>
-
 
     </div>
 

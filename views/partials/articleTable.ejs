@@ -162,7 +162,8 @@
       <p>[6개의 이미지를 전부 등록하면 자동으로 최종 제출이 완료딥니다. (임시 저장 가능)]</p>
     </div>
     <label for="article_submit">저장하기</label>
-    <input type="submit" id="article_submit">
+    <input type="text" id="verify" hidden value="<%=user.isVerified%>">
+    <input type="button" onclick="uploadProfile()" id="article_submit">
   </div>
   <% } %>
 </form>
@@ -191,6 +192,28 @@
 
 <% } %>
 
+<div class="popup-wrap" id="popup">
+  <div class="popup">
+    <div class="popup-header">
+      <img src="/images/0.png" alt="">
+    </div>
+    <div class="popup-body">
+      <div class="popup-content">
+        <div class="popup-content-titlebox">
+          <h1></h1>
+        </div>
+        <div class="popup-content-contentbox">
+          <p>포트폴리오를 업로드하려면 이메일 인증이 필요합니다.</p>
+          <p>입력하신 이메일로 인증 url이 전송되었습니다.</p>
+          <p>이메일로 전송된 url로 접속해주세요</p>
+        </div>
+      </div>
+    </div>
+    <div class="popup-footer">
+      <span class="popup-button close" id="popup_close">확인</span>
+    </div>
+  </div>
+</div>
 
 <script>
   //화면 캡쳐
@@ -229,5 +252,59 @@
       document.getElementById("image_container_"+ num).src = event.target.result;
     };
     reader.readAsDataURL(event.target.files[0]);
+  }
+</script>
+
+<script>
+  function openPopup(){
+    //console.log('openPopup');
+    let bodyscroll = document.getElementById('popupscroll');
+    bodyscroll.classList.toggle("popupscroll");
+    document.querySelector('.popup-wrap').style.display = 'flex';
+  }
+
+  function uploadProfile(){
+    let userVerified = document.getElementById('verify').value;
+    let uploadform = document.getElementById('article_upload');
+    console.log(userVerified);
+    if (userVerified == true){
+      console.log('submit update');
+      uploadform.submit();
+    }else{
+      console.log('openpopup');
+      openPopup();
+    }
+  }
+</script>
+
+<script type="text/javascript">
+//이메일 인증 팝업
+window.onload = function(){
+  function openPopup(){
+    //console.log('openPopup');
+    document.querySelector('.popup-wrap').style.display = 'flex';
+  }
+
+  function confirmPopup(){
+    console.log('confirmPopup');
+    submitForm();
+  }
+  function closePopup(){
+    console.log('closePopup');
+    let bodyscroll = document.getElementById('popupscroll');
+    bodyscroll.classList.toggle("popupscroll");
+    document.querySelector('.popup-wrap').style.display = 'none';
+  }
+  //document.getElementById('popup_open').addEventListener('click', openPopup);
+  //document.getElementById('popup_confirm').addEventListener('click', confirmPopup);
+  document.getElementById('popup_close').addEventListener('click', closePopup);
+}
+
+</script>
+
+<script>
+  function submitForm(){
+    let form = document.getElementById('register_form');
+    form.submit();
   }
 </script>
