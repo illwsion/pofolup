@@ -1,0 +1,54 @@
+#contents{
+  display: flex;
+  flex-direction: column;
+
+}
+
+/* noticeboard */
+
+#noticeboard{
+  width: 100%;
+}
+#noticeboard li{
+  display: flex;
+  justify-content: space-between;
+}
+
+.notice_noticeNumber{
+  width: 10%;
+}
+.notice_title{
+  width: 70%;
+  display: flex;
+  
+}
+.notice_adminName{
+  width: 10%;
+}
+.notice_createDate{
+  width: 10%;
+}
+
+
+
+/* createNotice */
+#notice_create{
+
+}
+
+.notice_info_key p{
+  font-size: 30pt;
+}
+
+.notice_info_value input{
+  width: 80%;
+  height: 50px;
+  font-size: 20pt;
+}
+.notice_info_value textarea{
+  font-size: 15pt;
+  width: 80%;
+  resize: none;
+}
+
+/* noticeArticle */

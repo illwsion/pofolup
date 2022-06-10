@@ -78,11 +78,7 @@ exports.createApplicant = (req, res, next) => {
   if (req.applicantsData.length == 0) {
     //현재 인원 수
     let currentUser = req.totalUser;
-
-    console.log('currentUser');
-    console.log(currentUser);
     currentUser = ('000000'+currentUser).slice(-6);
-    console.log(currentUser);
     let newApplicant = new Applicant({
       applicantNumber: currentUser,
       username: req.body.username,

@@ -3,6 +3,8 @@
 
 <head>
   <%- include('./partials/head'); %>
+
+  <link href="/styles/noticeboard.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -13,8 +15,28 @@
     </div>
 
     <div id="contents">
-      <p>공지사항 게시글</p>
+      <div class="article_title">
+        <div>
+          <a href="/noticeboard">뒤로 돌아가기</a>
+        </div>
+        <div class="notice_info_key">
+          <p>제목</p>
+        </div>
+        <div class="notice_info_value">
+          <p><%= Notices[0].title %></p>
+        </div>
+        <div class="">
 
+        </div>
+      </div>
+      <div class="article_content">
+        <div class="notice_info_key">
+          <p>내용</p>
+        </div>
+        <div class="notice_info_value">
+          <p><%= Notices[0].content %></p>
+        </div>
+      </div>
     </div>
 
     <div id="footer">

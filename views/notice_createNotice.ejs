@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <%- include('./partials/head'); %>
+  <link href="/styles/notice.css" rel="stylesheet" type="text/css">
+  <link href="/styles/noticeboard.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+  <div id="container">
+
+    <div id="header">
+      <%- include('./partials/header'); %>
+    </div>
+
+    <div id="contents">
+      <div id="notice_header">
+        <h2>공지사항 작성</h2>
+      </div>
+      <div id="notice_create">
+        <form id="notice_form" action="/noticeboard/create" method="post">
+          <div class="">
+            <div class="notice_info_key">
+              <p>제목</p>
+            </div>
+            <div class="notice_info_value">
+              <input type="text" id="title" name="title" required>
+            </div>
+          </div>
+          <div class="">
+            <div class="notice_info_key">
+              <p>내용</p>
+            </div>
+            <div class="notice_info_value">
+              <textarea id="content" name="content" rows="20" cols="150" maxlength="3000" required></textarea>
+            </div>
+          </div>
+          <div class="">
+            <input onclick="registerTest()" class="upload_button" type="button" name="" value="보내기">
+          </div>
+        </form>
+      </div>
+
+      <div class="popup-wrap" id="popup">
+        <div class="popup">
+          <div class="popup-header">
+            <img src="/images/0.png" alt="">
+          </div>
+          <div class="popup-body">
+            <div class="popup-content">
+              <div class="popup-content-titlebox">
+                <h1></h1>
+              </div>
+              <div class="popup-content-contentbox">
+                <p>공지사항이 업로드되었습니다</p>
+              </div>
+            </div>
+          </div>
+          <div class="popup-footer">
+            <span class="popup-button confirm" id="popup_confirm">확인</span>
+          </div>
+        </div>
+      </div>
+
+      <script>
+      //회원가입 팝업
+      window.onload = function(){
+        function openPopup(){
+          console.log('openPopup');
+          document.querySelector('.popup-wrap').style.display = 'flex';
+        }
+
+        function confirmPopup(){
+          console.log('confirmPopup');
+          submitForm();
+        }
+        function closePopup(){
+          console.log('closePopup');
+          document.querySelector('.popup-wrap').style.display = 'none';
+        }
+        //document.getElementById('popup_open').addEventListener('click', openPopup);
+        document.getElementById('popup_confirm').addEventListener('click', confirmPopup);
+        //document.getElementById('popup_close').addEventListener('click', closePopup);
+      }
+      </script>
+
+      <script type="text/javascript">
+        function openPopup(){
+          console.log('openPopup');
+          document.querySelector('.popup-wrap').style.display = 'flex';
+        }
+
+        function registerTest(){
+          let sendOK = true;
+          let title = document.getElementById('title').value;
+          let content = document.getElementById('content').value;
+          let alertMessage = "";
+
+          if (title.length == 0){
+            alertMessage += '제목을 입력해주세요\n'
+            sendOK = false;
+          }
+
+          if (content.length == 0){
+            alertMessage += '내용을 입력해주세요\n'
+            sendOK = false;
+          }
+
+          if (sendOK == true){
+            openPopup();
+          }else{
+            alert(alertMessage);
+          }
+        }
+
+        function submitForm(){
+          console.log('폼 전송');
+          let form = document.getElementById('notice_form');
+          form.submit();
+        }
+      </script>
+
+
+    </div>
+
+    <div id="footer">
+      <%- include('./partials/footer'); %>
+    </div>
+
+  </div>
+</body>
+
+
+
+</html>

@@ -11,7 +11,8 @@ const url = require('url');
 const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
 const categoryController = require('./../controllers/categoryController');
-const nodemailerController = require('./../controllers/nodemailerController.js')
+const nodemailerController = require('./../controllers/nodemailerController.js');
+const noticeController = require('./../controllers/noticeController');;
 
 //스태틱 폴더 지정
 router.use(express.static(__dirname + '/../public'));
@@ -188,8 +189,7 @@ const scrapList = (req, res, next) => {
 
 router.get('/scrapList/:category/:pageNum', categoryController.getAllCategories, scrapList, (req, res)=>{
   let ApplicantsData = req.applicantsData;
-  console.log('applicantData');
-  console.log(ApplicantsData.length);
+  ApplicantsData.reverse();
   let CategoryData = req.categoriesData.find((category)=>
     category.categoryName == req.params.category
   );
@@ -256,6 +256,30 @@ router.post('/unscrapApplicant/:applicantId', (req, res)=>{
   });
   res.send('ok');
 })
+
+//공지사항 게시판
+router.get('/noticeboard', noticeController.getAllNotices,(req, res)=>{
+  res.render('notice_noticeBoard',{
+    Notices: req.noticesData.reverse(),
+    pageNum: 1,
+    maxPage: 1,
+    queryString: '',
+  });
+});
+
+router.get('/noticeboard/create', (req, res)=>{
+  res.render('notice_createNotice');
+});
+
+router.post('/noticeboard/create', noticeController.getTotalNotice, noticeController.createNotice, (req, res)=>{
+  res.redirect('/noticeboard');
+});
+
+router.get('/noticeboard/views/:noticeNumber', noticeController.findNotice, (req, res)=>{
+  res.render('notice_noticeArticle',{
+    Notices: req.noticesData,
+  });
+});
 
 
 //유저 삭제

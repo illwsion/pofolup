@@ -241,9 +241,6 @@ router.get('/notice/:content', (req, res) => {
     case 'contact':
       res.render('notice_contact');
       break;
-    case 'noticeBoard':
-      res.render('notice_noticeBoard');
-      break;
     case 'privacy':
       res.render('notice_privacy');
       break;
