@@ -1,3 +1,26 @@
+<div id="admin_manage">
+  <div id="admin_manage_adminPage">
+    <a href="/adminPage/<%= Applicants[0].categories[0]%>/1"><img src="/images/06_view_03.jpg" alt=""></a>
+  </div>
+  <div id="admin_manage_nav">
+    <p><b>사용자 관리 메뉴</b></p>
+    <label>|</label>
+    <div id="admin_manage_nav_items">
+      <ul>
+        <li>
+          <a href="/appointAdmin/<%= Applicants[0].username %>">관리자 임명</a> <br>
+        </li>
+        <li>
+          <button onclick="captureProf()">포트폴리오 다운받기</button>
+        </li>
+        <li>
+          <a href="/deleteApplicant/<%= Applicants[0]._id %>">지원자 삭제</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
 <div id="detail_info">
   <div id="detail_info_left">
     <div id="detail_info_mainimage">
@@ -34,38 +57,19 @@
       </ul>
     </div>
     <div id="detail_info_style">
-      <%= Applicants[0].style%>
+      <p><%= Applicants[0].style%></p>
     </div>
-    <div id="detail_info_tags">
-      <% for (let i=0; i<Applicants[0].userTags.length; i++) { %>
-        <div class="userTags">
-            <p><%= Applicants[0].userTags[i] %></p>
-            <form class="" action="/detachTag/<%= Applicants[0].username%>/<%= Applicants[0].userTags[i]%>/<%= user._id%>" method="post">
-              <label for="tag<%=i%>"><img src="/images/deleteTag.png" alt=""></label>
-              <input id="tag<%=i%>" type="submit" name="" value="태그 삭제하기">
-            </form>
-        </div>
+
+    <div id="detail_info_url">
+      <p>포트폴리오 URL : </p>
+      <% if (Applicants[0].url != undefined) {%>
+          <a href="<%= Applicants[0].url %>" target="_blank"><%= Applicants[0].url %></a>
+      <% } else { %>
+          <p>포트폴리오 url 없음</p>
       <% } %>
     </div>
     <div id="detail_info_update">
       <p>최종 업데이트 : <%= Applicants[0].updateDate %></p>
     </div>
   </div>
-</div>
-
-
-<div id="admin_manage">
-  <% if (login == true) { %>
-    <% if (user.isAdmin == true) { %>
-      <a href="/adminPage/<%= Applicants[0].categories[0]%>/1">전체 목록 보기</a>
-
-      <p>이 사용자 관리자로 만들기</p>
-      <a href="/appointAdmin/<%= Applicants[0].username %>">관리자 임명</a> <br>
-
-      <br><br><br>
-      <button onclick="captureProf()">포트폴리오 이미지 다운로드</button>
-      <br><br><br>
-      <a href="/deleteApplicant/<%= Applicants[0]._id %>">지원자 삭제</a>
-    <% } %>
-  <% } %>
 </div>

@@ -6,6 +6,66 @@
   margin: 0 auto;
 }
 
+#admin_manage{
+  display: flex;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+#admin_manage img{
+  height: 50px;
+}
+
+#admin_manage_adminPage{
+  display: flex;
+  width: 20%;
+  margin: 0;
+}
+#admin_manage_nav{
+  width: 1400px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+
+}
+#admin_manage_nav_items{
+  width: 75%;
+}
+#admin_manage_nav a, button{
+  font-size: 15pt;
+  text-decoration: none;
+  color: black;
+  border: 0;
+  background-color: white;
+  cursor: pointer;
+}
+
+#admin_manage_nav p{
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  font-size: 20pt;
+
+}
+#admin_manage_nav ul{
+  width: auto;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0;
+  list-style : none;
+  padding: 0;
+}
+#admin_manage_nav li{
+  margin-left: 5px;
+  margin-left: 5px;
+}
+#admin_manage_nav button{
+
+}
+
+
 #applicant_detail{
   display: flex;
   flex-direction: column;
@@ -13,7 +73,7 @@
 }
 #detail_info{
   display: flex;
-  margin-bottom: 70px;
+  margin-bottom: 100px;
 }
 
 #detail_info_left{
@@ -24,47 +84,9 @@
   width: 100%
 }
 #detail_info_mainimage img{
-  width: 780px;
-  height: 780px;
-  margin-right: 20px;
-}
-#detail_info_info{
-  font-family: 'NanumSquareRound';
-  font-size: 40pt;
-  line-height: normal;
-}
-#detail_info_right_title p{
-  margin: 0;
-  font-size: 30px;
-}
-
-#detail_status{
-  display: flex;
-  width: auto;
-  height: 60px;
-  border: 1px #000000 solid;
-  display: flex;
-  align-items: center;
-  font-size: 20pt;
-}
-#detail_status p{
-  margin-left: 10px;
-}
-
-#detail_info_info ul{
-  margin-top: 20px;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-left: 5px;
-}
-#detail_info_info li{
-  list-style: none;
-  font-size: 30px;
-}
-#detail_info_info li:before{
-  content: "•";
-  font-size: 60px;
-  vertical-align: middle;
+  width: 800px;
+  height: 800px;
+  margin-right: 30px;
 }
 
 #detail_info_right{
@@ -73,7 +95,82 @@
   flex-direction: column;
 
 }
+#detail_info_right_title{
+  margin: 0;
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+#detail_info_info{
+  font-family: 'NanumSquareRound';
+  font-size: 40pt;
+  line-height: normal;
+  margin-bottom: 30px;
+}
 
+#detail_status{
+  display: flex;
+  width: 770px;
+  height: 80px;
+  border: 1px #000000 solid;
+  display: flex;
+  align-items: center;
+  font-size: 20pt;
+  margin-bottom: 30px;
+}
+#detail_status p{
+  margin: 0;
+  margin-left: 20px;
+}
+
+#detail_info_info ul{
+  margin: 0;
+  line-height: 40px;
+  padding: 0;
+}
+#detail_info_info li{
+  color:#404040;
+  list-style: none;
+  font-size: 25pt;
+  margin-left: 20px;
+}
+#detail_info_info li:first-child{
+  margin-bottom: 25px;
+}
+#detail_info_info li:before{
+  content: "•";
+  font-size: 60px;
+  vertical-align: middle;
+}
+
+#detail_info_style{
+  border: 1px solid black;
+  width:770px;
+  height: 280px;
+  overflow: auto;
+  margin-bottom: 30px;
+}
+#detail_info_style p{
+  margin-left: 20px;
+  font-size: 15pt;
+}
+
+#detail_info_url{
+  width: 770px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  margin-bottom: 30px;
+}
+#detail_info_url p{
+  margin-left: 20px;
+  font-size: 15pt;
+}
+#detail_info_url a{
+  margin-left: 20px;
+  font-size: 10pt;
+  text-decoration: none;
+}
 
 
 
@@ -84,16 +181,10 @@
   align-items: center;
 }
 
-#detail_info_style{
-  margin-left: 20px;
-  width:620px;
-  height: 280px;
-  overflow: auto;
-}
+
 
 #detail_info_tags{
   display: flex;
-
 }
 
 .userTags{
@@ -105,8 +196,10 @@
   border: 1px solid #b0b0b0;
   border-radius: 4px;
   padding: 4px;
+  margin: 10px 0 0 0;
 }
 .userTags label{
+  cursor: pointer;
   font-size: 15pt;
   display: flex;
   justify-content: center;
@@ -119,6 +212,7 @@
   padding: 0;
   line-height: normal;
   border: 1px solid #000000;
+  margin-left: -8px;
 }
 .userTags input{
   display: none;
@@ -137,12 +231,5 @@
 
 #detail_info_update p{
   font-size: 15pt;
-}
-
-#admin_manage a{
-  border: 1px solid black;
-  border-radius: 8px;
-  padding: 2px;
-  text-decoration: none;
-  color: black;
+  margin: 0;
 }

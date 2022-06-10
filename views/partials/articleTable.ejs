@@ -27,10 +27,10 @@
     </div>
   </div>
   <% } %>
-  <p class="article_upload_title">Portfolio Upload</p>
-  <div id="article_update">
-      <p><%= Applicants[0].updateDate %></p>
-  </div>
+  <p class="article_upload_title"><b>Portfolio</b></p>
+
+  
+
 
   <% if (!user.isAdmin) { %>
   <div class="article_upload_desc">
@@ -174,13 +174,23 @@
 
 <% } else{ %>
   <!-- 관리자일 경우 -->
-  <div id="article_url">
-    <% if (Articles[0].url != undefined) {%>
-        <a href="<%= Articles[0].url %>" target="_blank">포트폴리오 다운로드</a>
-    <% } else { %>
-        <p>포트폴리오 url 없음</p>
-    <% } %>
+  <div id="article_attachedTag">
+    <p><b>Hash Tag</b></p>
+    <div id="detail_info_tags">
+
+
+      <% for (let i=0; i<Applicants[0].userTags.length; i++) { %>
+        <div class="userTags">
+            <p><%= Applicants[0].userTags[i] %></p>
+            <form class="" action="/detachTag/<%= Applicants[0].username%>/<%= Applicants[0].userTags[i]%>/<%= user._id%>" method="post">
+              <label for="tag<%=i%>"><img src="/images/deleteTag.png" alt=""></label>
+              <input id="tag<%=i%>" type="submit" name="" value="태그 삭제하기">
+            </form>
+        </div>
+      <% } %>
+    </div>
   </div>
+
   <div id="article_attachTag">
     <p>tag 부여하기</p>
     <div id="article_attachTag_list">
@@ -195,7 +205,7 @@
 <div class="popup-wrap" id="popup">
   <div class="popup">
     <div class="popup-header">
-      <img src="/images/0.png" alt="">
+      <img src="/images/02_Top_13.jpg" alt="">
     </div>
     <div class="popup-body">
       <div class="popup-content">
@@ -266,12 +276,9 @@
   function uploadProfile(){
     let userVerified = document.getElementById('verify').value;
     let uploadform = document.getElementById('article_upload');
-    console.log(userVerified);
-    if (userVerified == true){
-      console.log('submit update');
+    if (userVerified == 'true'){
       uploadform.submit();
     }else{
-      console.log('openpopup');
       openPopup();
     }
   }

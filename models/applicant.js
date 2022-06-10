@@ -16,6 +16,7 @@ const applicantSchema = mongoose.Schema({
   status: 'string',
   file: 'string',
   fileNames : 'array',
+  url: 'string',
   createDate: 'date',
   updateDate: 'date',
   isAdmin: 'bool',

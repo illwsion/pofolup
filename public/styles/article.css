@@ -26,9 +26,11 @@
 }
 
 .article_upload_title{
-  font-size: 20pt;
+  font-size: 25pt;
   display: flex;
   justify-content: center;
+  margin: 0;
+  margin-bottom: 15px;
 }
 
 #article_update{
@@ -55,13 +57,13 @@
   display: flex;
   justify-content: space-between;
 
-  margin: 0 10px 20px 10px;
+  margin: 35px 10px 0px 10px;
 }
 
 .article_image img{
   width:520px;
   height: 520px;
-  margin: 0 10px 15px 10px;
+  margin: 0 10px 20px 10px;
 }
 
 .upload_button{
@@ -127,27 +129,17 @@
 }
 
 /* article - admin */
-#article_url{
-  display: flex;
-  justify-content: center;
-}
-#article_url p{
-  margin-left: 20px;
-  font-size: 20pt;
-}
-#article_url a{
-  margin-left: 20px;
-  font-size: 20pt;
-  text-decoration: none;
+#article_attachedTag{
+  margin-top: 65px;
 }
 
-#article_attachTag{
+#article_attachTag, #article_attachedTag{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-#article_attachTag p{
+#article_attachTag, #article_attachedTag p{
   font-size: 20pt;
 }
 #article_attachTag_list{
@@ -156,6 +148,7 @@
 
 }
 #article_attachTag_list a{
+  font-size: 15pt;
   margin: 0 5px;
   text-decoration: none;
   color: black;
