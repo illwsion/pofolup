@@ -29,6 +29,9 @@
     path: path.resolve(__dirname, "./.env")
   });
 
+  //기타 미들웨어
+  const moment = require('moment');
+
   const app = express();
 
   //https 받은 이후 삭제 예정

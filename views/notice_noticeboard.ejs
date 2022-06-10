@@ -46,7 +46,7 @@
                 <p><%= Notices[i].adminName %></p>
               </div>
               <div class="notice_createDate">
-                <p><%= Notices[i].createDate %></p>
+                <p><%= Notices[i].createDate.slice(0,10) %></p>
               </div>
             </li>
           <%}%>

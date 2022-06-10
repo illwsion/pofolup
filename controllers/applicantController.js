@@ -3,6 +3,7 @@ const Applicant = require('./../models/applicant');
 const Pofolup = require('./../models/Pofolup');
 const passport = require('passport');
 const crypto = require('crypto');
+const moment = require('moment');
 //mongoose
 const articleController = require('./../controllers/articleController');
 const s3Controller = require('./../controllers/s3Controller');
@@ -89,8 +90,8 @@ exports.createApplicant = (req, res, next) => {
       phone: req.body.phone,
       style: req.body.style,
       file: req.files[0].filename,
-      createDate: new Date().getTime(),
-      updateDate: new Date().getTime(),
+      createDate: moment().format('YYYY-MM-DD HH:mm'),
+      updateDate: moment().format('YYYY-MM-DD HH:mm'),
       isAdmin: false,
       isVerified: true,
       verifyKey: crypto.randomBytes(16).toString('hex'),
@@ -111,6 +112,9 @@ exports.createApplicant = (req, res, next) => {
           }else{
           }
         })
+        console.log(moment().format('YYYY-MM-DD HH:mm'));
+        console.log(typeof(moment().format('YYYY-MM-DD HH:mm')));
+
         //console.log("createApplicant success");
         //s3에 썸네일 이미지 업로드
         s3Controller.s3Upload(req, res, req.body.username, req.files[0].filename);

@@ -6,7 +6,7 @@ const s3Controller = require('./../controllers/s3Controller');
 const fs = require('fs');
 const passport = require('passport');
 let fileLength = 6;
-
+const moment = require('moment');
 
 exports.getAllArticles = (req, res, next) => {
   Article.find({}, (error, articles) => {
@@ -37,6 +37,9 @@ exports.findArticle = (req, res, next) => {
       console.log(error);
     } else {
       req.articlesData = articles;
+      console.log('@@@@@@@');
+      console.log(articles);
+      console.log(req.articlesData);
       next();
     }
   });
@@ -50,7 +53,7 @@ exports.articleInit = (req, res, applicantId) =>{
     userEmail: req.body.username,
     comment: req.body.comment,
     url: req.body.url,
-    createDate: new Date().getTime(),
+    createDate: moment().format('YYYY-MM-DD HH:mm'),
   });
   newArticle.save((error, article) => {
     if (error){
@@ -79,7 +82,7 @@ exports.articleInit = (req, res, applicantId) =>{
           }else{
             console.log('카테고리 이미 있음');
           }
-          applicant.updateDate = new Date().getTime();
+          applicant.updateDate = moment().format('YYYY-MM-DD HH:mm');
           applicant.save();
         }
       });
@@ -95,7 +98,7 @@ exports.createArticle = (req, res, applicantId) => {
     userEmail: req.body.username,
     comment: req.body.comment,
     url: req.body.url,
-    updateDate: new Date().getTime(),
+    updateDate: moment().format('YYYY-MM-DD HH:mm'),
   });
 
   newArticle.save((error, article) => {
@@ -129,8 +132,6 @@ exports.createArticle = (req, res, applicantId) => {
         }
 
       }
-      console.log('fileNames');
-      console.log(article.fileNames);
 
       article.createDate = req.articlesData[0].createDate;
       article.save();
@@ -165,7 +166,7 @@ exports.createArticle = (req, res, applicantId) => {
           }
           applicant.url = article.url;
           applicant.fileNames = article.fileNames;
-          applicant.updateDate = new Date().getTime();
+          applicant.updateDate = moment().format('YYYY-MM-DD HH:mm');
           applicant.save();
         }
       });

@@ -14,7 +14,7 @@ const articleSchema = mongoose.Schema({
   fileDesc : 'array',
   fileNames : 'array',
   url: 'string',
-  createDate: 'date',
+  createDate: 'string',
 }, {
   collection: 'article'
 });

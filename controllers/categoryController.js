@@ -1,6 +1,6 @@
 const Category = require('./../models/category');
 const Applicant = require('./../models/applicant');
-
+const moment = require('moment');
 exports.getAllCategories = (req, res, next)=>{
   Category.find({}, (error, categories)=>{
     if (error){
@@ -123,7 +123,7 @@ exports.attachTag = async (req, res)=>{
       });
       if (!alreadyExist){
         applicant[0].tagInfo.push(tagInfo);
-        //applicant[0].updateDate = new Date().getTime();
+        //applicant[0].updateDate = moment().format('YYYY-MM-DD HH:mm');
         //tagInfo 검사해서 과반수 이상이고 이미 없으면 usertags에 추가
         if ((parseInt((numOfAdmin-1)/2) + 1) <= numOfTag + 1){
           if (applicant[0].userTags.indexOf(req.params.tag) == -1){

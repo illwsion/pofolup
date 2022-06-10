@@ -120,12 +120,6 @@ router.get('/applicants/:username', isLoggedIn, applicantController.findApplican
     let ArticlesData = req.articlesData;
     ArticlesData.reverse();
     let ApplicantsData = req.applicantsData;
-    for (let i=0; i<3; i++){
-      if (ArticlesData[0].fileNames[i] != null){
-        console.log('파일 다운로드');
-        //s3Controller.s3Download(req, res, ArticlesData[0].fileNames[i].fileName);
-      }
-    }
     //cors 우회
     res.setHeader('Access-Control-Allow-origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
