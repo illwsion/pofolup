@@ -18,6 +18,10 @@
         </form>
         <form action="/adminPage/<%= category %>/1" method="post">
           <div id="sidebar_search">
+            <select name="searchOption" id="sidebar_search_option">
+              <option value="realname" selected>이름</option>
+              <option value="applicantNumber">회원번호</option>
+            </select>
             <input type="text" name="targetName" value="" placeholder="Search" autocomplete="off">
             <input type="submit" value="검색">
           </div>

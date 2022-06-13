@@ -48,7 +48,7 @@
               <p>내용</p>
             </div>
             <div class="notice_info_value">
-              <textarea id="content" name="content" rows="20" cols="150" maxlength="3000" required></textarea>
+              <textarea id="content" name="content" rows="20" cols="150" maxlength="3000"></textarea>
             </div>
           </div>
           <div class="">
@@ -126,16 +126,10 @@
         function registerTest(){
           let sendOK = true;
           let title = document.getElementById('title').value;
-          let content = document.getElementById('content').value;
           let alertMessage = "";
 
           if (title.length == 0){
             alertMessage += '제목을 입력해주세요\n'
-            sendOK = false;
-          }
-
-          if (content.length == 0){
-            alertMessage += '내용을 입력해주세요\n'
             sendOK = false;
           }
 

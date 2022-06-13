@@ -240,7 +240,7 @@ router.get('/scrapList/:category/:pageNum', categoryController.getAllCategories,
     queryString = queryString + tag + '&';
   });
 
-  res.render('scrapList', {
+  res.render('adminPage_scrapList', {
     curAdmin: req.user,
     Applicants: ApplicantsData,
     pageNum: req.params.pageNum,
@@ -282,6 +282,25 @@ router.post('/unscrapApplicant/:applicantId', (req, res)=>{
 })
 
 //공지사항 게시판
+
+router.get('/noticeboard/create', (req, res)=>{
+  res.render('notice_createNotice');
+});
+
+router.post('/noticeboard/create', nodemailerController.upload.array('file'), noticeController.getTotalNotice, noticeController.createNotice, (req, res)=>{
+  res.redirect('/noticeboard/1');
+});
+
+router.get('/noticeboard/views/:noticeNumber', noticeController.findNotice, (req, res)=>{
+  res.render('notice_noticeArticle',{
+    Notices: req.noticesData,
+  });
+});
+router.get('/noticeboard/deleteNotice/:noticeNumber', (req, res)=>{
+  noticeController.deleteNotice(req, res, req.params.noticeNumber);
+  res.redirect('/noticeboard/1');
+});
+
 router.get('/noticeboard/:pageNum', noticeController.getAllNotices,(req, res)=>{
   let NoticesData = req.noticesData;
   NoticesData.reverse();
@@ -304,25 +323,6 @@ router.get('/noticeboard/:pageNum', noticeController.getAllNotices,(req, res)=>{
     maxPage: maxPage,
   });
 });
-
-router.get('/noticeboard/create', (req, res)=>{
-  res.render('notice_createNotice');
-});
-
-router.post('/noticeboard/create', nodemailerController.upload.array('file'), noticeController.getTotalNotice, noticeController.createNotice, (req, res)=>{
-  res.redirect('/noticeboard');
-});
-
-router.get('/noticeboard/views/:noticeNumber', noticeController.findNotice, (req, res)=>{
-  res.render('notice_noticeArticle',{
-    Notices: req.noticesData,
-  });
-});
-router.post('/noticeboard/deleteNotice/:noticeNumber', (req, res)=>{
-  noticeController.deleteNotice(req, res, req.params.noticeNumber);
-  res.redirect('/noticeboard');
-});
-
 
 //유저 삭제
 router.get('/deleteApplicant/:applicantId', isLoggedIn, (req, res) => {

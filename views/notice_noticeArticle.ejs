@@ -15,27 +15,25 @@
     </div>
 
     <div id="contents">
-      <div class="article_title">
+      <div class="notice_info_title">
         <div>
-          <a href="/noticeboard">뒤로 돌아가기</a>
+          <a href="/noticeboard/1"><img src="/images/06_view_03.jpg" alt=""></a>
+          <% if (user != undefined){%>
+            <% if (user.isAdmin == true) { %>
+              <a id="notice_deleteButton" href="/noticeboard/deleteNotice/<%= Notices[0].noticeNumber %>">삭제</a>
+            <%}%>
+          <%}%>
         </div>
         <div class="notice_info_key">
-          <p>제목</p>
-        </div>
-        <div class="notice_info_value">
           <p><%= Notices[0].title %></p>
         </div>
-        <div class="">
-
-        </div>
       </div>
-      <div>
-        <img src="https://domnc9j4gfidk.cloudfront.net/notice/<%= Notices[0].title %>/<%= Notices[0].file%>">
+      <div class="notice_info_image">
+        <% if (Notices[0].file != undefined){ %>
+          <img src="https://domnc9j4gfidk.cloudfront.net/notice/<%= Notices[0].title %>/<%= Notices[0].file%>">
+        <% } %>
       </div>
-      <div class="article_content">
-        <div class="notice_info_key">
-          <p></p>
-        </div>
+      <div class="notice_content">
         <div class="notice_info_value">
           <p><%= Notices[0].content %></p>
         </div>

@@ -41,7 +41,6 @@ exports.createNotice = (req, res, next) => {
     adminName: req.user.realname,
     title: req.body.title,
     content: req.body.content,
-    file: req.files[0].filename,
     createDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
   });
 
@@ -50,14 +49,19 @@ exports.createNotice = (req, res, next) => {
       console.log('Notice save error');
       console.log(error);
     } else {
-      //s3에 이미지 업로드
-      s3Controller.s3NoticeUpload(req, res, req.files[0].filename);
+      //업로드된 이미지가 있다면
+      if (req.files.length != 0){
+        Notice.file = req.files[0].filename;
+        //s3에 이미지 업로드
+        s3Controller.s3NoticeUpload(req, res, req.files[0].filename);
+        Notice.save();
+      }
+
       //총 공지사항 수 +1
       Pofolup.updateOne({}, {$inc:{totalNotice:1}}, (error, pofolupDB)=>{
         if (error){
           console.log(error);
         }else{
-          s3Controller.s3Upload(req, res, req.files[0].filename);
           next();
         }
       });
@@ -66,23 +70,27 @@ exports.createNotice = (req, res, next) => {
 };
 
 exports.deleteNotice = (req, res, noticeNumber) => {
-  //console.log('사용자 삭제 시도');
-  Notice.find({noticeNumber: noticeNumber}, async (error, applicant) => {
+  console.log('공지사항 삭제 시도');
+  Notice.find({noticeNumber: noticeNumber}, async (error, notice) => {
     if (error) {
       console.log('error at deleteNotice' + error);
     } else {
+      console.log('found notice');
+      console.log(notice);
+      console.log(notice[0]._id);
       //이미지 삭제. 일단 남겨두는 쪽으로
       //지울거면 s3Controller에서 s3NoticeDelete 함수 작성해줘야함
       //s3Controller.s3Delete(req, res, applicant.username, applicant.file);
       //공지사항 삭제
       Notice.deleteOne({
-        _id: applicant._id
+        _id: notice[0]._id
       }, (error, result) => {
         if (error) {
           console.log('error at deleteNotice');
           console.log(error);
         } else {
-          //console.log('유저 삭제 성공');
+          console.log('공지사항 삭제 성공');
+          console.log(result);
         }
       });
     }

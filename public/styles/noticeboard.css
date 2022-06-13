@@ -1,3 +1,11 @@
+#contents{
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #container{
   display: flex;
   flex-direction: column;
@@ -22,6 +30,13 @@
   display: flex;
 
 }
+.notice_title a{
+  text-decoration: none;
+  color: black;
+}
+.notice_title a:hover{
+  text-decoration-line: underline;
+}
 .notice_adminName{
   width: 10%;
 }
@@ -30,7 +45,30 @@
 }
 #notice_list_pagination{
   display: flex;
+  flex-direction: column;
   justify-content: center;
+
+}
+#createNotice{
+  display: flex;
+  justify-content: flex-end;
+}
+
+#createNotice a{
+  font-size: 15pt;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: right;
+  width: 100px;
+  height: 40px;
+  color: #000000;
+  background-color: #ffffff;
+  padding: 0;
+  line-height: normal;
+  border: 1px solid #000000;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 #paging{
@@ -48,6 +86,46 @@
   color: #404040;
 }
 
+/* noticeArticle */
+.notice_info_title{
+  width: 100%;
+  font-size:
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #404040;
+}
+#notice_deleteButton{
+  font-size: 15pt;
+  display: flex;
+  float: right;
+  width: 114px;
+  height: 48px;
+  color: #ffffff;
+  background-color: #000000;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  line-height: normal;
+  margin-right: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.notice_info_image{
+  width: 800px;
+}
+.notice_info_image img{
+  width: 800px;
+}
+
+.notice_content{
+  width: 100%;
+  font-size: 20pt;
+  min-height: 300px;
+}
+
+
+
 
 /* createNotice */
 #notice_create{
@@ -55,7 +133,7 @@
 }
 
 .notice_info_key p{
-  font-size: 30pt;
+  font-size: 20pt;
 }
 
 .notice_info_value input{
