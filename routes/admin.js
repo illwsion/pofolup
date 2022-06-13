@@ -60,9 +60,7 @@ const searchCheck = (req, res, next) => {
         });
       } else if (hashTags[1][1] == "applicantNumber"){
         if (hashTags[1][1].length != 6){
-          console.log(hashTags[0][1]);
           hashTags[0][1] = ('000000' + hashTags[0][1]).slice(-6);
-          console.log(hashTags[0][1]);
         }
         Applicant.find({applicantNumber: hashTags[0][1]}, (error, applicants)=>{
           if (error){
@@ -367,6 +365,12 @@ router.get('/deleteTag/:categoryName/:tag', (req, res)=>{
 //관리자 임명
 router.get('/appointAdmin/:applicantEmail', (req, res)=>{
   applicantController.appointAdmin(req, res);
+  res.redirect('/applicants/'+req.params.applicantEmail);
+});
+
+//관리자가 확인하였습니다
+router.get('/checkDateUpdate/:applicantEmail', (req, res)=>{
+  applicantController.checkDateUpdate(req, res);
   res.redirect('/applicants/'+req.params.applicantEmail);
 });
 

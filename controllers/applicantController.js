@@ -30,7 +30,7 @@ exports.getTotalUser = (req, res, next) => {
 exports.getAllApplicants = (req, res, next) => {
   Applicant.find({}, (error, applicants) => {
     if (error) {
-      console.log(err);
+      console.log('error at getAllApplicants'+error);
     } else {
       req.applicantsData = applicants;
       next();
@@ -42,10 +42,8 @@ exports.findApplicantById = async (req, res, applicantId)=>{
   console.log('findapplicantbyid');
   await Applicant.findById(applicantId, (error, applicant)=>{
     if (error) {
-      console.log('applicant not found');
-      console.log(error);
+      console.log('applicant not found'+error);
     } else {
-      console.log('applicant found');
       req.applicantsData = applicant;
     }
   });
@@ -168,12 +166,10 @@ exports.deleteApplicant = (req, res, applicantId) => {
     if (error) {
       console.log(error);
     } else {
-      console.log('사용자 삭제');
       //연결된 게시글 모두 삭제
       for (var i = 0; i < applicant.articles.length; i++) {
         //console.log("for 게시글 삭제");
         await articleController.deleteArticle(req, res, applicant.articles[i]);
-        console.log(applicant.articles.length);
       }
       //썸네일 파일 삭제
       s3Controller.s3Delete(req, res, applicant.username, applicant.file);
@@ -181,10 +177,8 @@ exports.deleteApplicant = (req, res, applicantId) => {
       Applicant.deleteOne({
         _id: applicant._id
       }, (error, result) => {
-        console.log('applicant.deleteOne');
         if (error) {
-          console.log('error at deleteApplicant');
-          console.log(error);
+          console.log('error at deleteApplicant' + error);
         } else {
           //console.log('유저 삭제 성공');
         }
@@ -229,7 +223,17 @@ exports.appointAdmin = (req, res) => {
     if (error){
       console.log('error at appointAdmin'+error);
     } else{
-      console.log('made admin!');
+    }
+  });
+};
+
+exports.checkDateUpdate = (req, res) => {
+  Applicant.updateOne({username: req.params.applicantEmail},{
+    $set: {checkDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm')}
+  }, (error, applicant)=>{
+    if (error){
+      console.log('error at checkDateUpdate'+error);
+    } else{
     }
   });
 };

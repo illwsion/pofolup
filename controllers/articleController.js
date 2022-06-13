@@ -37,9 +37,6 @@ exports.findArticle = (req, res, next) => {
       console.log(error);
     } else {
       req.articlesData = articles;
-      console.log('@@@@@@@');
-      console.log(articles);
-      console.log(req.articlesData);
       next();
     }
   });

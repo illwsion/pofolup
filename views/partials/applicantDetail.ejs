@@ -54,7 +54,9 @@
     <% } %>
   </div>
   <div id="detail_status_admincheck">
-
+    <%if (Applicants[0].checkDate != undefined){ %>
+      <p>이 포트폴리오를 운영자가 <%=Applicants[0].checkDate%>에 확인하였습니다</p>
+    <% } %>
   </div>
 </div>
 

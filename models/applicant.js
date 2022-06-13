@@ -19,6 +19,7 @@ const applicantSchema = mongoose.Schema({
   url: 'string',
   createDate: 'string',
   updateDate: 'string',
+  checkDate: 'string',
   isAdmin: 'bool',
   isVerified: 'bool',
   verifyKey: 'string',
