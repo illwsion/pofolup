@@ -189,7 +189,7 @@ exports.deleteApplicant = (req, res, applicantId) => {
   });
 };
 
-//사용자 정보 수정 어떻게 할 것인지 고민
+
 exports.updateApplicant = (req, res) => {
   let filename;
   if (req.files[0] != undefined){
@@ -199,7 +199,6 @@ exports.updateApplicant = (req, res) => {
   }else{
     filename = req.user.file;
   }
-  //s3Controller.s3Upload(req, res, req.body.username, req.files[0].filename);
 
   Applicant.updateOne({username: req.params.username},{$set:{
     realname: req.body.realname,

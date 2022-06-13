@@ -115,6 +115,7 @@ body {
   justify-content: center;
   align-items: center;
   position: fixed;
+  /* flex for test */
   display: none;
   padding: 20px;
   top:0;
@@ -129,7 +130,7 @@ body {
   max-width: 400px;
   border-radius: 20px;
   overflow: hidden;
-  background-color: #959595;
+  background-color: #ffffff;
   padding: 0px;
   box-shadow: 5px 10px 10px 1px #0f0f0f;
 }
@@ -146,7 +147,7 @@ body {
 }
 .popup-body{
   width: 100%;
-  background-color: #60ebb5;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
 
@@ -160,11 +161,12 @@ body {
 }
 
 .popup-button{
-  background-color: #888888;
-  width: 30%;
+  background-color: #eeeeee;
+  width: 20%;
   display:flex;
   justify-content: center;
   margin-top: 20px;
   cursor: pointer;
   margin-bottom: 10px;
+  border-radius: 5px;
 }

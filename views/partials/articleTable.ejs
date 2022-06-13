@@ -290,16 +290,19 @@
 //이메일 인증 팝업
 window.onload = function(){
   function openPopup(){
-    //console.log('openPopup');
+    let bodyscroll = document.getElementById('popupscroll');
+    bodyscroll.classList.toggle("popupscroll");
     document.querySelector('.popup-wrap').style.display = 'flex';
   }
 
   function confirmPopup(){
-    console.log('confirmPopup');
+    let bodyscroll = document.getElementById('popupscroll');
+    bodyscroll.classList.toggle("popupscroll");
     submitForm();
   }
   function closePopup(){
-    console.log('closePopup');
+    let bodyscroll = document.getElementById('popupscroll');
+    bodyscroll.classList.toggle("popupscroll");
     let bodyscroll = document.getElementById('popupscroll');
     bodyscroll.classList.toggle("popupscroll");
     document.querySelector('.popup-wrap').style.display = 'none';

@@ -102,7 +102,7 @@
       <div class="popup-wrap" id="popup">
         <div class="popup">
           <div class="popup-header">
-            <img src="/images/0.png" alt="">
+            <img src="/images/02_Top_13.jpg" alt="">
           </div>
           <div class="popup-body">
             <div class="popup-content">
@@ -124,16 +124,19 @@
       //회원가입 팝업
       window.onload = function(){
         function openPopup(){
-          console.log('openPopup');
+          let bodyscroll = document.getElementById('popupscroll');
+          bodyscroll.classList.toggle("popupscroll");
           document.querySelector('.popup-wrap').style.display = 'flex';
         }
 
         function confirmPopup(){
-          console.log('confirmPopup');
+          let bodyscroll = document.getElementById('popupscroll');
+          bodyscroll.classList.toggle("popupscroll");
           submitForm();
         }
         function closePopup(){
-          console.log('closePopup');
+          let bodyscroll = document.getElementById('popupscroll');
+          bodyscroll.classList.toggle("popupscroll");
           document.querySelector('.popup-wrap').style.display = 'none';
         }
         //document.getElementById('popup_open').addEventListener('click', openPopup);
@@ -144,7 +147,8 @@
 
       <script type="text/javascript">
         function openPopup(){
-          console.log('openPopup');
+          let bodyscroll = document.getElementById('popupscroll');
+          bodyscroll.classList.toggle("popupscroll");
           document.querySelector('.popup-wrap').style.display = 'flex';
         }
 
