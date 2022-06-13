@@ -70,6 +70,7 @@
   display: flex;
   justify-content: space-between;
   margin-left: 10px;
+  margin-right: 10px;
 }
 .upload_button label{
   font-size: 15pt;

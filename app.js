@@ -30,7 +30,7 @@
   });
 
   //기타 미들웨어
-  const moment = require('moment');
+  const moment = require('moment-timezone');
 
   const app = express();
 

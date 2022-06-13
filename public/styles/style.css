@@ -32,15 +32,15 @@ body {
 }
 
 #headerline{
-  
+
   margin-left: 0;
   margin-right: 0;
   width: 1650px;
 }
 
 #header-main-logo{
-  height: 100px;
-  width: 600px;
+  height: 73px;
+  width: 347px;
   max-width: 100%;
   display: block;
   margin: 20px 0px 33px 0px;
@@ -48,8 +48,8 @@ body {
 
 
 #header-sub-logo{
-  height: 60px;
-  width: 400px;
+  height: 48px;
+  width: 334px;
   margin: 0px 0px 10px 0px;
   max-width: 100%;
   display: block;
@@ -60,6 +60,7 @@ body {
 /* footer */
 #footer{
   margin-top: 60px;
+  width: 100%;
 }
 
 #footer_nav{

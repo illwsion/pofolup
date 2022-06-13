@@ -1,8 +1,8 @@
 const Applicant = require('./../models/applicant');
 const Notice = require('./../models/notice');
-const Pofolup = require('./../models/Pofolup');
+const Pofolup = require('./../models/pofolup');
 const applicantController = require('./../controllers/applicantController');
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 exports.getTotalNotice = (req, res, next) => {
   Pofolup.find({}, (error, pofolupDB)=>{
@@ -36,7 +36,7 @@ exports.createNotice = (req, res, next) => {
     adminName: req.user.realname,
     title: req.body.title,
     content: req.body.content,
-    createDate: moment().format('YYYY-MM-DD HH:mm'),
+    createDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
   });
 
   newNotice.save((error, Notice) => {

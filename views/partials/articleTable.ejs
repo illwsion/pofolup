@@ -29,7 +29,7 @@
   <% } %>
   <p class="article_upload_title"><b>Portfolio</b></p>
 
-  
+
 
 
   <% if (!user.isAdmin) { %>
@@ -228,7 +228,9 @@
 <script>
   //화면 캡쳐
   function captureProf(){
-    let filename = document.getElementById("usernameforcapture").innerHTML;
+    let filename = document.getElementById("applicantNumberforcapture").innerHTML;
+    filename += "_";
+    filename += document.getElementById("updateDateforcapture").innerHTML;
     filename += "_프로필.jpg";
     html2canvas(document.getElementById("article_upload"),{
       allowTaint: false,

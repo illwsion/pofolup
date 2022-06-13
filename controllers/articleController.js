@@ -6,7 +6,7 @@ const s3Controller = require('./../controllers/s3Controller');
 const fs = require('fs');
 const passport = require('passport');
 let fileLength = 6;
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 exports.getAllArticles = (req, res, next) => {
   Article.find({}, (error, articles) => {
@@ -53,7 +53,7 @@ exports.articleInit = (req, res, applicantId) =>{
     userEmail: req.body.username,
     comment: req.body.comment,
     url: req.body.url,
-    createDate: moment().format('YYYY-MM-DD HH:mm'),
+    createDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
   });
   newArticle.save((error, article) => {
     if (error){
@@ -82,7 +82,7 @@ exports.articleInit = (req, res, applicantId) =>{
           }else{
             console.log('카테고리 이미 있음');
           }
-          applicant.updateDate = moment().format('YYYY-MM-DD HH:mm');
+          applicant.updateDate = moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm');
           applicant.save();
         }
       });
@@ -98,7 +98,7 @@ exports.createArticle = (req, res, applicantId) => {
     userEmail: req.body.username,
     comment: req.body.comment,
     url: req.body.url,
-    updateDate: moment().format('YYYY-MM-DD HH:mm'),
+    updateDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
   });
 
   newArticle.save((error, article) => {
@@ -166,7 +166,7 @@ exports.createArticle = (req, res, applicantId) => {
           }
           applicant.url = article.url;
           applicant.fileNames = article.fileNames;
-          applicant.updateDate = moment().format('YYYY-MM-DD HH:mm');
+          applicant.updateDate = moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm');
           applicant.save();
         }
       });

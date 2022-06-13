@@ -259,7 +259,7 @@ router.post('/unscrapApplicant/:applicantId', (req, res)=>{
 
 //공지사항 게시판
 router.get('/noticeboard', noticeController.getAllNotices,(req, res)=>{
-  res.render('notice_noticeBoard',{
+  res.render('notice_noticeboard',{
     Notices: req.noticesData.reverse(),
     pageNum: 1,
     maxPage: 1,

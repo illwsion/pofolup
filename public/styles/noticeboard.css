@@ -1,9 +1,8 @@
-#contents{
+#container{
   display: flex;
   flex-direction: column;
-
+  align-items: center;
 }
-
 /* noticeboard */
 
 #noticeboard{
@@ -20,7 +19,7 @@
 .notice_title{
   width: 70%;
   display: flex;
-  
+
 }
 .notice_adminName{
   width: 10%;
