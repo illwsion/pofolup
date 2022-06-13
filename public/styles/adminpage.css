@@ -192,6 +192,23 @@
   text-decoration: none;
   color: black;
 }
+.applicant_list_info_name_right input[type="button"]{
+  font-family: 'NanumSquareRound';
+  font-size: 15pt;
+  display: flex;
+  float: right;
+  width: auto;
+  padding: 0 10px;
+  height: 40px;
+  color: #000000;
+  background-color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  line-height: normal;
+  margin-right: 0px;
+  border-width: 0;
+  cursor: pointer;
+}
 
 .applicant_list_info_status{
   height: 40px;

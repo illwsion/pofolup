@@ -87,6 +87,7 @@ exports.createApplicant = (req, res, next) => {
       birth: req.body.birth,
       phone: req.body.phone,
       style: req.body.style,
+      status: req.body.status,
       file: req.files[0].filename,
       createDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
       updateDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
@@ -118,10 +119,6 @@ exports.createApplicant = (req, res, next) => {
         nodemailerController.sendVerificationMail(req, res, applicant.username, applicant.verifyKey);
         //기본 게시글 생성
         articleController.articleInit(req, res, applicant._id);
-        //업로드 후 로컬 파일에서는 삭제
-        if (fs.existsSync('./uploads/' + req.files[0].filename)) {
-          fs.unlinkSync('./uploads/' + req.files[0].filename);
-        }
         next();
       }
     });
@@ -194,10 +191,6 @@ exports.updateApplicant = (req, res) => {
     filename = req.files[0].filename;
     s3Controller.s3Delete(req, res, req.user.username, req.user.file);
     s3Controller.s3Upload(req, res, req.body.username, req.files[0].filename);
-    //로컬 파일 삭제
-    if (fs.existsSync('./uploads/' + req.files[0].filename)) {
-      fs.unlinkSync('./uploads/' + req.files[0].filename);
-    }
   }else{
     filename = req.user.file;
   }

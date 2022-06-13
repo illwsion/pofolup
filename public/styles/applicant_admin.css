@@ -34,6 +34,7 @@
   width: 75%;
 }
 #admin_manage_nav a, button{
+  font-family: 'NanumSquareRound';
   font-size: 15pt;
   text-decoration: none;
   color: black;

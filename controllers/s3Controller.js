@@ -25,8 +25,8 @@ exports.s3Upload = (req, res, userEmail, filename) => {
     } else {
       //업로드 성공
       //로컬 파일은 삭제
-      if (fs.existsSync(__dirname + './uploads/' + filename)) {
-        fs.unlinkSync(__dirname + './uploads/' + filename);
+      if (fs.existsSync(__dirname + '/../uploads/' + filename)) {
+        fs.unlinkSync(__dirname + '/../uploads/' + filename);
       }
     }
   });
@@ -81,8 +81,8 @@ exports.s3NoticeUpload = (req, res, filename) => {
     } else {
       //업로드 성공
       //로컬 파일은 삭제
-      if (fs.existsSync(__dirname + './uploads/' + filename)) {
-        fs.unlinkSync(__dirname + './uploads/' + filename);
+      if (fs.existsSync(__dirname + '/../uploads/' + filename)) {
+        fs.unlinkSync(__dirname + '/../uploads/' + filename);
       }
     }
   });

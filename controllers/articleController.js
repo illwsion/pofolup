@@ -121,11 +121,6 @@ exports.createArticle = (req, res, applicantId) => {
             s3Controller.s3Delete(req, res, req.body.username, req.articlesData[0].fileNames[i]);
             console.log(req.articlesData[0].fileNames[i]+'삭제');
           }
-          //로컬 파일은 삭제
-          if (fs.existsSync('./uploads/' + req.articlesData[0].fileNames[i])) {
-            fs.unlinkSync('./uploads/' + req.articlesData[0].fileNames[i]);
-          }
-
         }else if (req.articlesData[0].fileNames[i] != null){
           //새로 올라오지 않았지만 이미 있을 경우 파일 연결만
           console.log('없지만 이미 있던 파일 연결');

@@ -10,7 +10,7 @@
     <div id="admin_manage_nav_items">
       <ul>
         <li>
-          <a href="/appointAdmin/<%= Applicants[0].username %>">관리자 임명</a> <br>
+          <button onclick="appointAdmin()">관리자 임명</button>
         </li>
         <li>
           <a href="/checkDateUpdate/<%= Applicants[0].username %>">관리자가 확인함</a> <br>
@@ -19,7 +19,7 @@
           <button onclick="captureProf()">포트폴리오 다운받기</button>
         </li>
         <li>
-          <a href="/deleteApplicant/<%= Applicants[0]._id %>">지원자 삭제</a>
+          <button onclick="deleteApplicant()">지원자 삭제</button>
         </li>
       </ul>
     </div>
@@ -80,3 +80,19 @@
     </div>
   </div>
 </div>
+
+<script>
+  let deleteApplicant = ()=>{
+    let result = confirm("정말 사용자를 삭제하시겠습니까?");
+    if(result){
+      location.href = "/deleteApplicant/<%= Applicants[0]._id %>"
+    }
+  }
+
+  let appointAdmin = ()=>{
+    let result = confirm("정말 사용자를 관리자로 임명하시겠습니까?");
+    if(result){
+      location.href = "/appointAdmin/<%= Applicants[0].username %>"
+    }
+  }
+</script>
