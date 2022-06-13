@@ -18,6 +18,7 @@ const noticeController = require('./../controllers/noticeController');;
 router.use(express.static(__dirname + '/../public'));
 
 let pageSize = 4;
+let pageSize_notice = 10;
 
 //로그인 여부 확인
 const isLoggedIn = (req, res, next) => {
@@ -258,12 +259,26 @@ router.post('/unscrapApplicant/:applicantId', (req, res)=>{
 })
 
 //공지사항 게시판
-router.get('/noticeboard', noticeController.getAllNotices,(req, res)=>{
+router.get('/noticeboard/:pageNum', noticeController.getAllNotices,(req, res)=>{
+  let NoticesData = req.noticesData;
+  NoticesData.reverse();
+
+  let maxPage = parseInt(NoticesData.length / pageSize_notice);
+  if (NoticesData.length % pageSize_notice != 0){
+    maxPage++;
+  }
+  if (req.params.pageNum > maxPage)
+    req.params.pageNum = maxPage;
+  if (req.params.pageNum == 0)
+    req.params.pageNum = 1;
+  if (maxPage ==0) maxPage++;
+
+  NoticesData = NoticesData.slice((req.params.pageNum - 1) * pageSize_notice, req.params.pageNum * pageSize_notice);
+
   res.render('notice_noticeboard',{
-    Notices: req.noticesData.reverse(),
-    pageNum: 1,
-    maxPage: 1,
-    queryString: '',
+    Notices: NoticesData,
+    pageNum: req.params.pageNum,
+    maxPage: maxPage,
   });
 });
 
@@ -271,7 +286,7 @@ router.get('/noticeboard/create', (req, res)=>{
   res.render('notice_createNotice');
 });
 
-router.post('/noticeboard/create', noticeController.getTotalNotice, noticeController.createNotice, (req, res)=>{
+router.post('/noticeboard/create', nodemailerController.upload.array('file'), noticeController.getTotalNotice, noticeController.createNotice, (req, res)=>{
   res.redirect('/noticeboard');
 });
 
@@ -279,6 +294,10 @@ router.get('/noticeboard/views/:noticeNumber', noticeController.findNotice, (req
   res.render('notice_noticeArticle',{
     Notices: req.noticesData,
   });
+});
+router.post('/noticeboard/deleteNotice/:noticeNumber', (req, res)=>{
+  noticeController.deleteNotice(req, res, req.params.noticeNumber);
+  res.redirect('/noticeboard');
 });
 
 

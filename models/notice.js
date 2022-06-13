@@ -13,6 +13,7 @@ const noticeSchema = mongoose.Schema({
   adminName: 'string',
   title: 'string',
   content: 'string',
+  file: 'string',
   createDate: 'string',
 }, {
   collection: 'notice'

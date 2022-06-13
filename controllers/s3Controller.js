@@ -63,3 +63,24 @@ exports.s3Delete = (req, res, userEmail, filename) => {
     }
   });
 };
+
+exports.s3NoticeUpload = (req, res, filename) => {
+  let param = {
+    'Bucket': process.env.AWS_BUCKET,
+    'Key': 'notice/' + req.body.title + '/' + filename,
+    'ACL': 'public-read',
+    'Body': fs.createReadStream(__dirname + '/../uploads/' + filename),
+  };
+  s3.upload(param, (err, data) => {
+    if (err) {
+      console.log('something wrong at s3.upload');
+      console.log(err);
+    } else {
+      //업로드 성공
+      //로컬 파일은 삭제
+      if (fs.existsSync(__dirname + './uploads/' + filename)) {
+        fs.unlinkSync(__dirname + './uploads/' + filename);
+      }
+    }
+  });
+};

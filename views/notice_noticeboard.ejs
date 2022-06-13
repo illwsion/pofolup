@@ -54,7 +54,7 @@
 
       </div>
       <div id="util">
-        <div id="applicant_list_pagination">
+        <div id="notice_list_pagination">
           <div id="createNotice">
             <% if (user != undefined){%>
               <% if (user.isAdmin == true) { %>
@@ -65,23 +65,23 @@
           </div>
           <div id="paging">
             <% if (pageNum > 1) { %>
-               <a class="pg" href="/noticeboard/1<%=queryString%>">처음</a>
+               <a class="pg" href="/noticeboard/1">처음</a>
             <% } %>
             <% if (pageNum > 10) { %>
-               <a href="/noticeboard/<%= parseInt((pageNum-1)/10)*10 %><%=queryString%>">이전</a>
+               <a href="/noticeboard/<%= parseInt((pageNum-1)/10)*10 %>">이전</a>
             <% } %>
             <div>
               <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
                 <% if (i <= maxPage) { %>
-                  <a href="/noticeboard/<%= i %><%=queryString%>">[<%= i %>]</a>
+                  <a href="/noticeboard/<%= i %>">[<%= i %>]</a>
                 <% } %>
               <% } %>
             </div>
             <% if (pageNum <= parseInt(maxPage/10)*10) { %>
-               <a href="/noticeboard/<%= parseInt((pageNum-1)/10)*10+11 %><%=queryString%>">다음</a>
+               <a href="/noticeboard/<%= parseInt((pageNum-1)/10)*10+11 %>">다음</a>
             <% } %>
             <% if (pageNum != maxPage) { %>
-               <a href="/noticeboard/<%=maxPage%><%=queryString%>">맨끝</a>
+               <a href="/noticeboard/<%=maxPage%>">맨끝</a>
             <% } %>
           </div>
         </div>

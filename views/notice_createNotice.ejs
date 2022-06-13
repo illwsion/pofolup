@@ -20,7 +20,7 @@
         <h2>공지사항 작성</h2>
       </div>
       <div id="notice_create">
-        <form id="notice_form" action="/noticeboard/create" method="post">
+        <form id="notice_form" action="/noticeboard/create" method="post" enctype="multipart/form-data">
           <div class="">
             <div class="notice_info_key">
               <p>제목</p>
@@ -29,6 +29,20 @@
               <input type="text" id="title" name="title" required>
             </div>
           </div>
+
+          <div class="">
+            <div class="notice_info_key">
+              <p>이미지 파일</p>
+            </div>
+            <div class="notice_info_value">
+              <img id= "image_container" src="/images/default_main.png" alt="">
+              <div class="upload_button">
+                <label for="image">파일 선택</label>
+                <input type="file" id="image" onchange="setThumbnail(event);" name="file" accept=".jpg, .png, .gif" required><br>
+              </div>
+            </div>
+          </div>
+
           <div class="">
             <div class="notice_info_key">
               <p>내용</p>
@@ -63,6 +77,19 @@
           </div>
         </div>
       </div>
+
+
+      <script>
+        //파일 업로드 시 미리보기
+        function setThumbnail(event, num){
+          let reader = new FileReader();
+
+          reader.onload = (event)=>{
+            document.getElementById("image_container").src = event.target.result;
+          };
+          reader.readAsDataURL(event.target.files[0]);
+        }
+      </script>
 
       <script>
       //회원가입 팝업

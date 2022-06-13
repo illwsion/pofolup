@@ -27,7 +27,25 @@
 .notice_createDate{
   width: 10%;
 }
+#notice_list_pagination{
+  display: flex;
+  justify-content: center;
+}
 
+#paging{
+  width: 800px;
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+}
+
+#paging a{
+  font-family: 'NanumSquareRound';
+  font-size: 15pt;
+  text-decoration: none;
+  margin: 0 8px;
+  color: #404040;
+}
 
 
 /* createNotice */
@@ -40,14 +58,39 @@
 }
 
 .notice_info_value input{
-  width: 80%;
+  width: 800px;
   height: 50px;
   font-size: 20pt;
 }
 .notice_info_value textarea{
   font-size: 15pt;
-  width: 80%;
+  width: 800px;
   resize: none;
+}
+
+.upload_button label{
+  font-size: 15pt;
+  display: flex;
+  float: right;
+  width: 114px;
+  height: 48px;
+  color: #ffffff;
+  background-color: #000000;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  line-height: normal;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.upload_button input[type="file"]{
+  display: none;
+}
+
+#image_container{
+  display: block;
+  width : 800px;
+  margin : 0px 10px 20px 10px;
 }
 
 /* noticeArticle */

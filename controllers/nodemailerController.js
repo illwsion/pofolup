@@ -12,13 +12,6 @@ const storage = multer.diskStorage({
     callback(null, 'uploads/')
   },
   filename: (req, file, callback) => {
-    console.log('저장되는 body');
-    console.log(req.body);
-    console.log('stringify');
-    console.log(JSON.stringify(req.body));
-
-    console.log('req');
-    //console.log(req);
     callback(null, req.body.username + '-' + Date.now() + '-' + file.originalname)
   }
 });
