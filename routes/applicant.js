@@ -77,12 +77,6 @@ router.post('/register', nodemailerController.upload.array('file'), applicantCon
 
 });
 
-router.get('/registerSuccess', (req, res)=>{
-  res.render('applicantRegisterSuccess',{
-    userEmail: req.user.username
-  });
-});
-
 //로그인 기능
 router.post('/userLogin', passport.authenticate('local', {
   failureRedirect: '/loginFailed',
@@ -99,13 +93,10 @@ router.post('/userLogin', passport.authenticate('local', {
 });
 
 
-
-
 //인증 url
 router.get('/checkVerify/:verifyKey', (req, res) => {
   applicantController.verifyApplicant(req, res, req.params.verifyKey);
 });
-
 
 //유저 상세 페이지
 router.get('/applicants/:username', isLoggedIn, applicantController.findApplicant, articleController.findArticle, categoryController.getAllCategories,(req, res) => {

@@ -29,7 +29,7 @@ const isLoggedIn = (req, res, next) => {
 };
 //관리자 여부 확인
 const isAdmin = (req, res, next) => {
-  if (req.login) {
+  if (req.isAuthenticated()) {
     if (req.user.isAdmin == true) {
       return next();
     }
@@ -39,6 +39,7 @@ const isAdmin = (req, res, next) => {
     errorDetail: '관리자가 아닙니다!'
   });
 };
+
 
 //adminPage 검색 기능
 const searchCheck = (req, res, next) => {
@@ -84,7 +85,7 @@ const searchCheck = (req, res, next) => {
 
 
 //관리자 페이지
-router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants, categoryController.getAllCategories, searchCheck, (req, res) => {
+router.get('/adminPage/:category/:pageNum', isAdmin, applicantController.getAllApplicants, categoryController.getAllCategories, searchCheck, (req, res) => {
   let ApplicantsData = req.applicantsData;
   let CategoryData = req.categoriesData.find((category)=>
     category.categoryName == req.params.category
@@ -155,7 +156,7 @@ router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants
 });
 
 //태그 검색
-router.post('/adminPage/:category/:pageNum', categoryController.getAllTags, (req, res) => {
+router.post('/adminPage/:category/:pageNum', isAdmin, categoryController.getAllTags, (req, res) => {
   let queryString = "/adminPage/" + req.params.category + "/" + req.params.pageNum + "?";
   //검색창에 무언가를 검색했을 경우
   if (req.body.targetName.length != 0){
@@ -209,7 +210,7 @@ const scrapList = (req, res, next) => {
 
 //관리자 즐겨찾기 페이지
 
-router.get('/scrapList/:category/:pageNum', categoryController.getAllCategories, scrapList, (req, res)=>{
+router.get('/scrapList/:category/:pageNum', isAdmin, categoryController.getAllCategories, scrapList, (req, res)=>{
   let ApplicantsData = req.applicantsData;
   ApplicantsData.reverse();
   let CategoryData = req.categoriesData.find((category)=>
@@ -252,7 +253,7 @@ router.get('/scrapList/:category/:pageNum', categoryController.getAllCategories,
 });
 
 //즐겨찾기 추가
-router.post('/scrapApplicant/:applicantId', (req, res)=>{
+router.post('/scrapApplicant/:applicantId', isAdmin, (req, res)=>{
   Applicant.findById(req.user._id, (error, applicant)=>{
     if (error){
       console.log('error at scrapApplicant'+error);
@@ -269,7 +270,7 @@ router.post('/scrapApplicant/:applicantId', (req, res)=>{
 })
 
 //즐겨찾기 삭제
-router.post('/unscrapApplicant/:applicantId', (req, res)=>{
+router.post('/unscrapApplicant/:applicantId', isAdmin, (req, res)=>{
   Applicant.updateOne({_id: req.user._id}, {$pull : {scrapList: req.params.applicantId}}, (error, applicant)=>{
     if (error){
       console.log('error at unscrapApplicant'+error);
@@ -281,11 +282,11 @@ router.post('/unscrapApplicant/:applicantId', (req, res)=>{
 
 //공지사항 게시판
 
-router.get('/noticeboard/create', (req, res)=>{
+router.get('/noticeboard/create', isAdmin, (req, res)=>{
   res.render('notice_createNotice');
 });
 
-router.post('/noticeboard/create', nodemailerController.upload.array('file'), noticeController.getTotalNotice, noticeController.createNotice, (req, res)=>{
+router.post('/noticeboard/create', isAdmin, nodemailerController.upload.array('file'), noticeController.getTotalNotice, noticeController.createNotice, (req, res)=>{
   res.redirect('/noticeboard/1');
 });
 
@@ -294,7 +295,7 @@ router.get('/noticeboard/views/:noticeNumber', noticeController.findNotice, (req
     Notices: req.noticesData,
   });
 });
-router.get('/noticeboard/deleteNotice/:noticeNumber', (req, res)=>{
+router.get('/noticeboard/deleteNotice/:noticeNumber', isAdmin, (req, res)=>{
   noticeController.deleteNotice(req, res, req.params.noticeNumber);
   res.redirect('/noticeboard/1');
 });
@@ -343,33 +344,33 @@ router.get('/deleteArticle/:articleId', isLoggedIn, (req, res) => {
 });
 
 //태그 부여
-router.get('/attachTag/:applicantEmail/:tag/:adminId', (req, res)=>{
+router.get('/attachTag/:applicantEmail/:tag/:adminId', isAdmin, (req, res)=>{
   categoryController.attachTag(req, res);
 });
 
 //태그 취소
-router.post('/detachTag/:applicantEmail/:tag/:adminId', (req, res)=>{
+router.post('/detachTag/:applicantEmail/:tag/:adminId', isAdmin, (req, res)=>{
   categoryController.detachTag(req, res);
 });
 
 //태그 생성
-router.post('/createTag/:categoryName', (req, res)=>{
+router.post('/createTag/:categoryName', isAdmin, (req, res)=>{
   categoryController.createTag(req, res, req.params.categoryName);
 });
 
 //태그 삭제
-router.get('/deleteTag/:categoryName/:tag', (req, res)=>{
+router.get('/deleteTag/:categoryName/:tag', isAdmin, (req, res)=>{
   categoryController.deleteTag(req, res, req.params.categoryName);
 });
 
 //관리자 임명
-router.get('/appointAdmin/:applicantEmail', (req, res)=>{
+router.get('/appointAdmin/:applicantEmail', isAdmin, (req, res)=>{
   applicantController.appointAdmin(req, res);
   res.redirect('/applicants/'+req.params.applicantEmail);
 });
 
 //관리자가 확인하였습니다
-router.get('/checkDateUpdate/:applicantEmail', (req, res)=>{
+router.get('/checkDateUpdate/:applicantEmail', isAdmin, (req, res)=>{
   applicantController.checkDateUpdate(req, res);
   res.redirect('/applicants/'+req.params.applicantEmail);
 });
