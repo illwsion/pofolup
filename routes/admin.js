@@ -105,7 +105,11 @@ router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants
   if (ApplicantsData.length % pageSize != 0) {
     maxPage++;
   }
-  ApplicantsData.reverse();
+  //유저 updateDate 기준으로 정렬
+  ApplicantsData.sort((a,b)=>{
+    if (a.updateDate < b.updateDate) return 1;
+    else return -1;
+  });
 
   if (req.params.pageNum > maxPage)
     req.params.pageNum = maxPage;

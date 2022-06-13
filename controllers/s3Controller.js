@@ -24,7 +24,10 @@ exports.s3Upload = (req, res, userEmail, filename) => {
       console.log(err);
     } else {
       //업로드 성공
-
+      //로컬 파일은 삭제
+      if (fs.existsSync(__dirname + './uploads/' + filename)) {
+        fs.unlinkSync(__dirname + './uploads/' + filename);
+      }
     }
   });
 };

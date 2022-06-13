@@ -11,13 +11,14 @@
 #noticeboard li{
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid #d7d7d7;
 }
 
 .notice_noticeNumber{
   width: 10%;
 }
 .notice_title{
-  width: 70%;
+  width: 65%;
   display: flex;
 
 }
@@ -25,7 +26,7 @@
   width: 10%;
 }
 .notice_createDate{
-  width: 10%;
+  width: 15%;
 }
 #notice_list_pagination{
   display: flex;
