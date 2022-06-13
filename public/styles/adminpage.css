@@ -26,9 +26,14 @@
   display: flex;
   justify-content: space-between;
 }
+#sidebar_search_option{
+  width: 80px;
+  height: 42px;
+  margin: 0px;
+}
 
 #sidebar_search input[type=text]{
-  width: 280px;
+  width: 200px;
   height: 40px;
   border: 1px solid #a0a0a0;
   font-size: 20pt;

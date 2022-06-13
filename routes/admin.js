@@ -48,15 +48,34 @@ const searchCheck = (req, res, next) => {
   if (hashTags[0] != undefined){
     if (hashTags[0][0] == 'search'){
       //검색했으므로 태그 무시하고 이름으로만 찾음
-      Applicant.find({realname: hashTags[0][1]}, (error, applicants)=>{
-        if (error){
-          console.log('error at finding applicant at adminPage' + error);
-        }else{
-          ApplicantsData = applicants;
-          req.applicantsData = applicants;
-          next();
+      if (hashTags[1][1] == "realname"){
+        Applicant.find({realname: hashTags[0][1]}, (error, applicants)=>{
+          if (error){
+            console.log('error at finding applicant at adminPage' + error);
+          }else{
+            ApplicantsData = applicants;
+            req.applicantsData = applicants;
+            next();
+          }
+        });
+      } else if (hashTags[1][1] == "applicantNumber"){
+        if (hashTags[1][1].length != 6){
+          console.log(hashTags[0][1]);
+          hashTags[0][1] = ('000000' + hashTags[0][1]).slice(-6);
+          console.log(hashTags[0][1]);
         }
-      });
+        Applicant.find({applicantNumber: hashTags[0][1]}, (error, applicants)=>{
+          if (error){
+            console.log('error at finding applicant at adminPage' + error);
+          }else{
+            ApplicantsData = applicants;
+            req.applicantsData = applicants;
+            next();
+          }
+        });
+      }else{
+        next();
+      }
     }else{
       next();
     }
@@ -140,10 +159,10 @@ router.get('/adminPage/:category/:pageNum', applicantController.getAllApplicants
 //태그 검색
 router.post('/adminPage/:category/:pageNum', categoryController.getAllTags, (req, res) => {
   let queryString = "/adminPage/" + req.params.category + "/" + req.params.pageNum + "?";
-
   //검색창에 무언가를 검색했을 경우
   if (req.body.targetName.length != 0){
     queryString += ("search="+req.body.targetName + "&");
+    queryString += ("searchOption="+req.body.searchOption + "&");
   }
 
   //category별로 hashTags 불러와서 queryString에 넣음
