@@ -12,7 +12,19 @@ const storage = multer.diskStorage({
     callback(null, 'uploads/')
   },
   filename: (req, file, callback) => {
-    callback(null, req.body.username + '-' + Date.now() + '-' + file.originalname)
+    if (req.isAuthenticated()) {
+      if (req.user.isAdmin){
+        //공지사항
+        callback(null, req.body.title + '-' + Date.now() + '-' + file.originalname);
+      }else{
+        //포트폴리오 업데이트
+        callback(null, req.body.username + '-' + Date.now() + '-' + file.originalname);
+      }
+    }else{
+      //회원가입 시
+      callback(null, req.body.username + '-' + Date.now() + '-' + file.originalname);
+    }
+
   }
 });
 
