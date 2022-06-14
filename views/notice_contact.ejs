@@ -7,7 +7,7 @@
   <link href="/styles/register.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body id="popupscroll">
   <div id="container">
 
     <div id="header">
@@ -80,7 +80,7 @@
                 <p>문의 내용</p>
               </div>
               <div class="contact_info_value">
-                <textarea id="content" name="content" rows="8" cols="80" maxlength="3000" required></textarea>
+                <textarea id="content" name="content" rows="8" cols="80" maxlength="3000" wrap="hard" required></textarea>
               </div>
             </li>
 
@@ -153,6 +153,7 @@
         }
 
         function registerTest(){
+          console.log('hi');
           let sendOK = true;
           let companyname = document.getElementById('companyname').value;
           let enquirename = document.getElementById('enquirename').value;

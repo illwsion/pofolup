@@ -3,8 +3,6 @@
 
 <head>
 
-
-
 </head>
 
 <body style="width: 80%;margin: 0 auto;background-color: #ffffff;padding: 0 20px 20px 20px;">
@@ -15,13 +13,14 @@
       <hr id="headerline" style="margin-left: 0;margin-right: 0;width: 1650px;">
     </div>
     <div id="content">
-
       <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">기업명 : <%= companyname %></p>
       <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">담당자 : <%= enquirename %></p>
       <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">연락처 : <%= phone %></p>
       <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">이메일 : <%= email %></p>
       <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">문의종류 : <%= item %></p>
-      <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">문의내용 : <%= companyname %></p>
+      <p style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';">문의내용 : <br></p>
+      <p id="detail_info_style_text" style="font-size: 15pt;margin-bottom: 5px;font-family: '굴림';"><%= content %></p>
+
     </div>
 
     <div id="footer" style="margin-top: 60px;">
@@ -36,7 +35,8 @@
     </div>
 
   </div>
-</body>
 
+
+</body>
 
 </html>

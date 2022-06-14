@@ -324,7 +324,7 @@ router.get('/noticeboard/:pageNum', noticeController.getAllNotices,(req, res)=>{
 });
 
 //유저 삭제
-router.get('/deleteApplicant/:applicantId', isLoggedIn, (req, res) => {
+router.get('/deleteApplicant/:applicantId', isAdmin, (req, res) => {
   applicantController.deleteApplicant(req, res, req.params.applicantId);
   if (req.isAuthenticated()) {
     if (req.user.isAdmin) {
@@ -338,7 +338,7 @@ router.get('/deleteApplicant/:applicantId', isLoggedIn, (req, res) => {
 });
 
 //게시글 삭제
-router.get('/deleteArticle/:articleId', isLoggedIn, (req, res) => {
+router.get('/deleteArticle/:articleId', isAdmin, (req, res) => {
   articleController.deleteArticle(req, res, req.params.articleId);
   res.redirect('/applicants/' + req.user.username);
 });

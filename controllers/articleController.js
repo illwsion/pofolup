@@ -147,7 +147,7 @@ exports.createArticle = (req, res, applicantId) => {
           if (fullApply){
             if (!applicant.userTags.includes('최종제출')){
               applicant.userTags.push('최종제출');
-              nodemailerController.sendApplyMail(req, res);
+              nodemailerController.sendApplyMail(req, res, applicant);
             }
           }
           //그림작가 1개만 있을 경우

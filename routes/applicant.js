@@ -60,7 +60,7 @@ router.get('/', (req, res) => {
   }
 });
 
-//회원가입
+//회원가입창
 router.get('/register', (req, res)=>{
   //로그인 안되어있어야 가능
   if (req.isAuthenticated()) {
@@ -69,7 +69,7 @@ router.get('/register', (req, res)=>{
     res.render('applicantRegister');
   }
 });
-
+//회원가입
 router.post('/register', nodemailerController.upload.array('file'), applicantController.findApplicant, applicantController.getTotalUser, applicantController.createApplicant, passport.authenticate("local",{
   successRedirect: '/',
   failureRedirect: '/'
@@ -106,7 +106,9 @@ router.get('/applicants/:username', isLoggedIn, applicantController.findApplican
   //관리자도 아니고 내 계정도 아니면 튕겨나감
   if (req.user.username != req.params.username && req.user.isAdmin == false) {
     console.log('다른 사람의 페이지입니다');
-    res.redirect('/');
+    res.render('errorPage',{
+      errorDetail: '다른 사람의 페이지입니다'
+    });
   } else {
     let ArticlesData = req.articlesData;
     ArticlesData.reverse();
@@ -123,7 +125,7 @@ router.get('/applicants/:username', isLoggedIn, applicantController.findApplican
 });
 
 //status 변경
-router.post('/changeStatus', (req, res)=>{
+router.post('/changeStatus', isLoggedIn, (req, res)=>{
   Applicant.updateOne({username: req.body.username}, {$set: {status: req.body.status}}, (error, applicant)=>{
     if (error){
       console.log(error);
@@ -135,7 +137,7 @@ router.post('/changeStatus', (req, res)=>{
 
 //유저 프로필 업데이트
 //지원하기 버튼 클릭
-router.post('/apply', nodemailerController.upload.fields([
+router.post('/apply', isLoggedIn, nodemailerController.upload.fields([
   {
     name: '0', maxCount: 1
   },
@@ -196,7 +198,7 @@ router.get('/updateApplicant/:username', isLoggedIn, applicantController.findApp
   }
 });
 
-router.post('/updateApplicant/:username', nodemailerController.upload.array('file'), applicantController.findApplicant, (req, res)=>{
+router.post('/updateApplicant/:username', isLoggedIn, nodemailerController.upload.array('file'), applicantController.findApplicant, (req, res)=>{
   applicantController.updateApplicant(req, res);
   res.redirect('/applicants/' + req.user.username);
 });
@@ -241,8 +243,9 @@ router.get('/notice/:content', (req, res) => {
 });
 
 router.post('/notice/contact', (req, res)=>{
+  req.body.content = req.body.content.replaceAll(/(\r\n|\n|\r)/gm, "<br>");
   //nodemailerController.sendContactMail(req, res);
-  res.render('mail_contact',{
+  res.render('mail_verification',{
     companyname: req.body.companyname,
     enquirename: req.body.enquirename,
     phone: req.body.phone,
@@ -250,6 +253,7 @@ router.post('/notice/contact', (req, res)=>{
     item: req.body.item,
     content: req.body.content,
   });
+  //res.redirect('/notice/contact');
 });
 
 module.exports = router;
