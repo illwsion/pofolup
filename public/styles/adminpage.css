@@ -76,11 +76,15 @@
   color: black;
   text-decoration: none;
 }
+#sidebar_hashtags{
+  padding: 0;
+}
 
 .sidebar_hashtag{
   margin-left: 30px;
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 15pt;
+  list-style: none;
 }
 .sidebar_hashtag input[type=checkbox]{
 
@@ -128,13 +132,20 @@
 #sidebar_deletetag{
   margin-top: 50px;
 }
-#sidebar_deletetag a{
-  font-size: 10pt;
+#sidebar_deletetag_tags{
+  display: flex;
+  flex-wrap: wrap;
+}
+#sidebar_deletetag_tags a{
+  width: auto;
+  font-size: 14pt;
   color: black;
   text-decoration: none;
   border: 1px solid #a6a6a6;
   border-radius: 3px;
-  padding: 2px;
+  padding: 4px;
+  margin: 0 1% 10px 1%;
+  margin-bottom: 10px;
 }
 
 .checkboxframe{
@@ -145,24 +156,26 @@
 .applicant_list_profile{
   width: 1230px;
   height: 300px;
-  padding: 10px;
   display: flex;
 }
 
 .applicant_list_profile_mainimg img{
   width: 280px;
   height: 280px;
+  margin: 10px;
 }
 
 .applicant_list_detail{
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 1100px;
 }
 
 .applicant_list_info_name{
   display: flex;
   justify-content: space-between;
+  padding-bottom: 10px;
   border-bottom: 1px dashed #a0a0a0
 }
 .applicant_list_info_name_left{
@@ -211,9 +224,10 @@
 }
 
 .applicant_list_info_status{
-  height: 40px;
+  margin: 10px 0;
 }
 .applicant_list_info_status p{
+  font-size: 13pt;
   display: flex;
   align-items: center;
   margin: 0;
@@ -222,11 +236,13 @@
 
 .applicant_list_info_tag{
   display: flex;
+  flex-wrap: wrap;
 }
 .applicant_list_info_tag p{
+  font-size: 15pt;
   display: flex;
   align-items: center;
-  height: 30px;
+  height: 20px;
   padding: 5px;
   border: 1px solid #a6a6a6;
   border-radius: 10px;
@@ -234,13 +250,11 @@
   border:
 }
 
-
-
-
 .applicant_list_profile_subimgs{
   width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 .applicant_list_profile_subimgs img{
   width: 145px;
@@ -263,5 +277,6 @@
   font-family: 'NanumSquareRound';
   font-size: 18pt;
   text-decoration: none;
+  color: #404040;
   margin: 0 8px;
 }

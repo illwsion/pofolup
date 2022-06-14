@@ -27,7 +27,10 @@
     </div>
   </div>
   <% } %>
-  <p class="article_upload_title"><b>Portfolio</b></p>
+  <div class="article_upload_title">
+      <img src="/images/06_view_11.jpg" alt="">
+  </div>
+
 
 
 
@@ -55,7 +58,7 @@
         <% } %>
       </div>
     </div>
-    <div class="article_image">
+    <div class="article_image article_image_middle">
       <% if (Articles[0].fileNames[1] != null) { %>
           <img id= "image_container_1" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[1]%>" width="100px" , height="100px" alt="구도 1. 새로고침 필요">
       <% } else {%>
@@ -112,7 +115,7 @@
         <% } %>
       </div>
     </div>
-    <div class="article_image">
+    <div class="article_image article_image_middle">
       <% if (Articles[0].fileNames[4] != null) { %>
           <img id= "image_container_4" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Articles[0].fileNames[4]%>" width="100px" , height="100px" alt="구도 4. 새로고침 필요">
       <% } else {%>
@@ -175,7 +178,7 @@
 <% } else{ %>
   <!-- 관리자일 경우 -->
   <div id="article_attachedTag">
-    <p><b>Hash Tag</b></p>
+    <img id="HashTag" src="/images/06_view_15.jpg" alt="">
     <div id="detail_info_tags">
 
 
@@ -308,6 +311,10 @@ window.onload = function(){
   //document.getElementById('popup_open').addEventListener('click', openPopup);
   //document.getElementById('popup_confirm').addEventListener('click', confirmPopup);
   document.getElementById('popup_close').addEventListener('click', closePopup);
+
+  let style = document.getElementById('detail_info_style_text').innerHTML;
+  style = style.replaceAll("&lt;br&gt;", "<br>");
+  document.getElementById('detail_info_style_text').innerHTML = style;
 }
 
 </script>

@@ -78,6 +78,9 @@ exports.createApplicant = (req, res, next) => {
     //현재 인원 수
     let currentUser = req.totalUser;
     currentUser = ('000000'+currentUser).slice(-6);
+    //그림스타일 엔터 적용
+    req.body.style = req.body.style.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    req.body.style.replace(/['"]+/g, '');
     let newApplicant = new Applicant({
       applicantNumber: currentUser,
       username: req.body.username,

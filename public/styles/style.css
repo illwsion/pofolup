@@ -29,12 +29,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 
 #headerline{
-
-  margin-left: 0;
-  margin-right: 0;
+  margin: 0;
   width: 1650px;
 }
 
@@ -43,14 +42,14 @@ body {
   width: 347px;
   max-width: 100%;
   display: block;
-  margin: 20px 0px 33px 0px;
+  margin: 30px 0px 33px 0px;
 }
 
 
 #header-sub-logo{
   height: 48px;
   width: 334px;
-  margin: 0px 0px 10px 0px;
+  margin: -40px 0px 10px 0px;
   max-width: 100%;
   display: block;
 }
@@ -65,13 +64,15 @@ body {
 
 #footer_nav{
   height:30px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #a6a6a6;
 }
 
 #footer_nav li, #footer_nav p, #footer_nav a{
   display: inline-block;
   font-size: 10pt;
   text-decoration: none;
-  color: black;
+  color: #808080;
 }
 
 #footer_nav ul{
@@ -81,10 +82,23 @@ body {
 #footer_info{
   height:150px;
   font-size:15px;
+  display: flex;
+  flex-direction: column;
 }
 #footer_copyright{
-  float:right;
-  color:#a7a7a7;
+  display: flex;
+  justify-content: flex-end;
+  color:#808080;
+}
+#footer_company{
+  display: flex;
+  align-items: center;
+}
+#footer_company_logo img{
+  margin-right: 50px;
+}
+.footer_company{
+  font-size: 15pt;
 }
 /* etc */
 #logoutButton input{

@@ -1,7 +1,7 @@
 /* applicantDetail.ejs */
 
 #container{
-  width: 1640px;
+  width: 1600px;
   padding: 20px;
   margin: 0 auto;
 }
@@ -39,6 +39,9 @@
   font-size: 40pt;
   line-height: normal;
 }
+#detail_info_info img{
+
+}
 #detail_info_info p{
   margin: 0;
 }
@@ -51,6 +54,7 @@
 #detail_info_info li{
   list-style: none;
   font-size: 30px;
+  color: #404040;
 }
 #detail_info_info li:before{
   content: "•";
@@ -69,7 +73,9 @@
   height: 280px;
   overflow: auto;
 }
-
+#detail_info_style p{
+  font-size: 15pt;
+}
 #update_info{
   display: flex;
   flex-direction: column;
@@ -101,6 +107,7 @@
   height: 80px;
   margin-bottom: 70px;
   border: 1px #000000 solid;
+  box-sizing:border-box;
 }
 
 #detail_status_mystatus{
@@ -117,13 +124,15 @@
   align-items: center;
 }
 #detail_status_radio input[type="radio"]{
-  height: 1em;
+  height: 1.5em;
   width: 10%;
   margin: 5px;
 }
 #detail_status_radio label{
   width: 50%;
   font-size: 15pt;
+  display: flex;
+  align-items: center;
 }
 
 #detail_status_admincheck{

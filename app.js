@@ -34,9 +34,6 @@
 
   const app = express();
 
-  //https 받은 이후 삭제 예정
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
   //기본 설정
   app.set('port', process.env.PORT);
   app.set('view engine', 'ejs');
@@ -99,6 +96,9 @@
   passport.use(new Localstrategy(Applicant.authenticate()));
   passport.serializeUser(Applicant.serializeUser());
   passport.deserializeUser(Applicant.deserializeUser());
+
+  //https 받은 이후 삭제 예정
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
   //mongoose
   //Conneting

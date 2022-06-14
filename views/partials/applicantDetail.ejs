@@ -4,7 +4,7 @@
       <img src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Applicants[0].file%>">
     </div>
     <div id="detail_info_info">
-      <p><b>My Information</b></p>
+      <img src="/images/05_mypage_03.jpg" alt="">
       <ul>
         <li>
           <%= Applicants[0].realname%>
@@ -29,7 +29,7 @@
   </div>
   <div id="detail_info_right">
       <div id="detail_info_style">
-        <%= Applicants[0].style%>
+        <p id="detail_info_style_text" value="<%= Applicants[0].style%>"><%= Applicants[0].style%></p>
       </div>
       <div id="update_info">
         <form id="logoutButton" action="/logout" method="post">
@@ -41,7 +41,7 @@
 </div>
 <div id="detail_status">
   <div id="detail_status_mystatus">
-    <p><b>My Status</b></p>
+    <img src="/images/05_mypage_14.jpg" alt="">
   </div>
   <div id="detail_status_radio">
     <input id="hiddenEmail" hidden type="text" name="username" value="<%= Applicants[0].username %>">

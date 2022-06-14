@@ -80,6 +80,7 @@
 #detail_info_left{
   display: flex;
   width: 50%;
+  margin-right: 30px;
 }
 #detail_info_mainimage{
   width: 100%
@@ -101,10 +102,6 @@
   justify-content: space-between;
   margin-bottom: 30px;
 }
-#detail_info_right_Information{
-  margin: 0;
-  font-size: 30px;
-}
 #detail_info_right_applicantNumber{
   margin: 0;
   margin-right: 40px;
@@ -125,6 +122,7 @@
   align-items: center;
   font-size: 20pt;
   margin-bottom: 30px;
+  box-sizing:border-box;
 }
 #detail_status p{
   margin: 0;
@@ -154,9 +152,10 @@
 #detail_info_style{
   border: 1px solid black;
   width:770px;
-  height: 280px;
+  height: 240px;
   overflow: auto;
   margin-bottom: 30px;
+  box-sizing: border-box;
 }
 #detail_info_style p{
   margin-left: 20px;
@@ -169,7 +168,8 @@
   display: flex;
   align-items: center;
   border: 1px solid black;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
 }
 #detail_info_url p{
   margin-left: 20px;
@@ -194,11 +194,12 @@
 
 #detail_info_tags{
   display: flex;
+  flex-wrap: wrap;
 }
 
 .userTags{
   display: flex;
-  margin: 0 5px;
+  margin: 0px 5px 5px 0;
 }
 .userTags p{
   font-size: 10pt;
@@ -237,7 +238,10 @@
   height: 15px;
   width: 15px;
 }
-
+#detail_info_update{
+  display: flex;
+  justify-content: space-between;
+}
 #detail_info_update p{
   font-size: 15pt;
   margin: 0;

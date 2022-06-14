@@ -65,10 +65,10 @@
           </div>
           <div id="paging">
             <% if (pageNum > 1) { %>
-               <a class="pg" href="/noticeboard/1">처음</a>
+               <a class="pg" href="/noticeboard/1">[처음]</a>
             <% } %>
             <% if (pageNum > 10) { %>
-               <a href="/noticeboard/<%= parseInt((pageNum-1)/10)*10 %>">이전</a>
+               <a href="/noticeboard/<%= parseInt((pageNum-1)/10)*10 %>">[이전]</a>
             <% } %>
             <div>
               <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
@@ -78,10 +78,10 @@
               <% } %>
             </div>
             <% if (pageNum <= parseInt(maxPage/10)*10) { %>
-               <a href="/noticeboard/<%= parseInt((pageNum-1)/10)*10+11 %>">다음</a>
+               <a href="/noticeboard/<%= parseInt((pageNum-1)/10)*10+11 %>">[다음]</a>
             <% } %>
             <% if (pageNum != maxPage) { %>
-               <a href="/noticeboard/<%=maxPage%>">맨끝</a>
+               <a href="/noticeboard/<%=maxPage%>">[맨끝]</a>
             <% } %>
           </div>
         </div>

@@ -34,7 +34,7 @@
   </div>
   <div id="detail_info_right">
     <div id="detail_info_right_title">
-      <p id="detail_info_right_Information"><b>Information</b></p>
+      <img src="/images/06_view_07.jpg" alt="">
       <p id="detail_info_right_applicantNumber">회원번호 : <%= Applicants[0].applicantNumber %></p>
     </div>
     <div id="detail_status">
@@ -64,7 +64,7 @@
       </ul>
     </div>
     <div id="detail_info_style">
-      <p><%= Applicants[0].style%></p>
+      <p id="detail_info_style_text"><%= Applicants[0].style%></p>
     </div>
 
     <div id="detail_info_url">
@@ -76,6 +76,17 @@
       <% } %>
     </div>
     <div id="detail_info_update">
+      <div id="detail_info_tags">
+        <% for (let i=0; i<Applicants[0].userTags.length; i++) { %>
+          <div class="userTags">
+              <p><%= Applicants[0].userTags[i] %></p>
+              <form class="" action="/detachTag/<%= Applicants[0].username%>/<%= Applicants[0].userTags[i]%>/<%= user._id%>" method="post">
+                <label for="tag<%=i%>"><img src="/images/deleteTag.png" alt=""></label>
+                <input id="tag<%=i%>" type="submit" name="" value="태그 삭제하기">
+              </form>
+          </div>
+        <% } %>
+      </div>
       <p>최종 업데이트 : <%= Applicants[0].updateDate %></p>
     </div>
   </div>
@@ -94,5 +105,13 @@
     if(result){
       location.href = "/appointAdmin/<%= Applicants[0].username %>"
     }
+  }
+</script>
+
+<script>
+  window.onload = ()=>{
+    let style = document.getElementById('detail_info_style_text').innerHTML;
+    style = style.replaceAll("&lt;br&gt;", "<br>");
+    document.getElementById('detail_info_style_text').innerHTML = style;
   }
 </script>
