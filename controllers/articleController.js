@@ -7,6 +7,7 @@ const fs = require('fs');
 const passport = require('passport');
 let fileLength = 6;
 const moment = require('moment-timezone');
+const sanitize = require('sanitize-html');
 
 exports.getAllArticles = (req, res, next) => {
   Article.find({}, (error, articles) => {
@@ -47,9 +48,8 @@ exports.articleInit = (req, res, applicantId) =>{
   let newArticle = new Article({
     applicantId: applicantId,
     category: req.body.category,
-    userEmail: req.body.username,
-    comment: req.body.comment,
-    url: req.body.url,
+    userEmail: sanitize(req.body.username),
+    url: sanitize(req.body.url),
     createDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
   });
   newArticle.save((error, article) => {
@@ -74,10 +74,10 @@ exports.articleInit = (req, res, applicantId) =>{
 
           applicant.articles.push(article._id);
           if (applicant.categories.indexOf(req.body.category) == -1){
-            console.log('카테고리 추가');
+            //카테고리 추가
             applicant.categories.push(req.body.category);
           }else{
-            console.log('카테고리 이미 있음');
+            //카테고리 이미 있음
           }
           applicant.updateDate = moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm');
           applicant.save();
@@ -92,9 +92,8 @@ exports.createArticle = (req, res, applicantId) => {
   let newArticle = new Article({
     applicantId: applicantId,
     category: req.body.category,
-    userEmail: req.body.username,
-    comment: req.body.comment,
-    url: req.body.url,
+    userEmail: sanitize(req.body.username),
+    url: sanitize(req.body.url),
     updateDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
   });
 
@@ -119,11 +118,9 @@ exports.createArticle = (req, res, applicantId) => {
           //원래 있던 것은 삭제
           if (req.articlesData[0].fileNames[i] != null){
             s3Controller.s3Delete(req, res, req.body.username, req.articlesData[0].fileNames[i]);
-            console.log(req.articlesData[0].fileNames[i]+'삭제');
           }
         }else if (req.articlesData[0].fileNames[i] != null){
           //새로 올라오지 않았지만 이미 있을 경우 파일 연결만
-          console.log('없지만 이미 있던 파일 연결');
           article.fileNames[i] = req.articlesData[0].fileNames[i];
         }
 
@@ -183,8 +180,7 @@ exports.deleteArticle = (req, res, articleId) => {
         //연결된 유저에서 해당 게시글 id 삭제
         Applicant.updateOne({_id: article.applicantId}, {$pull : {articles: article._id}}, (error, applicant)=>{
           if (error){
-            console.log('error at articles delete');
-            console.log(error);
+            console.log('error at articles delete' + error);
           } else{
             username = applicant.username;
           }

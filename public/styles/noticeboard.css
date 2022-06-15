@@ -129,7 +129,7 @@
 
 /* createNotice */
 #notice_create{
-
+  width: 100%;
 }
 
 .notice_info_key p{
@@ -140,14 +140,16 @@
   width: 800px;
   height: 50px;
   font-size: 20pt;
+  box-sizing: border-box;
 }
 .notice_info_value textarea{
   font-size: 15pt;
   width: 800px;
   resize: none;
+  box-sizing: border-box;
 }
 
-.upload_button label{
+.upload_button{
   font-size: 15pt;
   display: flex;
   float: right;
@@ -159,17 +161,18 @@
   align-items: center;
   padding: 0;
   line-height: normal;
-  margin-right: 10px;
   cursor: pointer;
 }
 .upload_button input[type="file"]{
   display: none;
 }
-
+.upload_button label{
+  margin:0;
+}
 #image_container{
   display: block;
   width : 800px;
-  margin : 0px 10px 20px 10px;
+  margin : 0px 0px 20px 0px;
 }
 
 /* noticeArticle */

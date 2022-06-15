@@ -4,6 +4,7 @@ const Pofolup = require('./../models/pofolup');
 const passport = require('passport');
 const crypto = require('crypto');
 const moment = require('moment-timezone');
+const sanitize = require('sanitize-html');
 //mongoose
 const articleController = require('./../controllers/articleController');
 const s3Controller = require('./../controllers/s3Controller');
@@ -83,13 +84,13 @@ exports.createApplicant = (req, res, next) => {
     req.body.style.replace(/['"]+/g, '');
     let newApplicant = new Applicant({
       applicantNumber: currentUser,
-      username: req.body.username,
-      realname: req.body.realname,
+      username: sanitize(req.body.username),
+      realname: sanitize(req.body.realname),
       position: '그림작가',
       sex: req.body.sex,
-      birth: req.body.birth,
-      phone: req.body.phone,
-      style: req.body.style,
+      birth: sanitize(req.body.birth),
+      phone: sanitize(req.body.phone),
+      style: sanitize(req.body.style),
       status: req.body.status,
       file: req.files[0].filename,
       createDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
@@ -199,10 +200,10 @@ exports.updateApplicant = (req, res) => {
   }
 
   Applicant.updateOne({username: req.params.username},{$set:{
-    realname: req.body.realname,
-    birth: req.body.birth,
-    phone: req.body.phone,
-    style: req.body.style,
+    realname: sanitize(req.body.realname),
+    birth: sanitize(req.body.birth),
+    phone: sanitize(req.body.phone),
+    style: sanitize(req.body.style),
     file: filename,
   }}, (error, result)=>{
     if (error){

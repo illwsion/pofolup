@@ -212,7 +212,7 @@ const scrapList = (req, res, next) => {
 
 router.get('/scrapList/:category/:pageNum', isAdmin, categoryController.getAllCategories, scrapList, (req, res)=>{
   let ApplicantsData = req.applicantsData;
-  ApplicantsData.reverse();
+  //ApplicantsData.reverse();
   let CategoryData = req.categoriesData.find((category)=>
     category.categoryName == req.params.category
   );
