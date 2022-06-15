@@ -17,6 +17,7 @@
         <!-- 아무도 로그인되어있지 않음 -->
         <div class="form-wrap">
           <form action="/userLogin" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <input type="text" name="username" id="username" required placeholder="  Email">
             <input type="password" name="password" id="password" required placeholder="  Password">
             <div id="register_login">

@@ -4,9 +4,9 @@ const router = express.Router();
 const path = require('path');
 const Applicant = require('./../models/applicant');
 
+const cookieParser = require('cookie-parser');
 const http = require('http');
 const url = require('url');
-
 const csrf = require('csurf');
 const csrfProtection = csrf({
   cookie: true
@@ -17,6 +17,9 @@ const articleController = require('./../controllers/articleController');
 const categoryController = require('./../controllers/categoryController');
 const nodemailerController = require('./../controllers/nodemailerController.js')
 const s3Controller = require('./../controllers/s3Controller');
+
+
+router.use(cookieParser(process.env.cookieKey));
 
 //스태틱 폴더 지정
 router.use(express.static(__dirname + '/../public'));
@@ -45,7 +48,7 @@ const isVerified = (req, res, next) => {
 };
 
 //메인 페이지.
-router.get('/', (req, res) => {
+router.get('/', csrfProtection, (req, res) => {
   if (req.isAuthenticated()) {
     if (req.user.isAdmin){
       res.redirect('/adminPage/illustrator/1');
@@ -55,30 +58,34 @@ router.get('/', (req, res) => {
   }else{
     res.render('index', {
       user: req.user,
-      //csrfToken: req.csrfToken()
+      csrfToken: req.csrfToken(),
     });
   }
 });
 
 //회원가입창
-router.get('/register', (req, res)=>{
+router.get('/register', csrfProtection, (req, res)=>{
   //로그인 안되어있어야 가능
   if (req.isAuthenticated()) {
     res.redirect('/');
   } else {
-    res.render('applicantRegister');
+    res.render('applicantRegister',{
+      csrfToken: req.csrfToken()
+    });
   }
 });
+
 //회원가입
-router.post('/register', nodemailerController.upload.array('file'), applicantController.findApplicant, applicantController.getTotalUser, applicantController.createApplicant, passport.authenticate("local",{
+router.post('/register', nodemailerController.upload.array('file'), csrfProtection, applicantController.findApplicant, applicantController.getTotalUser, applicantController.createApplicant, passport.authenticate("local",{
   successRedirect: '/',
   failureRedirect: '/'
 }), (req, res) => {
-
+  console.log('hello');
+  console.log(req.body._csrf);
 });
 
 //로그인 기능
-router.post('/userLogin', passport.authenticate('local', {
+router.post('/userLogin', csrfProtection, passport.authenticate('local', {
   failureRedirect: '/loginFailed',
   session: true
 }), applicantController.findApplicant, articleController.findArticle, (req, res) => {
@@ -99,7 +106,7 @@ router.get('/checkVerify/:verifyKey', (req, res) => {
 });
 
 //유저 상세 페이지
-router.get('/applicants/:username', isLoggedIn, applicantController.findApplicant, articleController.findArticle, categoryController.getAllCategories,(req, res) => {
+router.get('/applicants/:username', csrfProtection, isLoggedIn, applicantController.findApplicant, articleController.findArticle, categoryController.getAllCategories,(req, res) => {
   let CategoryData = req.categoriesData.find((category)=>
     category.categoryName == 'illustrator'
   );
@@ -120,6 +127,7 @@ router.get('/applicants/:username', isLoggedIn, applicantController.findApplican
       Applicants: ApplicantsData,
       Articles: ArticlesData,
       curCategory: CategoryData,
+      csrfToken: req.csrfToken(),
     });
   }
 });
@@ -156,7 +164,7 @@ router.post('/apply', isLoggedIn, nodemailerController.upload.fields([
   {
     name: '5', maxCount: 1
   },
-]), applicantController.findApplicant, articleController.findArticle,(req, res, next) => {
+]), csrfProtection, applicantController.findApplicant, articleController.findArticle,(req, res, next) => {
   if (req.isAuthenticated()) {
     if (req.user.username == req.body.username) {
       articleController.deleteArticle(req, res, req.articlesData[0]._id);
@@ -179,7 +187,7 @@ router.post('/apply', isLoggedIn, nodemailerController.upload.fields([
 });
 
 //유저 개인정보 수정하기
-router.get('/updateApplicant/:username', isLoggedIn, applicantController.findApplicant,  categoryController.getAllCategories, (req, res) => {
+router.get('/updateApplicant/:username', csrfProtection, isLoggedIn, applicantController.findApplicant,  categoryController.getAllCategories, (req, res) => {
   let CategoryData = req.categoriesData.find((category)=>
     category.categoryName == 'illustrator'
   );
@@ -194,11 +202,12 @@ router.get('/updateApplicant/:username', isLoggedIn, applicantController.findApp
     res.render('applicantUpdate', {
       Applicants: ApplicantsData,
       curCategory: CategoryData,
+      csrfToken: req.csrfToken(),
     });
   }
 });
 
-router.post('/updateApplicant/:username', isLoggedIn, nodemailerController.upload.array('file'), applicantController.findApplicant, (req, res)=>{
+router.post('/updateApplicant/:username', isLoggedIn, nodemailerController.upload.array('file'), csrfProtection, applicantController.findApplicant, (req, res)=>{
   applicantController.updateApplicant(req, res);
   res.redirect('/applicants/' + req.user.username);
 });
@@ -223,10 +232,12 @@ router.get("/logout", function(req, res) {
 });
 
 //공지사항 페이지
-router.get('/notice/:content', (req, res) => {
+router.get('/notice/:content', csrfProtection, (req, res) => {
   switch (req.params.content) {
     case 'contact':
-      res.render('notice_contact');
+      res.render('notice_contact',{
+        csrfToken: req.csrfToken(),
+      });
       break;
     case 'privacy':
       res.render('notice_privacy');
@@ -242,7 +253,7 @@ router.get('/notice/:content', (req, res) => {
   }
 });
 
-router.post('/notice/contact', (req, res)=>{
+router.post('/notice/contact', csrfProtection, (req, res)=>{
   req.body.content = req.body.content.replaceAll(/(\r\n|\n|\r)/gm, "<br>");
   //nodemailerController.sendContactMail(req, res);
   res.render('mail_verification',{

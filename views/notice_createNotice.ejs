@@ -21,6 +21,7 @@
       </div>
       <div id="notice_create">
         <form id="notice_form" action="/noticeboard/create" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div class="">
             <div class="notice_info_key">
               <p>제목</p>

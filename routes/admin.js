@@ -6,7 +6,10 @@ const Applicant = require('./../models/applicant');
 
 const http = require('http');
 const url = require('url');
-
+const csrf = require('csurf');
+const csrfProtection = csrf({
+  cookie: true
+});
 //mongoose
 const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
@@ -282,11 +285,13 @@ router.post('/unscrapApplicant/:applicantId', isAdmin, (req, res)=>{
 
 //공지사항 게시판
 
-router.get('/noticeboard/create', isAdmin, (req, res)=>{
-  res.render('notice_createNotice');
+router.get('/noticeboard/create', csrfProtection, isAdmin, (req, res)=>{
+  res.render('notice_createNotice',{
+    csrfToken: req.csrfToken(),
+  });
 });
 
-router.post('/noticeboard/create', isAdmin, nodemailerController.upload.array('file'), noticeController.getTotalNotice, noticeController.createNotice, (req, res)=>{
+router.post('/noticeboard/create', isAdmin, nodemailerController.upload.array('file'), csrfProtection, noticeController.getTotalNotice, noticeController.createNotice, (req, res)=>{
   res.redirect('/noticeboard/1');
 });
 

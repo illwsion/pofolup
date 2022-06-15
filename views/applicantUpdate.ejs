@@ -81,6 +81,7 @@
     <div id="contents">
 
       <form id="update_form" action="/updateApplicant/<%= Applicants[0].username %>" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <div id="profile_information">
 
           <ul>

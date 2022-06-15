@@ -1,5 +1,6 @@
 <form id="article_upload" action="/apply" method="post" enctype="multipart/form-data">
   <input hidden type="text" name="username" value="<%= Applicants[0].username %>">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <% if (!user.isAdmin) { %>
   <div id="article_notice">
     <div id="article_notice_notice">

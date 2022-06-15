@@ -20,6 +20,7 @@
       </div>
       <div id="notice_contact">
         <form id="contact_form" action="/notice/contact" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <ul>
             <li class="contact_info">
               <div class="contact_info_key">
