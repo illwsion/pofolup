@@ -31,6 +31,10 @@
   color: #404040;
 }
 
+.notice_termsAndPolicy{
+  white-space: pre-line;
+}
+
 /* contact */
 .upload_button label{
   font-size: 15pt;

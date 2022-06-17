@@ -17,6 +17,12 @@
     }
   </style>
 -->
+<script>
+  function tagChange(){
+    let myform = document.getElementById("sidebar_search_form");
+    myform.submit();
+  }
+</script>
 </head>
 
 <body>
@@ -29,7 +35,7 @@
         <form id="logoutButton" action="/logout" method="post">
           <input type="submit" value="Log out">
         </form>
-        <form action="/adminPage/<%= category %>/1" method="post">
+        <form id="sidebar_search_form" action="/adminPage/<%= category %>/1" method="post">
           <div id="sidebar_search">
             <select name="searchOption" id="sidebar_search_option">
               <option value="realname" selected>이름</option>
@@ -51,12 +57,12 @@
               <% if (queryString.search(curCategory.hashTags[i]) != -1) { %>
                 <li class="sidebar_hashtag">
                   <label for="cb<%= i %>" class="checkboxframe"></label>
-                  <label><input id="cb<%= i %>" type="checkbox" name= hashTags value="<%= curCategory.hashTags[i] %>" checked><%= curCategory.hashTags[i] %></label>
+                  <label><input id="cb<%= i %>" onchange="tagChange()" type="checkbox" name= hashTags value="<%= curCategory.hashTags[i] %>" checked><%= curCategory.hashTags[i] %></label>
                 </li>
               <% } else { %>
                 <li class="sidebar_hashtag">
                   <label for="cb<%= i %>" class="checkboxframe"></label>
-                  <label><input id="cb<%= i %>" type="checkbox" name= hashTags value="<%= curCategory.hashTags[i] %>" ><%= curCategory.hashTags[i] %></label>
+                  <label><input id="cb<%= i %>" onchange="tagChange()" type="checkbox" name= hashTags value="<%= curCategory.hashTags[i] %>" ><%= curCategory.hashTags[i] %></label>
                 </li>
               <% } %>
             <% } %>

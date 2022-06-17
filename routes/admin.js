@@ -101,15 +101,17 @@ router.get('/adminPage/:category/:pageNum', isAdmin, applicantController.getAllA
     if (hashTags[0][0] != 'search'){
       //검색한게 없으므로 태그 적용
       outer : for (var i=0; i<ApplicantsData.length; i++){
+        //category 검사해서 맞지 않는 applicant는 삭제
+        //지금은 category 'illustrator' 1개뿐이므로 비활성화
+        /*
         if(!ApplicantsData[i].categories.includes(req.params.category)){
           ApplicantsData.splice(i, 1);
           i--;
           continue;
         }
+        */
         for (var j=0; j<hashTags.length; j++){
-          //category 검사해서 맞지 않는 applicant는 삭제
           //Tag에 맞지 않는 ApplicantsData는 삭제
-
           if (!ApplicantsData[i].userTags.includes(hashTags[j][0])) {
             ApplicantsData.splice(i, 1);
             i--;
@@ -119,7 +121,17 @@ router.get('/adminPage/:category/:pageNum', isAdmin, applicantController.getAllA
       }
     }
   }else{
-
+    //category 검사해서 맞지 않는 applicant는 삭제
+    //지금은 category 'illustrator' 1개뿐이므로 비활성화
+    /*
+    for (var i=0; i<ApplicantsData.length; i++){
+      if(!ApplicantsData[i].categories.includes(req.params.category)){
+        ApplicantsData.splice(i, 1);
+        i--;
+        continue;
+      }
+    }
+    */
   }
 
   let maxPage = parseInt(ApplicantsData.length / pageSize);

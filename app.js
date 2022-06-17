@@ -67,29 +67,16 @@
   };
   if (process.env.NODE_ENV === 'production') {
     sessOptions.proxy = true;
-    //https 이후
-    //sessOptions.cookie.secure = true;
+    sessOptions.cookie.secure = true;
   }
   app.use(session(sessOptions));
   app.use(cookieParser(process.env.cookieKey));
-  /*
-  app.use(session({
-    secret: process.env.cookieKey,
-    resave: false,
-    saveUninitialized: true,
-    cookie:{
-      httpOnly: true
-    }
-  }));
-  */
+
   //req.body 에 접근하기 위한 미들웨어
   app.use(express.json());
   app.use(express.urlencoded({
     extended: true
   }));
-
-  //csrf
-  //app.use(csrf());
 
   //passport
   app.use(passport.initialize());
@@ -143,4 +130,4 @@
   app.listen(app.get('port'), () => {
     //winston.info('App is running on port ' + app.get('port'));
     console.log(app.get('port'), '번 포트에서 실행 중..');
-  })
+  });

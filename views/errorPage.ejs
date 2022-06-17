@@ -14,8 +14,9 @@
     </div>
     <div id="contents">
       <% if (errorDetail != undefined) { %>
-      <p>에러 내용</p>
       <p><%= errorDetail %></p>
+      <% } else {%>
+      <p>에러가 발생했습니다!</p>
       <% } %>
     </div>
 

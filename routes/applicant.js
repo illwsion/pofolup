@@ -178,7 +178,7 @@ router.post('/apply', isLoggedIn, nodemailerController.upload.fields([
     }
   }
   else{
-    res.render('loginFailed');
+    res.render('errorPage_loginFailure');
   }
   next();
 }, (req, res)=>{
@@ -219,7 +219,7 @@ router.get('/errorPage', (req, res)=>{
 });
 
 router.get('/loginFailed', (req, res) => {
-  res.render('loginFailed');
+  res.render('errorPage_loginFailure');
 });
 
 router.post('/logout', (req, res) => {
