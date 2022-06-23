@@ -29,7 +29,6 @@ const storage = multer.diskStorage({
 });
 
 exports.uploadFile = (req, res, next)=>{
-  console.log('uploadFile');
   const upload = multer({
     storage: storage,
     //파일 크기 5mb로 제한
@@ -46,14 +45,12 @@ exports.uploadFile = (req, res, next)=>{
       });
     }
     else{
-      console.log('no error');
       next();
     }
   })
 };
 
 exports.uploadFields = (req, res, next)=>{
-  console.log('uploadFile');
   const upload = multer({
     storage: storage,
     //파일 크기 5mb로 제한
@@ -89,7 +86,6 @@ exports.uploadFields = (req, res, next)=>{
       });
     }
     else{
-      console.log('no error');
       next();
     }
   })

@@ -58,7 +58,7 @@
     function scrapApplicant(i){
       alert('즐겨찾기에 등록했습니다');
       let applicantId = document.getElementById('applicantId'+i).value;
-      fetch("http://127.0.0.1:8080/scrapApplicant/"+applicantId, {
+      fetch("https://pofolup.com/scrapApplicant/"+applicantId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +70,7 @@
     function unscrapApplicant(i){
       alert('즐겨찾기에서 삭제했습니다');
       let applicantId = document.getElementById('applicantId'+i).value;
-      fetch("http://127.0.0.1:8080/unscrapApplicant/"+applicantId, {
+      fetch("https://pofolup.com/unscrapApplicant/"+applicantId, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

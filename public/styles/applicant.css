@@ -76,6 +76,15 @@
 #detail_info_style p{
   font-size: 15pt;
 }
+#detail_info_style textarea{
+  font-family: 'NanumSquareRound';
+  width: 590px;
+  height: 265px;
+  font-size: 15pt;
+  background-color: white;
+  border: 0;
+  resize: none;
+}
 #update_info{
   display: flex;
   flex-direction: column;

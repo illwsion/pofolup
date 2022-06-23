@@ -29,7 +29,8 @@
   </div>
   <div id="detail_info_right">
       <div id="detail_info_style">
-        <p id="detail_info_style_text" value="<%= Applicants[0].style%>"><%= Applicants[0].style%></p>
+        <textarea name="name" rows="8" cols="160" disabled><%= Applicants[0].style %></textarea>
+
       </div>
       <div id="update_info">
         <form id="logoutButton" action="/logout" method="post">
@@ -72,7 +73,7 @@
         statusvalue = radio2.value;
       }
 
-      fetch("http://127.0.0.1:8080/changeStatus", {
+      fetch("https://pofolup.com/changeStatus", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

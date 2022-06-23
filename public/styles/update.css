@@ -85,6 +85,7 @@
 .profile_info_value input{
   width: 100%;
   height: auto;
+  font-family: 'NanumSquareRound';
 }
 
 .profile_info_value input[type="radio"]{
@@ -107,6 +108,8 @@
   margin-bottom: 15px;
 }
 .profile_info_style textarea{
+  font-size: 12pt;
+  font-family: 'NanumSquareRound';
   width: auto;
   height: auto;
   resize: none;
