@@ -35,12 +35,10 @@ exports.createCategory = (req, res, categoryName)=>{
       console.log('error at createcategory');
       console.log(error);
     } else{
-      console.log('found category');
-      console.log(category);
       if (category.length == 0){
 
       } else{
-        console.log('이미 존재하는 카테고리입니다');
+        //console.log('이미 존재하는 카테고리입니다');
       }
     }
   });
@@ -93,8 +91,6 @@ exports.attachTag = async (req, res)=>{
         console.log('query admin error');
       }
       else{
-        console.log('query admin success');
-        console.log(admin.length);
         numOfAdmin = admin.length;
       }
     });

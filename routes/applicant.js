@@ -123,12 +123,18 @@ router.get('/applicants/:username', csrfProtection, isLoggedIn, applicantControl
     //cors 우회
     res.setHeader('Access-Control-Allow-origin', '*');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.render('applicant', {
-      Applicants: ApplicantsData,
-      Articles: ArticlesData,
-      curCategory: CategoryData,
-      csrfToken: req.csrfToken(),
-    });
+    if (!ApplicantsData.length){
+      res.render('errorPage',{
+        errorDetail: '존재하지 않는 사용자입니다'
+      });
+    }else{
+      res.render('applicant', {
+        Applicants: ApplicantsData,
+        Articles: ArticlesData,
+        curCategory: CategoryData,
+        csrfToken: req.csrfToken(),
+      });
+    }
   }
 });
 
@@ -180,11 +186,17 @@ router.get('/updateApplicant/:username', csrfProtection, isLoggedIn, applicantCo
     let ApplicantsData = req.applicantsData;
     //cors 우회?
 
-    res.render('applicantUpdate', {
-      Applicants: ApplicantsData,
-      curCategory: CategoryData,
-      csrfToken: req.csrfToken(),
-    });
+    if (!ApplicantsData.length){
+      res.render('errorPage',{
+        errorDetail: '존재하지 않는 사용자입니다'
+      });
+    }else{
+      res.render('applicantUpdate', {
+        Applicants: ApplicantsData,
+        curCategory: CategoryData,
+        csrfToken: req.csrfToken(),
+      });
+    }
   }
 });
 

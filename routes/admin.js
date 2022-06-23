@@ -93,6 +93,7 @@ router.get('/adminPage/:category/:pageNum', isAdmin, applicantController.getAllA
   let CategoryData = req.categoriesData.find((category)=>
     category.categoryName == req.params.category
   );
+
   const queryObject = url.parse(req.url, true).query;
   let hashTags = Object.entries(queryObject);
   //주어진 queryObject로
@@ -157,17 +158,24 @@ router.get('/adminPage/:category/:pageNum', isAdmin, applicantController.getAllA
     queryString = queryString + Object.values(tag)[0] + '&';
   });
 
-  res.render('adminPage', {
-    curAdmin: req.user,
-    Applicants: ApplicantsData,
-    pageNum: req.params.pageNum,
-    pageSize: pageSize,
-    maxPage: maxPage,
-    queryString: queryString,
-    category: req.params.category,
-    Categories: req.categoriesData,
-    curCategory: CategoryData,
-  });
+  if (CategoryData == undefined){
+    res.render('errorPage',{
+      errorDetail: '존재하지 않는 카테고리입니다'
+    });
+  }else{
+    res.render('adminPage', {
+      curAdmin: req.user,
+      Applicants: ApplicantsData,
+      pageNum: req.params.pageNum,
+      pageSize: pageSize,
+      maxPage: maxPage,
+      queryString: queryString,
+      category: req.params.category,
+      Categories: req.categoriesData,
+      curCategory: CategoryData,
+    });
+  }
+
 });
 
 //태그 검색
@@ -306,16 +314,23 @@ router.get('/noticeboard/create', csrfProtection, isAdmin, (req, res)=>{
 router.post('/noticeboard/create', isAdmin, nodemailerController.upload.array('file'), csrfProtection, noticeController.getTotalNotice, noticeController.createNotice, (req, res, error)=>{
   if (error){
     console.log('error at create notice' + error);
-    console.log(error instanceof multer.MulterError);
   }
   res.redirect('/noticeboard/1');
 });
 
 router.get('/noticeboard/views/:noticeNumber', noticeController.findNotice, (req, res)=>{
-  res.render('notice_noticeArticle',{
-    Notices: req.noticesData,
-  });
+  if(req.noticesData.length){
+    res.render('notice_noticeArticle',{
+      Notices: req.noticesData,
+    });
+  }else{
+    res.render('errorPage',{
+      errorDetail: '존재하지 않는 공지사항입니다'
+    })
+  }
+
 });
+
 router.get('/noticeboard/deleteNotice/:noticeNumber', isAdmin, (req, res)=>{
   noticeController.deleteNotice(req, res, req.params.noticeNumber);
   res.redirect('/noticeboard/1');

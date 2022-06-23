@@ -15,6 +15,15 @@
       }
     }
   </script>
+  <script>
+    window.onload = function(){
+      let textarea = document.getElementById('notice_content');
+      console.log(textarea.scrollHeight);
+      textarea.style.height = '1px';
+      textarea.style.height = (12 + textarea.scrollHeight) + 'px';
+    }
+  </script>
+
 </head>
 
 <body>
@@ -45,9 +54,7 @@
         <% } %>
       </div>
       <div class="notice_content">
-        <div class="notice_info_value">
-          <p><%= Notices[0].content %></p>
-        </div>
+        <textarea id="notice_content" name="name" rows="8" cols="160" disabled><%= Notices[0].content %></textarea>
       </div>
     </div>
 

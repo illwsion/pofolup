@@ -15,6 +15,7 @@
 
 #noticeboard{
   width: 100%;
+  min-height: 400px;
 }
 #noticeboard li{
   display: flex;
@@ -122,8 +123,18 @@
   width: 100%;
   font-size: 20pt;
   min-height: 300px;
+  margin-top: 40px;
 }
 
+.notice_content textarea{
+  font-family: 'NanumSquareRound';
+  width: 800px;
+  height: auto;
+  font-size: 20pt;
+  background-color: white;
+  border: 0;
+  resize: none;
+}
 
 
 
@@ -137,13 +148,15 @@
 }
 
 .notice_info_value input{
+  font-family: 'NanumSquareRound';
   width: 800px;
   height: 50px;
   font-size: 20pt;
   box-sizing: border-box;
 }
 .notice_info_value textarea{
-  font-size: 15pt;
+  font-family: 'NanumSquareRound';
+  font-size: 20pt;
   width: 800px;
   resize: none;
   box-sizing: border-box;

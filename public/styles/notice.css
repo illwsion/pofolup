@@ -80,6 +80,8 @@
   flex-direction: column;
 }
 .contact_info_value input{
+  font-family: 'NanumSquareRound';
+  font-size: 20pt;
   height: 40px
 }
 
@@ -128,8 +130,10 @@
   margin-bottom: 15px;
 }
 .contact_info_value textarea{
+  font-family: 'NanumSquareRound';
+  font-size: 20pt;
   width: auto;
-  height: auto;
+  height: 200px;
   resize: none;
   font-size: 15pt;
 }

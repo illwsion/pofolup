@@ -182,6 +182,7 @@
   display: flex;
 }
 .applicant_list_info_name_left a{
+  width: 200px;
   font-size: 30pt;
   margin-right: 20px;
   color: black;
