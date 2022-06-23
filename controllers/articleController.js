@@ -169,7 +169,6 @@ exports.createArticle = (req, res, applicantId) => {
 
 exports.deleteArticle = (req, res, articleId) => {
   Article.findById(articleId, (error, article) => {
-    let username = null;
     if (error) {
       console.log(error);
     } else {
@@ -182,14 +181,13 @@ exports.deleteArticle = (req, res, articleId) => {
           if (error){
             console.log('error at articles delete' + error);
           } else{
-            username = applicant.username;
           }
         });
         //게시글에 연결된 파일들 삭제
         for (var i = 0; i < article.fileNames.length; i++) {
           if (article.fileNames[i] != null){
             //aws에서 파일 삭제
-            s3Controller.s3Delete(req, res, username, article.fileNames[i]);
+            s3Controller.s3Delete(req, res, article.userEmail, article.fileNames[i]);
 
             //uploads/에서 파일 삭제
             if (fs.existsSync('./uploads/' + article.fileNames[i])) {
