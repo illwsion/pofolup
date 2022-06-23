@@ -76,7 +76,7 @@ exports.findApplicant = (req, res, next) => {
 
 exports.createApplicant = (req, res, next) => {
   if (req.applicantsData.length == 0) {
-    //현재 인원 수
+    //회원번호 설정
     let currentUser = req.totalUser;
     currentUser = ('000000'+currentUser).slice(-6);
     //그림스타일 엔터 적용
@@ -120,7 +120,7 @@ exports.createApplicant = (req, res, next) => {
         //s3에 썸네일 이미지 업로드
         s3Controller.s3Upload(req, res, req.body.username, req.files[0].filename);
         //verify code 전송
-        nodemailerController.sendVerificationMail(req, res, applicant.username, applicant.verifyKey);
+        nodemailerController.sendVerificationMail(req, res, applicant.username, applicant.realname, applicant.verifyKey);
         //기본 게시글 생성
         articleController.articleInit(req, res, applicant._id);
         next();

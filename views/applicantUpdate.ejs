@@ -47,12 +47,14 @@
       sendOK = false;
     }
 
-    if (birth.length != 8){
+    let birthcheck = /^[0-9]{8}$/;
+    if (!birthcheck.test(birth)){
       alertMessage += '생년월일은 YYYYMMDD 형식이어야 합니다 \n ex)20000101\n'
       sendOK = false;
     }
-    if (phone.length != 11){
-      alertMessage += '핸드폰 번호 양식을 맞춰주세요\n'
+    let phonecheck = /^[0-9]{9,11}$/;
+    if (!phonecheck.test(phone)){
+      alertMessage += '핸드폰 번호 양식을 맞춰주세요\n ex)01011112222\n'
       sendOK = false;
     }
 
@@ -70,6 +72,16 @@
   }
 </script>
 
+<script>
+  let deleteApplicant = ()=>{
+    let result = confirm("정말 포폴업에서 탈퇴하시겠습니까?");
+    if(result){
+      alert('회원탈퇴가 완료되었습니다.\n 그동안 포폴업을 이용해주셔서 감사합니다');
+      let applicantId = document.getElementById('applicantId').value;
+      location.href = "/deleteApplicant/"+applicantId;
+    }
+  }
+</script>
 </head>
 
 <body>
@@ -82,6 +94,7 @@
 
       <form id="update_form" action="/updateApplicant/<%= Applicants[0].username %>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input id="applicantId" type="text" hidden name="" value="<%= Applicants[0]._id %>">
         <div id="profile_information">
 
           <ul>
@@ -156,8 +169,8 @@
               <div id="user_agreement">
                 <input onclick="registerTest()" class="upload_button" type="button" name="" value="수정하기">
               </div>
-              <div class="profile_info_desc">
-                <p></p>
+              <div id="deleteApplicant">
+                <input onclick="deleteApplicant()" class="upload_button" type="button" name="" value="회원탈퇴">
               </div>
             </li>
 
@@ -169,7 +182,7 @@
           <img id= "image_container" src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[0].username%>/<%= Applicants[0].file%>" width="500px" height="500px" alt="">
           <div class="upload_button">
             <label for="image">파일 선택</label>
-            <input type="file" id="image" onchange="setThumbnail(event);" name="file" accept=".jpg, .png, .gif"><br>
+            <input type="file" id="image" onchange="setThumbnail(event);" name="file" accept=".jpg, .png"><br>
           </div>
         </div>
       </form>
@@ -180,10 +193,6 @@
   </div>
 
   <span id="usernameforcapture" style="display:none;" value="<%= Applicants[0].realname %>"><%= Applicants[0].realname %></span>
-  <form action="/logout" method="post">
-    <input type="submit" value="Log out">
-  </form>
-
 
 </body>
 

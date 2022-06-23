@@ -75,9 +75,6 @@ exports.deleteNotice = (req, res, noticeNumber) => {
     if (error) {
       console.log('error at deleteNotice' + error);
     } else {
-      console.log('found notice');
-      console.log(notice);
-      console.log(notice[0]._id);
       //이미지 삭제. 일단 남겨두는 쪽으로
       //지울거면 s3Controller에서 s3NoticeDelete 함수 작성해줘야함
       //s3Controller.s3Delete(req, res, applicant.username, applicant.file);
@@ -89,8 +86,6 @@ exports.deleteNotice = (req, res, noticeNumber) => {
           console.log('error at deleteNotice');
           console.log(error);
         } else {
-          console.log('공지사항 삭제 성공');
-          console.log(result);
         }
       });
     }

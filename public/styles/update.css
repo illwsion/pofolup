@@ -141,3 +141,28 @@
   border-width: 0;
   cursor: pointer;
 }
+
+#deleteApplicant{
+  display: flex;
+  justify-content: flex-end;
+  width: 300px;
+  float: right;
+}
+
+#deleteApplicant input[type="button"]{
+  font-family: 'NanumSquareRound';
+  font-size: 15pt;
+  display: flex;
+  float: right;
+  width: 114px;
+  height: 48px;
+  color: #ffffff;
+  background-color: #000000;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  line-height: normal;
+  margin-right: 0px;
+  border-width: 0;
+  cursor: pointer;
+}

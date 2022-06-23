@@ -303,7 +303,11 @@ router.get('/noticeboard/create', csrfProtection, isAdmin, (req, res)=>{
   });
 });
 
-router.post('/noticeboard/create', isAdmin, nodemailerController.upload.array('file'), csrfProtection, noticeController.getTotalNotice, noticeController.createNotice, (req, res)=>{
+router.post('/noticeboard/create', isAdmin, nodemailerController.upload.array('file'), csrfProtection, noticeController.getTotalNotice, noticeController.createNotice, (req, res, error)=>{
+  if (error){
+    console.log('error at create notice' + error);
+    console.log(error instanceof multer.MulterError);
+  }
   res.redirect('/noticeboard/1');
 });
 
@@ -341,7 +345,7 @@ router.get('/noticeboard/:pageNum', noticeController.getAllNotices,(req, res)=>{
 });
 
 //유저 삭제
-router.get('/deleteApplicant/:applicantId', isAdmin, (req, res) => {
+router.get('/deleteApplicant/:applicantId', isLoggedIn, (req, res) => {
   applicantController.deleteApplicant(req, res, req.params.applicantId);
   if (req.isAuthenticated()) {
     if (req.user.isAdmin) {

@@ -25,7 +25,7 @@
           <input type="password" id="password_check" name="password_check" required>
         </div>
         <div class="profile_info_desc">
-          <p>영문, 숫자를 이용한 6글자 이상</p>
+          <p>영문, 숫자를 포함한 6글자 이상</p>
         </div>
       </li>
 
@@ -133,7 +133,7 @@
     <img id= "image_container" src="/images/default_main.png" width="500px" height="500px" alt="">
     <div class="upload_button">
       <label for="image">파일 선택</label>
-      <input type="file" id="image" onchange="setThumbnail(event);" name="file" accept=".jpg, .png, .gif" required><br>
+      <input type="file" id="image" onchange="setThumbnail(event);" name="file" accept=".jpg, .png" required><br>
     </div>
   </div>
 </form>
@@ -233,8 +233,9 @@ window.onload = function(){
       sendOK = false;
     }
 
-    if (pw1.length < 6){
-      alertMessage += '비밀번호는 6글자 이상이어야 합니다\n'
+    let pwtest = /^(?=.*[a-zA-Z])(?=.*[0-9]).{6,}$/
+    if (!pwtest.test(pw1)){
+      alertMessage += '비밀번호는 영문, 숫자를 포함한 6글자 이상이어야 합니다\n'
       sendOK = false;
     }else if (pw1 != pw2){
       alertMessage += '비밀번호가 다릅니다\n'
@@ -245,12 +246,13 @@ window.onload = function(){
       alertMessage += '이름을 입력해 주세요\n'
       sendOK = false;
     }
-
-    if (birth.length != 8){
+    let birthcheck = /^[0-9]{8}$/;
+    if (!birthcheck.test(birth)){
       alertMessage += '생년월일은 YYYYMMDD 형식이어야 합니다 \n ex)20000101\n'
       sendOK = false;
     }
-    if (phone.length != 11){
+    let phonecheck = /^[0-9]{9,11}$/;
+    if (!phonecheck.test(phone)){
       alertMessage += '핸드폰 번호 양식을 맞춰주세요\n ex)01011112222\n'
       sendOK = false;
     }

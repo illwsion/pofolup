@@ -28,27 +28,79 @@ const storage = multer.diskStorage({
   }
 });
 
-exports.uploadFile = (req, res)=>{
+exports.uploadFile = (req, res, next)=>{
   console.log('uploadFile');
-  const upload = multer().array('file');
+  const upload = multer({
+    storage: storage,
+    //파일 크기 5mb로 제한
+    limits: {
+      fileSize: 1024 * 1024 * 5
+    }
+  }).array('file');
   upload(req, res, (error)=>{
     if (error){
       console.log('multer error');
       console.log(error);
+      res.render('errorPage', {
+        errorDetail: '파일 사이즈는 5mb를 초과하지 않아야 합니다'
+      });
     }
     else{
       console.log('no error');
+      next();
+    }
+  })
+};
+
+exports.uploadFields = (req, res, next)=>{
+  console.log('uploadFile');
+  const upload = multer({
+    storage: storage,
+    //파일 크기 5mb로 제한
+    limits: {
+      fileSize: 1024 * 1024 * 5
+    }
+  }).fields([
+    {
+      name: '0', maxCount: 1
+    },
+    {
+      name: '1', maxCount: 1
+    },
+    {
+      name: '2', maxCount: 1
+    },
+    {
+      name: '3', maxCount: 1
+    },
+    {
+      name: '4', maxCount: 1
+    },
+    {
+      name: '5', maxCount: 1
+    },
+  ]);
+  upload(req, res, (error)=>{
+    if (error){
+      console.log('multer error');
+      console.log(error);
+      res.render('errorPage', {
+        errorDetail: '파일 사이즈는 5mb를 초과하지 않아야 합니다'
+      });
+    }
+    else{
+      console.log('no error');
+      next();
     }
   })
 };
 
 exports.upload = multer({
   storage: storage,
-  //파일 크기 5mb로 제한
+  //파일 크기 30mb로 제한
   limits: {
-    fileSize: 1024 * 1024 * 5
+    fileSize: 1024 * 1024 * 30
   }
-
 });
 
 
@@ -94,11 +146,15 @@ exports.sendApplyMail = (req, res, applicant) => {
     } else {
     }
   });
+
 };
 
-exports.sendVerificationMail = (req, res, username, verifyKey)=>{
+exports.sendVerificationMail = (req, res, username, realname, verifyKey)=>{
   let emailTemplate;
-  ejs.renderFile('views/mail_verification.ejs', {verifyKey: verifyKey}, (error, data)=>{
+  ejs.renderFile('views/mail_verification.ejs', {
+    realname: realname,
+    verifyKey: verifyKey
+  }, (error, data)=>{
     if (error){
       console.log('ejs.renderFile err');
     }

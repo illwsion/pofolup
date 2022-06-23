@@ -76,7 +76,7 @@ router.get('/register', csrfProtection, (req, res)=>{
 });
 
 //회원가입
-router.post('/register', nodemailerController.upload.array('file'), csrfProtection, applicantController.findApplicant, applicantController.getTotalUser, applicantController.createApplicant, passport.authenticate("local",{
+router.post('/register', nodemailerController.uploadFile, csrfProtection, applicantController.findApplicant, applicantController.getTotalUser, applicantController.createApplicant, passport.authenticate("local",{
   successRedirect: '/',
   failureRedirect: '/'
 }), (req, res) => {
@@ -145,26 +145,7 @@ router.post('/changeStatus', isLoggedIn, (req, res)=>{
 
 //유저 프로필 업데이트
 //지원하기 버튼 클릭
-router.post('/apply', isLoggedIn, nodemailerController.upload.fields([
-  {
-    name: '0', maxCount: 1
-  },
-  {
-    name: '1', maxCount: 1
-  },
-  {
-    name: '2', maxCount: 1
-  },
-  {
-    name: '3', maxCount: 1
-  },
-  {
-    name: '4', maxCount: 1
-  },
-  {
-    name: '5', maxCount: 1
-  },
-]), csrfProtection, applicantController.findApplicant, articleController.findArticle,(req, res, next) => {
+router.post('/apply', isLoggedIn, nodemailerController.uploadFields, csrfProtection, applicantController.findApplicant, articleController.findArticle,(req, res, next) => {
   if (req.isAuthenticated()) {
     if (req.user.username == req.body.username) {
       articleController.deleteArticle(req, res, req.articlesData[0]._id);
@@ -207,7 +188,7 @@ router.get('/updateApplicant/:username', csrfProtection, isLoggedIn, applicantCo
   }
 });
 
-router.post('/updateApplicant/:username', isLoggedIn, nodemailerController.upload.array('file'), csrfProtection, applicantController.findApplicant, (req, res)=>{
+router.post('/updateApplicant/:username', isLoggedIn, nodemailerController.uploadFile, csrfProtection, applicantController.findApplicant, (req, res)=>{
   applicantController.updateApplicant(req, res);
   res.redirect('/applicants/' + req.user.username);
 });
@@ -255,16 +236,8 @@ router.get('/notice/:content', csrfProtection, (req, res) => {
 
 router.post('/notice/contact', csrfProtection, (req, res)=>{
   req.body.content = req.body.content.replaceAll(/(\r\n|\n|\r)/gm, "<br>");
-  //nodemailerController.sendContactMail(req, res);
-  res.render('mail_verification',{
-    companyname: req.body.companyname,
-    enquirename: req.body.enquirename,
-    phone: req.body.phone,
-    email: req.body.email,
-    item: req.body.item,
-    content: req.body.content,
-  });
-  //res.redirect('/notice/contact');
+  nodemailerController.sendContactMail(req, res);
+  res.redirect('/notice/contact');
 });
 
 module.exports = router;

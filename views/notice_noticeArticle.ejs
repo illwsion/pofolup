@@ -5,6 +5,16 @@
   <%- include('./partials/head'); %>
 
   <link href="/styles/noticeboard.css" rel="stylesheet" type="text/css">
+  <script>
+    let deleteNotice = ()=>{
+      let result = confirm("정말 공지사항을 삭제하시겠습니까?");
+      if(result){
+        alert('공지사항이 삭제되었습니다');
+        let noticeNumber = document.getElementById('noticeNumber').value;
+        location.href = "/noticeboard/deleteNotice/"+noticeNumber;
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -15,12 +25,13 @@
     </div>
 
     <div id="contents">
+      <input id="noticeNumber" type="text" hidden name="" value="<%= Notices[0].noticeNumber %>">
       <div class="notice_info_title">
         <div>
           <a href="/noticeboard/1"><img src="/images/06_view_03.jpg" alt=""></a>
           <% if (user != undefined){%>
             <% if (user.isAdmin == true) { %>
-              <a id="notice_deleteButton" href="/noticeboard/deleteNotice/<%= Notices[0].noticeNumber %>">삭제</a>
+              <input onclick="deleteNotice()" class="upload_button" type="button" name="" value="삭제">
             <%}%>
           <%}%>
         </div>
