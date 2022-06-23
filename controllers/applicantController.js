@@ -174,6 +174,13 @@ exports.deleteApplicant = (req, res, applicantId) => {
       }
       //썸네일 파일 삭제
       s3Controller.s3Delete(req, res, applicant.username, applicant.file);
+      //포트폴리오 파일들 삭제
+      for (var i = 0; i < applicant.fileNames.length; i++) {
+        if (applicant.fileNames[i] != null){
+          //aws에서 파일 삭제
+          s3Controller.s3Delete(req, res, applicant.username, applicant.fileNames[i]);
+        }
+      }
       //유저 삭제
       Applicant.deleteOne({
         _id: applicant._id

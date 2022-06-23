@@ -183,19 +183,7 @@ exports.deleteArticle = (req, res, articleId) => {
           } else{
           }
         });
-        //게시글에 연결된 파일들 삭제
-        for (var i = 0; i < article.fileNames.length; i++) {
-          if (article.fileNames[i] != null){
-            //aws에서 파일 삭제
-            s3Controller.s3Delete(req, res, article.userEmail, article.fileNames[i]);
-
-            //uploads/에서 파일 삭제
-            if (fs.existsSync('./uploads/' + article.fileNames[i])) {
-              fs.unlinkSync('./uploads/' + article.fileNames[i]);
-            }
-            //console.log(fileArray);
-          }
-        }
+        
         //article 삭제
         Article.deleteOne({
           _id: article._id
