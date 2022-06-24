@@ -57,12 +57,12 @@
               <% if (queryString.search(curCategory.hashTags[i]) != -1) { %>
                 <li class="sidebar_hashtag">
                   <label for="cb<%= i %>" class="checkboxframe"></label>
-                  <label><input id="cb<%= i %>" onchange="tagChange()" type="checkbox" name= hashTags value="<%= curCategory.hashTags[i] %>" checked><%= curCategory.hashTags[i] %></label>
+                  <label><input id="cb<%= i %>" class="checkbox_hashtag" onchange="tagChange()" type="checkbox" name= hashTags value="<%= curCategory.hashTags[i] %>" checked><%= curCategory.hashTags[i] %></label>
                 </li>
               <% } else { %>
                 <li class="sidebar_hashtag">
                   <label for="cb<%= i %>" class="checkboxframe"></label>
-                  <label><input id="cb<%= i %>" onchange="tagChange()" type="checkbox" name= hashTags value="<%= curCategory.hashTags[i] %>" ><%= curCategory.hashTags[i] %></label>
+                  <label><input id="cb<%= i %>" class="checkbox_hashtag" onchange="tagChange()" type="checkbox" name= hashTags value="<%= curCategory.hashTags[i] %>" ><%= curCategory.hashTags[i] %></label>
                 </li>
               <% } %>
             <% } %>

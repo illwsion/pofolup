@@ -1,5 +1,5 @@
 #container{
-  width: 1600px;
+  width: 100%;
   padding: 20px;
   margin: 0 auto;
   display: flex;
@@ -18,8 +18,9 @@ img{
 }
 
 #main-logo{
-  height: 100px;
+
   width: 600px;
+  height: auto;
   max-width: 100%;
   display: block;
   margin: 290px 0px 33px 0px;
@@ -27,10 +28,10 @@ img{
 
 
 #sub-logo{
-  height: 60px;
+  height: auto;
   width: 400px;
   margin: 0px 0px 90px 0px;
-  max-width: 100%;
+  max-width: 70%;
   display: block;
 }
 

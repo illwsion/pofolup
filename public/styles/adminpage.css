@@ -1,283 +1,580 @@
-#container{
-  width: 1600px;
-  padding: 20px;
-  margin: 0 auto;
-}
+@media (max-width: 1000px){
+  #contents{
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
 
-#contents{
-  width: 100%;
-  display: flex;
-}
+    align-items: center;
+  }
+
+  #sidebar{
+    width: 92%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+  }
+
+  #applicant_list_container{
+    width: auto;
+  }
+
+  #logoutButton{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+  }
+
+  #sidebar_search{
+    display: flex;
+
+  }
+  #sidebar_search_option{
+    width: 20%;
+    height: 42px;
+    margin: 0px;
+  }
+
+  #sidebar_search input[type=text]{
+    width: 60%;
+    height: 40px;
+    border: 1px solid #a0a0a0;
+    font-size: 20pt;
+    color: black;
+    padding: 0;
+  }
+  #sidebar_search input[type=text]::placeholder{
+    font-family: 'NanumSquareRound';
+    color: #a6a6a6;
+  }
+
+  #sidebar_search input[type=submit]{
+    font-family: 'NanumSquareRound';
+    font-size: 1.2rem;
+    display: flex;
+    float: right;
+    width: 50px;
+    height: 40px;
+    color: #ffffff;
+    background-color: #000000;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: normal;
+    margin-right: 0px;
+    border-width: 0;
+    cursor: pointer;
+  }
+
+  #sidebar_category{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+  }
+  .sidebar_category{
+    font-family: 'NanumSquareRound';
+    font-size: 1.8rem;
+    margin-top: 30px;
+    color: black;
+    text-decoration: none;
+  }
+  #sidebar_hashtags{
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .sidebar_hashtag{
+    width: 40%;
+    margin-left: 30px;
+    margin-top: 10px;
+    font-size: 2rem;
+    list-style: none;
+  }
+   .checkbox_hashtag{
+     width: 1.2rem;
+     height: 1.4rem;
+   }
+
+  #sidebar_addtag{
+    width: 50%;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #sidebar_addtag form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  #sidebar_addtag input[type=text]{
+    width: 146px;
+    height: 40px;
+    font-size: 20pt;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  #sidebar_addtag input[type=submit]{
+    font-family: 'NanumSquareRound';
+    font-size: 15pt;
+    display: flex;
+    float: right;
+    width: 150px;
+    height: 48px;
+    color: #ffffff;
+    background-color: #000000;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: normal;
+    margin-right: 0px;
+    border-width: 0;
+    cursor: pointer;
+  }
+
+  #sidebar_deletetag{
+    margin-top: 50px;
+  }
+  #sidebar_deletetag_tags{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #sidebar_deletetag_tags a{
+    width: auto;
+    font-size: 14pt;
+    color: black;
+    text-decoration: none;
+    border: 1px solid #a6a6a6;
+    border-radius: 3px;
+    padding: 4px;
+    margin: 0 1% 10px 1%;
+    margin-bottom: 10px;
+  }
+
+  .checkboxframe{
+
+  }
 
 
-#sidebar{
-  width: 350px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+  .applicant_list_profile{
+    width: 100%;
+    height: auto;
+    display: flex;
+  }
+  .applicant_list_profile_mainimg{
+    width: 30%;
+    display: flex;
+    align-items: center;
+  }
+  .applicant_list_profile_mainimg img{
+    width: 100%;
+    height: auto;
+  }
 
-#applicant_list_container{
-  width: auto;
-}
+  .applicant_list_detail{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 70%;
+  }
+  .applicant_list_info{
+    width: 100%;
+  }
 
-#sidebar_search{
-  display: flex;
-  justify-content: space-between;
-}
-#sidebar_search_option{
-  width: 80px;
-  height: 42px;
-  margin: 0px;
-}
+  .applicant_list_info_name{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #a0a0a0
+  }
+  .applicant_list_info_name_left{
+    display: flex;
+  }
+  .applicant_list_info_name_left a{
+    width: 100px;
+    font-size: 2rem;
+    margin-right: 10px;
+    color: black;
+    text-decoration: none;
+  }
+  .applicant_list_info_name_left p{
+    font-size: 0.8rem;
+    margin: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-#sidebar_search input[type=text]{
-  width: 200px;
-  height: 40px;
-  border: 1px solid #a0a0a0;
-  font-size: 20pt;
-  color: black;
-  padding: 0;
-}
-#sidebar_search input[type=text]::placeholder{
-  font-family: 'NanumSquareRound';
-  color: #a6a6a6;
-}
+  .applicant_list_info_name_right{
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .applicant_list_info_name_right a{
+    text-decoration: none;
+    color: black;
+  }
+  .applicant_list_info_name_right input[type="button"]{
+    font-family: 'NanumSquareRound';
+    font-size: 1rem;
+    display: flex;
+    float: right;
+    width: auto;
+    padding: 0 10px;
+    height: 40px;
+    color: #000000;
+    background-color: #ffffff;
+    justify-content: center;
+    align-items: center;
+    line-height: normal;
+    margin-right: 0px;
+    border-width: 0;
+    cursor: pointer;
+  }
 
-#sidebar_search input[type=submit]{
-  font-family: 'NanumSquareRound';
-  font-size: 15pt;
-  display: flex;
-  float: right;
-  width: 50px;
-  height: 40px;
-  color: #ffffff;
-  background-color: #000000;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  line-height: normal;
-  margin-right: 0px;
-  border-width: 0;
-  cursor: pointer;
-}
+  .applicant_list_info_status{
+    margin: 10px 0;
+  }
+  .applicant_list_info_status p{
+    font-size: 13pt;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    margin-left: 10px;
+  }
 
-#sidebar_category{
-  display: flex;
-  flex-direction: column;
-  width: 350px;
+  .applicant_list_info_tag{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .applicant_list_info_tag p{
+    font-size: 15pt;
+    display: flex;
+    align-items: center;
+    height: 20px;
+    padding: 5px;
+    border: 1px solid #a6a6a6;
+    border-radius: 10px;
+    margin: 0px 10px;
+    border:
+  }
 
-}
-.sidebar_category{
-  font-family: 'NanumSquareRound';
-  font-size: 20pt;
-  margin-top: 30px;
-  color: black;
-  text-decoration: none;
-}
-#sidebar_hashtags{
-  padding: 0;
-}
+  .applicant_list_profile_subimgs{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .applicant_list_profile_subimgs img{
+    width: 33%;
+    height: auto;
+  }
 
-.sidebar_hashtag{
-  margin-left: 30px;
-  margin-top: 10px;
-  font-size: 15pt;
-  list-style: none;
-}
-.sidebar_hashtag input[type=checkbox]{
+  #applicant_list_pagination{
+    display: flex;
+    justify-content: center;
+  }
 
-}
+  #paging{
+    width: 100%;
+    margin-top: 35px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-#sidebar_addtag{
-  width: 50%;
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-}
-
-#sidebar_addtag form{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-#sidebar_addtag input[type=text]{
-  width: 146px;
-  height: 40px;
-  font-size: 20pt;
-  padding: 0;
-  margin-bottom: 20px;
-}
-
-#sidebar_addtag input[type=submit]{
-  font-family: 'NanumSquareRound';
-  font-size: 15pt;
-  display: flex;
-  float: right;
-  width: 150px;
-  height: 48px;
-  color: #ffffff;
-  background-color: #000000;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  line-height: normal;
-  margin-right: 0px;
-  border-width: 0;
-  cursor: pointer;
-}
-
-#sidebar_deletetag{
-  margin-top: 50px;
-}
-#sidebar_deletetag_tags{
-  display: flex;
-  flex-wrap: wrap;
-}
-#sidebar_deletetag_tags a{
-  width: auto;
-  font-size: 14pt;
-  color: black;
-  text-decoration: none;
-  border: 1px solid #a6a6a6;
-  border-radius: 3px;
-  padding: 4px;
-  margin: 0 1% 10px 1%;
-  margin-bottom: 10px;
-}
-
-.checkboxframe{
+  #paging a{
+    font-family: 'NanumSquareRound';
+    font-size: 1rem;
+    text-decoration: none;
+    color: #404040;
+    margin: 0 4px;
+  }
 
 }
+@media (min-width: 1000px){
+  #contents{
+    width: 100%;
+    display: flex;
+  }
+  #sidebar{
+    width: 350px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  #applicant_list_container{
+    width: auto;
+  }
+
+  #sidebar_search{
+    display: flex;
+    justify-content: space-between;
+  }
+  #sidebar_search_option{
+    width: 80px;
+    height: 42px;
+    margin: 0px;
+  }
+
+  #sidebar_search input[type=text]{
+    width: 200px;
+    height: 40px;
+    border: 1px solid #a0a0a0;
+    font-size: 20pt;
+    color: black;
+    padding: 0;
+  }
+  #sidebar_search input[type=text]::placeholder{
+    font-family: 'NanumSquareRound';
+    color: #a6a6a6;
+  }
+
+  #sidebar_search input[type=submit]{
+    font-family: 'NanumSquareRound';
+    font-size: 15pt;
+    display: flex;
+    float: right;
+    width: 50px;
+    height: 40px;
+    color: #ffffff;
+    background-color: #000000;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: normal;
+    margin-right: 0px;
+    border-width: 0;
+    cursor: pointer;
+  }
+
+  #sidebar_category{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+
+  }
+  .sidebar_category{
+    font-family: 'NanumSquareRound';
+    font-size: 20pt;
+    margin-top: 30px;
+    color: black;
+    text-decoration: none;
+  }
+  #sidebar_hashtags{
+    padding: 0;
+  }
+
+  .sidebar_hashtag{
+    margin-left: 30px;
+    margin-top: 10px;
+    font-size: 15pt;
+    list-style: none;
+  }
+  .sidebar_hashtag input[type=checkbox]{
+
+  }
+
+  #sidebar_addtag{
+    width: 50%;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #sidebar_addtag form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  #sidebar_addtag input[type=text]{
+    width: 146px;
+    height: 40px;
+    font-size: 20pt;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  #sidebar_addtag input[type=submit]{
+    font-family: 'NanumSquareRound';
+    font-size: 15pt;
+    display: flex;
+    float: right;
+    width: 150px;
+    height: 48px;
+    color: #ffffff;
+    background-color: #000000;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: normal;
+    margin-right: 0px;
+    border-width: 0;
+    cursor: pointer;
+  }
+
+  #sidebar_deletetag{
+    margin-top: 50px;
+  }
+  #sidebar_deletetag_tags{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #sidebar_deletetag_tags a{
+    width: auto;
+    font-size: 14pt;
+    color: black;
+    text-decoration: none;
+    border: 1px solid #a6a6a6;
+    border-radius: 3px;
+    padding: 4px;
+    margin: 0 1% 10px 1%;
+    margin-bottom: 10px;
+  }
+
+  .checkboxframe{
+
+  }
 
 
-.applicant_list_profile{
-  width: 1230px;
-  height: 300px;
-  display: flex;
-}
+  .applicant_list_profile{
+    width: 1230px;
+    height: 300px;
+    display: flex;
+  }
 
-.applicant_list_profile_mainimg img{
-  width: 280px;
-  height: 280px;
-  margin: 10px;
-}
+  .applicant_list_profile_mainimg img{
+    width: 280px;
+    height: 280px;
+    margin: 10px;
+  }
 
-.applicant_list_detail{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 1100px;
-}
+  .applicant_list_detail{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 1100px;
+  }
 
-.applicant_list_info_name{
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 10px;
-  border-bottom: 1px dashed #a0a0a0
-}
-.applicant_list_info_name_left{
-  display: flex;
-}
-.applicant_list_info_name_left a{
-  width: 200px;
-  font-size: 30pt;
-  margin-right: 20px;
-  color: black;
-  text-decoration: none;
-}
-.applicant_list_info_name_left p{
-  font-size: 20pt;
-  margin: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .applicant_list_info_name{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #a0a0a0
+  }
+  .applicant_list_info_name_left{
+    display: flex;
+  }
+  .applicant_list_info_name_left a{
+    width: 200px;
+    font-size: 30pt;
+    margin-right: 20px;
+    color: black;
+    text-decoration: none;
+  }
+  .applicant_list_info_name_left p{
+    font-size: 20pt;
+    margin: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.applicant_list_info_name_right{
-  font-size: 15pt;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.applicant_list_info_name_right a{
-  text-decoration: none;
-  color: black;
-}
-.applicant_list_info_name_right input[type="button"]{
-  font-family: 'NanumSquareRound';
-  font-size: 15pt;
-  display: flex;
-  float: right;
-  width: auto;
-  padding: 0 10px;
-  height: 40px;
-  color: #000000;
-  background-color: #ffffff;
-  justify-content: center;
-  align-items: center;
-  line-height: normal;
-  margin-right: 0px;
-  border-width: 0;
-  cursor: pointer;
-}
+  .applicant_list_info_name_right{
+    font-size: 15pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .applicant_list_info_name_right a{
+    text-decoration: none;
+    color: black;
+  }
+  .applicant_list_info_name_right input[type="button"]{
+    font-family: 'NanumSquareRound';
+    font-size: 15pt;
+    display: flex;
+    float: right;
+    width: auto;
+    padding: 0 10px;
+    height: 40px;
+    color: #000000;
+    background-color: #ffffff;
+    justify-content: center;
+    align-items: center;
+    line-height: normal;
+    margin-right: 0px;
+    border-width: 0;
+    cursor: pointer;
+  }
 
-.applicant_list_info_status{
-  margin: 10px 0;
-}
-.applicant_list_info_status p{
-  font-size: 13pt;
-  display: flex;
-  align-items: center;
-  margin: 0;
-  margin-left: 10px;
-}
+  .applicant_list_info_status{
+    margin: 10px 0;
+  }
+  .applicant_list_info_status p{
+    font-size: 13pt;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    margin-left: 10px;
+  }
 
-.applicant_list_info_tag{
-  display: flex;
-  flex-wrap: wrap;
-}
-.applicant_list_info_tag p{
-  font-size: 15pt;
-  display: flex;
-  align-items: center;
-  height: 20px;
-  padding: 5px;
-  border: 1px solid #a6a6a6;
-  border-radius: 10px;
-  margin: 0px 10px;
-  border:
-}
+  .applicant_list_info_tag{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .applicant_list_info_tag p{
+    font-size: 15pt;
+    display: flex;
+    align-items: center;
+    height: 20px;
+    padding: 5px;
+    border: 1px solid #a6a6a6;
+    border-radius: 10px;
+    margin: 0px 10px;
+    border:
+  }
 
-.applicant_list_profile_subimgs{
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.applicant_list_profile_subimgs img{
-  width: 145px;
-  height: 145px;
-}
+  .applicant_list_profile_subimgs{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .applicant_list_profile_subimgs img{
+    width: 145px;
+    height: 145px;
+  }
 
-#applicant_list_pagination{
-  display: flex;
-  justify-content: center;
-}
+  #applicant_list_pagination{
+    display: flex;
+    justify-content: center;
+  }
 
-#paging{
-  width: 800px;
-  margin-top: 35px;
-  display: flex;
-  justify-content: center;
-}
+  #paging{
+    width: 800px;
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+  }
 
-#paging a{
-  font-family: 'NanumSquareRound';
-  font-size: 18pt;
-  text-decoration: none;
-  color: #404040;
-  margin: 0 8px;
+  #paging a{
+    font-family: 'NanumSquareRound';
+    font-size: 18pt;
+    text-decoration: none;
+    color: #404040;
+    margin: 0 8px;
+  }
+
 }

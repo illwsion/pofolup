@@ -1,191 +1,400 @@
-#contents{
-  width: 800px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+@media (max-width: 1000px){
+  #contents{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  /* noticeboard */
+
+  #noticeboard{
+    width: 100%;
+    min-height: 400px;
+  }
+  #noticeboard ul{
+    padding: 0 20px;
+  }
+  #noticeboard li{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #d7d7d7;
+  }
+
+  .notice_noticeNumber{
+    font-size: 1.2rem;
+    width: 20%;
+  }
+  .notice_title{
+    font-size: 1.2rem;
+    width: 80%;
+    display: flex;
+
+  }
+  .notice_title a{
+    text-decoration: none;
+    color: black;
+  }
+  .notice_title a:hover{
+    text-decoration-line: underline;
+  }
+  .notice_adminName{
+    display: none;
+    width: 15%;
+  }
+  .notice_createDate{
+    display: none;
+    width: 25%;
+  }
+
+  #util{
+    width: 90%;
+  }
+
+  #notice_list_pagination{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+  #createNotice{
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  #createNotice a{
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    width: 100px;
+    height: 40px;
+    color: #000000;
+    background-color: #ffffff;
+    padding: 0;
+    line-height: normal;
+    border: 1px solid #000000;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  #paging{
+    width: 100%;
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+  }
+
+  #paging a{
+    font-family: 'NanumSquareRound';
+    font-size: 1.2rem;
+    text-decoration: none;
+    margin: 0 8px;
+    color: #404040;
+  }
+
+  /* noticeArticle */
+  .notice_info_title{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #404040;
+  }
+  .notice_info_title img{
+    width: 150px;
+  }
+  #notice_deleteButton{
+    font-size: 15pt;
+    display: flex;
+    float: right;
+    width: 114px;
+    height: 48px;
+    color: #ffffff;
+    background-color: #000000;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: normal;
+    margin-right: 10px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .notice_info_image{
+    width: 100%;
+  }
+  .notice_info_image img{
+    width: 100%;
+  }
+
+  .notice_content{
+    width: 100%;
+    font-size: 20pt;
+    min-height: 300px;
+    margin-top: 40px;
+  }
+
+  .notice_content textarea{
+    font-family: 'NanumSquareRound';
+    width: 100%;
+    height: auto;
+    font-size: 20pt;
+    background-color: white;
+    border: 0;
+    resize: none;
+  }
+
+
+
+  /* createNotice */
+  #notice_create{
+    width: 100%;
+  }
+
+  .notice_info_key p{
+    font-size: 20pt;
+  }
+
+  .notice_info_value input{
+    font-family: 'NanumSquareRound';
+    width: 800px;
+    height: 50px;
+    font-size: 20pt;
+    box-sizing: border-box;
+  }
+  .notice_info_value textarea{
+    font-family: 'NanumSquareRound';
+    font-size: 20pt;
+    width: 800px;
+    resize: none;
+    box-sizing: border-box;
+  }
+
+  .upload_button{
+    font-size: 15pt;
+    display: flex;
+    float: right;
+    width: 114px;
+    height: 48px;
+    color: #ffffff;
+    background-color: #000000;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: normal;
+    cursor: pointer;
+  }
+  .upload_button input[type="file"]{
+    display: none;
+  }
+  .upload_button label{
+    margin:0;
+  }
+  #image_container{
+    display: block;
+    width : 800px;
+    margin : 0px 0px 20px 0px;
+  }
+}
+@media (min-width: 1000px){
+  #contents{
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  /* noticeboard */
+
+  #noticeboard{
+    width: 100%;
+    min-height: 400px;
+  }
+  #noticeboard li{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #d7d7d7;
+  }
+
+  .notice_noticeNumber{
+    width: 10%;
+  }
+  .notice_title{
+    width: 65%;
+    display: flex;
+
+  }
+  .notice_title a{
+    text-decoration: none;
+    color: black;
+  }
+  .notice_title a:hover{
+    text-decoration-line: underline;
+  }
+  .notice_adminName{
+    width: 10%;
+  }
+  .notice_createDate{
+    width: 15%;
+  }
+  #notice_list_pagination{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+  #createNotice{
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  #createNotice a{
+    font-size: 15pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    width: 100px;
+    height: 40px;
+    color: #000000;
+    background-color: #ffffff;
+    padding: 0;
+    line-height: normal;
+    border: 1px solid #000000;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  #paging{
+    width: 800px;
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+  }
+
+  #paging a{
+    font-family: 'NanumSquareRound';
+    font-size: 15pt;
+    text-decoration: none;
+    margin: 0 8px;
+    color: #404040;
+  }
+
+  /* noticeArticle */
+  .notice_info_title{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #404040;
+  }
+  #notice_deleteButton{
+    font-size: 15pt;
+    display: flex;
+    float: right;
+    width: 114px;
+    height: 48px;
+    color: #ffffff;
+    background-color: #000000;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: normal;
+    margin-right: 10px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .notice_info_image{
+    width: 800px;
+  }
+  .notice_info_image img{
+    width: 800px;
+  }
+
+  .notice_content{
+    width: 100%;
+    font-size: 20pt;
+    min-height: 300px;
+    margin-top: 40px;
+  }
+
+  .notice_content textarea{
+    font-family: 'NanumSquareRound';
+    width: 800px;
+    height: auto;
+    font-size: 20pt;
+    background-color: white;
+    border: 0;
+    resize: none;
+  }
+
+
+
+  /* createNotice */
+  #notice_create{
+    width: 100%;
+  }
+
+  .notice_info_key p{
+    font-size: 20pt;
+  }
+
+  .notice_info_value input{
+    font-family: 'NanumSquareRound';
+    width: 800px;
+    height: 50px;
+    font-size: 20pt;
+    box-sizing: border-box;
+  }
+  .notice_info_value textarea{
+    font-family: 'NanumSquareRound';
+    font-size: 20pt;
+    width: 800px;
+    resize: none;
+    box-sizing: border-box;
+  }
+
+  .upload_button{
+    font-size: 15pt;
+    display: flex;
+    float: right;
+    width: 114px;
+    height: 48px;
+    color: #ffffff;
+    background-color: #000000;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: normal;
+    cursor: pointer;
+  }
+  .upload_button input[type="file"]{
+    display: none;
+  }
+  .upload_button label{
+    margin:0;
+  }
+  #image_container{
+    display: block;
+    width : 800px;
+    margin : 0px 0px 20px 0px;
+  }
 }
 
-#container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-/* noticeboard */
-
-#noticeboard{
-  width: 100%;
-  min-height: 400px;
-}
-#noticeboard li{
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid #d7d7d7;
-}
-
-.notice_noticeNumber{
-  width: 10%;
-}
-.notice_title{
-  width: 65%;
-  display: flex;
-
-}
-.notice_title a{
-  text-decoration: none;
-  color: black;
-}
-.notice_title a:hover{
-  text-decoration-line: underline;
-}
-.notice_adminName{
-  width: 10%;
-}
-.notice_createDate{
-  width: 15%;
-}
-#notice_list_pagination{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-}
-#createNotice{
-  display: flex;
-  justify-content: flex-end;
-}
-
-#createNotice a{
-  font-size: 15pt;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  float: right;
-  width: 100px;
-  height: 40px;
-  color: #000000;
-  background-color: #ffffff;
-  padding: 0;
-  line-height: normal;
-  border: 1px solid #000000;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-#paging{
-  width: 800px;
-  margin-top: 35px;
-  display: flex;
-  justify-content: center;
-}
-
-#paging a{
-  font-family: 'NanumSquareRound';
-  font-size: 15pt;
-  text-decoration: none;
-  margin: 0 8px;
-  color: #404040;
-}
-
-/* noticeArticle */
-.notice_info_title{
-  width: 100%;
-  font-size:
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px solid #404040;
-}
-#notice_deleteButton{
-  font-size: 15pt;
-  display: flex;
-  float: right;
-  width: 114px;
-  height: 48px;
-  color: #ffffff;
-  background-color: #000000;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  line-height: normal;
-  margin-right: 10px;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.notice_info_image{
-  width: 800px;
-}
-.notice_info_image img{
-  width: 800px;
-}
-
-.notice_content{
-  width: 100%;
-  font-size: 20pt;
-  min-height: 300px;
-  margin-top: 40px;
-}
-
-.notice_content textarea{
-  font-family: 'NanumSquareRound';
-  width: 800px;
-  height: auto;
-  font-size: 20pt;
-  background-color: white;
-  border: 0;
-  resize: none;
-}
-
-
-
-/* createNotice */
-#notice_create{
-  width: 100%;
-}
-
-.notice_info_key p{
-  font-size: 20pt;
-}
-
-.notice_info_value input{
-  font-family: 'NanumSquareRound';
-  width: 800px;
-  height: 50px;
-  font-size: 20pt;
-  box-sizing: border-box;
-}
-.notice_info_value textarea{
-  font-family: 'NanumSquareRound';
-  font-size: 20pt;
-  width: 800px;
-  resize: none;
-  box-sizing: border-box;
-}
-
-.upload_button{
-  font-size: 15pt;
-  display: flex;
-  float: right;
-  width: 114px;
-  height: 48px;
-  color: #ffffff;
-  background-color: #000000;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  line-height: normal;
-  cursor: pointer;
-}
-.upload_button input[type="file"]{
-  display: none;
-}
-.upload_button label{
-  margin:0;
-}
-#image_container{
-  display: block;
-  width : 800px;
-  margin : 0px 0px 20px 0px;
-}
 
 /* noticeArticle */
