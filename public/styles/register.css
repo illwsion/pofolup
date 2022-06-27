@@ -1,3 +1,5 @@
+/* 해당 코드는 안진형(cookise09@naver.com)에 의해 작성되었습니다 */
+
 @media (max-width: 1000px){
 
   #contents{
@@ -63,7 +65,7 @@
 
   .profile_info_key{
     width: 25%;
-    margin: 0 10px;
+    margin: 0 10px 0 0;
   }
   .profile_info_key p{
     width: 100%;
@@ -181,10 +183,11 @@
   }
 
   #user_agreement{
-    width: 500px;
-    height: 50px;
-    display: inline-flex;
-    font-size: 10pt;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
     line-height: 0;
     justify-content: space-between;
   }
@@ -192,10 +195,11 @@
     height: auto;
   }
   .user_agreement_checkbox input[type='checkbox']{
-    width: 1.4rem;
-    height: 1.4rem;
+    width: 1.2rem;
+    height: 1.2rem;
   }
   #user_agreement p{
+    width: auto;
     display: inline-block;
   }
   #user_agreement input[type="button"]{

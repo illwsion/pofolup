@@ -1,3 +1,5 @@
+/* 해당 코드는 안진형(cookise09@naver.com)에 의해 작성되었습니다 */
+
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const dotenv = require('dotenv');

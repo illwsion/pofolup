@@ -1,3 +1,5 @@
+/* 해당 코드는 안진형(cookise09@naver.com)에 의해 작성되었습니다 */
+
 const Category = require('./../models/category');
 const Applicant = require('./../models/applicant');
 const moment = require('moment-timezone');

@@ -1,3 +1,5 @@
+/* 해당 코드는 안진형(cookise09@naver.com)에 의해 작성되었습니다 */
+
 //파일 관리, 이메일 전송 미들웨어
 const nodemailer = require('nodemailer');
 const fs = require('fs');

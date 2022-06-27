@@ -1,3 +1,5 @@
+/* 해당 코드는 안진형(cookise09@naver.com)에 의해 작성되었습니다 */
+
 const mongoose = require('mongoose');
 const Applicant = require('./../models/applicant');
 const Pofolup = require('./../models/pofolup');
