@@ -104,12 +104,13 @@
   }
   #detail_info_right_title{
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 30px;
   }
   #detail_info_right_applicantNumber{
     margin: 0;
-    margin-right: 40px;
   }
   #detail_info_info{
     font-family: 'NanumSquareRound';

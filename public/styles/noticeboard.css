@@ -1,3 +1,5 @@
+
+
 @media (max-width: 1000px){
   #contents{
     width: 90%;
@@ -185,7 +187,7 @@
     width: 114px;
     height: 48px;
     color: #ffffff;
-    background-color: #000000;
+    background-color: #404040;
     justify-content: center;
     align-items: center;
     padding: 0;
@@ -376,7 +378,7 @@
     width: 114px;
     height: 48px;
     color: #ffffff;
-    background-color: #000000;
+    background-color: #404040;
     justify-content: center;
     align-items: center;
     padding: 0;

@@ -6,30 +6,33 @@
 
   #update_form{
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column-reverse;
   }
 
   #profile_mainimage{
-    margin: 0px 10px 10px 10px;
-    width: 33%;
+    margin: 10px 0;
+    width: 100%;
   }
   #profile_mainimage img{
     width: 100%;
     height: auto;
   }
   #profile_information{
-    width: 67%;
+    width: 100%;
   }
 
   #image_container{
     display: block;
-    margin : 0px 10px 20px 10px;
+    margin-bottom: 20px;
+  }
+  .upload_button{
+    display: flex;
+    justify-content: center;
   }
 
   .upload_button label{
     font-size: 15pt;
     display: flex;
-    float: right;
     width: 114px;
     height: 48px;
     color: #ffffff;
@@ -48,26 +51,27 @@
 
   #profile_information ul{
     padding: 0;
-    margin: 0 auto;
+    margin-top: 40px;
   }
 
   .profile_info{
     display: flex;
-    height: 40px;
+    flex-wrap: wrap;
+    height: auto;
     margin: 0;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 
   .profile_info_key{
-    margin: 0 20px;
+    width: 25%;
+    margin-right: 5%;
   }
   .profile_info_key p{
-    width: 125px;
-    font-size: 20px;
+    width: 100%;
+    font-size: 1rem;
     color: #000000;
     margin: 0;
     text-align: justify;
-
   }
   .profile_info_key p:after{
     content: "";
@@ -76,15 +80,15 @@
   }
 
   .profile_info_value{
-    width: 500px;
+    width: 70%;
     display: flex;
-
   }
 
   .profile_info_value input{
+    font-family: 'NanumSquareRound';
     width: 100%;
     height: auto;
-    font-family: 'NanumSquareRound';
+    font-size: 1.2rem;
   }
 
   .profile_info_value input[type="radio"]{
@@ -93,7 +97,12 @@
     margin: 5px;
   }
 
-
+  .profile_info_desc {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 30px;
+  }
   .profile_info_desc p{
     font-size: 20px;
     color: #898989;
@@ -102,12 +111,13 @@
 
   .profile_info_style{
     display: flex;
-    height: 182px;
+    flex-wrap: wrap;
+    height: auto;
     margin: 0;
     margin-bottom: 15px;
   }
   .profile_info_style textarea{
-    font-size: 12pt;
+    font-size: 1rem;
     font-family: 'NanumSquareRound';
     width: auto;
     height: auto;
@@ -118,9 +128,9 @@
     width: 500px;
     height: 50px;
     display: inline-flex;
-    font-size: 8pt;
+    font-size: 1rem;
     line-height: 0;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   #user_agreement p{
@@ -130,7 +140,6 @@
     font-family: 'NanumSquareRound';
     font-size: 15pt;
     display: flex;
-    float: right;
     width: 114px;
     height: 48px;
     color: #ffffff;
@@ -145,10 +154,10 @@
   }
 
   #deleteApplicant{
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
-    width: 300px;
-    float: right;
+    justify-content: center;
+    margin-top: 100px;
   }
 
   #deleteApplicant input[type="button"]{
