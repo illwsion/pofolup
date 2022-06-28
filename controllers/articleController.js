@@ -1,5 +1,5 @@
 /* 해당 코드는 안진형(cookise09@naver.com)에 의해 작성되었습니다 */
-
+//게시글(포트폴리오)에 관한 데이터 수정을 담당
 const Applicant = require('./../models/applicant');
 const Article = require('./../models/article');
 const applicantController = require('./../controllers/applicantController');
@@ -7,9 +7,11 @@ const nodemailerController = require('./../controllers/nodemailerController.js')
 const s3Controller = require('./../controllers/s3Controller');
 const fs = require('fs');
 const passport = require('passport');
-let fileLength = 6;
 const moment = require('moment-timezone');
 const sanitize = require('sanitize-html');
+
+//포트폴리오에서 받는 파일의 수
+let fileLength = 6;
 
 exports.getAllArticles = (req, res, next) => {
   Article.find({}, (error, articles) => {
@@ -21,7 +23,7 @@ exports.getAllArticles = (req, res, next) => {
     }
   });
 };
-
+//포트폴리오 검색. 자동으로 사용자의 이메일로 찾아서 검색한다
 exports.findArticle = (req, res, next) => {
   let targetName;
   if (req.params.username != undefined) {
@@ -45,7 +47,7 @@ exports.findArticle = (req, res, next) => {
   });
 
 };
-
+//기본 포트폴리오 생성
 exports.articleInit = (req, res, applicantId) =>{
   let newArticle = new Article({
     applicantId: applicantId,
@@ -71,16 +73,21 @@ exports.articleInit = (req, res, applicantId) =>{
         if (error) {
           console.log(error);
         } else {
-          //그림작가 1개만 있을 경우
+          //카테고리 1개 고정일때
           req.body.category = 'illustrator';
 
+          //사용자의 게시글 목록에 이 게시글 추가
           applicant.articles.push(article._id);
+
+          //카테고리 1개라 지금은 필요없는 기능
+          //만약 사용자가 새로운 카테고리의 포트폴리오를 등록했다면
           if (applicant.categories.indexOf(req.body.category) == -1){
             //카테고리 추가
             applicant.categories.push(req.body.category);
           }else{
             //카테고리 이미 있음
           }
+          //사용자 업데이트 날짜 저장
           applicant.updateDate = moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm');
           applicant.save();
         }
@@ -89,7 +96,7 @@ exports.articleInit = (req, res, applicantId) =>{
   });
 
 }
-
+//새로운 포트폴리오 생성 (수정하기 버튼)
 exports.createArticle = (req, res, applicantId) => {
   let newArticle = new Article({
     applicantId: applicantId,
@@ -127,7 +134,7 @@ exports.createArticle = (req, res, applicantId) => {
         }
 
       }
-
+      //포트폴리오 생성날짜
       article.createDate = req.articlesData[0].createDate;
       article.save();
 
@@ -168,7 +175,7 @@ exports.createArticle = (req, res, applicantId) => {
     }
   });
 };
-
+//포트폴리오 삭제
 exports.deleteArticle = (req, res, articleId) => {
   Article.findById(articleId, (error, article) => {
     if (error) {

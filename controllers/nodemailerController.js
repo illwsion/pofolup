@@ -1,4 +1,5 @@
 /* 해당 코드는 안진형(cookise09@naver.com)에 의해 작성되었습니다 */
+//파일 업로드와 이메일 전송을 담당
 
 //파일 관리, 이메일 전송 미들웨어
 const nodemailer = require('nodemailer');
@@ -8,11 +9,13 @@ const path = require('path');
 const ejs = require('ejs');
 //보안 관련 미들웨어
 const sanitize = require('sanitize-html');
-
+//멀터 업로드 설정
 const storage = multer.diskStorage({
+  //파일이 저장되는 위치
   destination: (req, file, callback) => {
     callback(null, 'uploads/')
   },
+  //저장되는 파일의 이름
   filename: (req, file, callback) => {
     if (req.isAuthenticated()) {
       if (req.user.isAdmin){
@@ -29,7 +32,7 @@ const storage = multer.diskStorage({
 
   }
 });
-
+//여러 파일 업로드 시
 exports.uploadFile = (req, res, next)=>{
   const upload = multer({
     storage: storage,
@@ -51,7 +54,7 @@ exports.uploadFile = (req, res, next)=>{
     }
   })
 };
-
+//포트폴리오 파일 업로드 시
 exports.uploadFields = (req, res, next)=>{
   const upload = multer({
     storage: storage,
@@ -92,7 +95,7 @@ exports.uploadFields = (req, res, next)=>{
     }
   })
 };
-
+//공지사항 업로드 시
 exports.upload = multer({
   storage: storage,
   //파일 크기 30mb로 제한
@@ -101,7 +104,7 @@ exports.upload = multer({
   }
 });
 
-
+//최종제출 알림 메일
 exports.sendApplyMail = (req, res, applicant) => {
   let emailTemplate;
   ejs.renderFile('views/mail_applyAlarm.ejs', {
@@ -146,7 +149,7 @@ exports.sendApplyMail = (req, res, applicant) => {
   });
 
 };
-
+//이메일 인증 메일
 exports.sendVerificationMail = (req, res, username, realname, verifyKey)=>{
   let emailTemplate;
   ejs.renderFile('views/mail_verification.ejs', {
@@ -190,7 +193,7 @@ exports.sendVerificationMail = (req, res, username, realname, verifyKey)=>{
     }
   });
 };
-
+//제휴문의 메일
 exports.sendContactMail = (req, res)=>{
   let emailTemplate;
   ejs.renderFile('views/mail_contact.ejs',{
@@ -231,7 +234,6 @@ exports.sendContactMail = (req, res)=>{
 
 
   //3.이메일 전송
-
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
@@ -239,6 +241,4 @@ exports.sendContactMail = (req, res)=>{
     } else {
     }
   });
-
-
 };

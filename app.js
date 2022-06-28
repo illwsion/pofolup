@@ -12,8 +12,8 @@
 
   //LOG 기록 미들웨어
   const winston = require('./config/winston');
+  //.env 파일을 위한 미들웨어
   const dotenv = require('dotenv');
-  const path = require('path');
 
   //보안 관련 미들웨어
   const helmet = require('helmet');
@@ -26,12 +26,9 @@
   //router
   const adminRouter = require('./routes/admin');
   const applicantRouter = require('./routes/applicant');
-  const applicantController = require('./controllers/applicantController');
-  dotenv.config({
-    path: path.resolve(__dirname, "./.env")
-  });
 
   //기타 미들웨어
+  const path = require('path');
   const moment = require('moment-timezone');
 
   const app = express();
@@ -39,6 +36,10 @@
   //기본 설정
   app.set('port', process.env.PORT);
   app.set('view engine', 'ejs');
+  //.env 연결
+  dotenv.config({
+    path: path.resolve(__dirname, "./.env")
+  });
 
   //폴더 지정
   app.use(express.static(__dirname + '/public')); //스태틱 폴더 지정
@@ -89,12 +90,13 @@
   passport.serializeUser(Applicant.serializeUser());
   passport.deserializeUser(Applicant.deserializeUser());
 
-  //https 받은 이후 삭제 예정
+  //로컬에서 https 아니어도 작동하기 위해 필요. 서버에서는 필요없다
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
   //mongoose
   //Conneting
   mongoose
+  //서버에서는 mongo: 사용. 로컬에서는 127.0.0.1: 사용
     //.connect("mongodb://mongo:27017/pofolup", {
     .connect("mongodb://127.0.0.1:27017/pofolup", {
       useNewUrlParser: true,
@@ -107,7 +109,7 @@
       console.log(err);
     });
 
-
+  //로그인된 유저
   app.use((req, res, next) => {
     res.locals.user = req.user;
     res.locals.login = req.isAuthenticated();

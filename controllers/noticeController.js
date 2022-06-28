@@ -1,5 +1,5 @@
 /* 해당 코드는 안진형(cookise09@naver.com)에 의해 작성되었습니다 */
-
+//공지사항 담당
 const Applicant = require('./../models/applicant');
 const Notice = require('./../models/notice');
 const Pofolup = require('./../models/pofolup');
@@ -10,7 +10,7 @@ const nodemailerController = require('./../controllers/nodemailerController');
 const moment = require('moment-timezone');
 
 
-
+//총 공지사항 수 조회
 exports.getTotalNotice = (req, res, next) => {
   Pofolup.find({}, (error, pofolupDB)=>{
     if (error){
@@ -21,7 +21,7 @@ exports.getTotalNotice = (req, res, next) => {
     next();
   });
 };
-
+//모든 공지사항의 데이터 검색
 exports.getAllNotices = (req, res, next) => {
   Notice.find({}, (error, notices) => {
     if (error) {
@@ -32,11 +32,12 @@ exports.getAllNotices = (req, res, next) => {
     }
   });
 };
-
+//공지사항 생성 (업로드 버튼)
 exports.createNotice = (req, res, next) => {
-  //현재 인원 수
+  //현재 공지사항 수
   let currentNotice = req.totalNotice;
   currentNotice = ('0000'+currentNotice).slice(-4);
+  //새로운 공지사항 생성
   let newNotice = new Notice({
     noticeNumber: currentNotice,
     adminId: req.user._id,
@@ -70,15 +71,14 @@ exports.createNotice = (req, res, next) => {
     }
   });
 };
-
+//공지사항 삭제
 exports.deleteNotice = (req, res, noticeNumber) => {
-  console.log('공지사항 삭제 시도');
   Notice.find({noticeNumber: noticeNumber}, async (error, notice) => {
     if (error) {
       console.log('error at deleteNotice' + error);
     } else {
       //이미지 삭제. 일단 남겨두는 쪽으로
-      //지울거면 s3Controller에서 s3NoticeDelete 함수 작성해줘야함
+      //지울거면 s3Controller에서 s3NoticeDelete 함수 작성해줘야한다
       //s3Controller.s3Delete(req, res, applicant.username, applicant.file);
       //공지사항 삭제
       Notice.deleteOne({
@@ -94,10 +94,9 @@ exports.deleteNotice = (req, res, noticeNumber) => {
   });
 };
 
-
+//공지사항 조회
 exports.findNotice = (req, res, next) => {
   let targetName;
-
   Notice.find({
     noticeNumber: req.params.noticeNumber
   }, (error, Notices) => {
@@ -108,5 +107,4 @@ exports.findNotice = (req, res, next) => {
       next();
     }
   });
-
 };

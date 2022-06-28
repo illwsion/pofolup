@@ -4,6 +4,7 @@ const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 const path = require('path');
+
 const Applicant = require('./../models/applicant');
 
 const cookieParser = require('cookie-parser');
@@ -13,7 +14,7 @@ const csrf = require('csurf');
 const csrfProtection = csrf({
   cookie: true
 });
-
+//controllers 연결
 const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
 const categoryController = require('./../controllers/categoryController');
@@ -44,14 +45,13 @@ const isVerified = (req, res, next) => {
       res.render('applicantVerify');
     }
   }
-  //이메일 인증 안내 페이지
-  //다시 보내는 기능도 있고 해야 함
   res.redirect('/');
 };
 
 //메인 페이지.
 router.get('/', csrfProtection, (req, res) => {
   if (req.isAuthenticated()) {
+    //로그인되어있을시 자동으로 이동
     if (req.user.isAdmin){
       res.redirect('/adminPage/illustrator/1');
     }else{
@@ -65,7 +65,7 @@ router.get('/', csrfProtection, (req, res) => {
   }
 });
 
-//회원가입창
+//회원가입 페이지
 router.get('/register', csrfProtection, (req, res)=>{
   //로그인 안되어있어야 가능
   if (req.isAuthenticated()) {
@@ -77,7 +77,7 @@ router.get('/register', csrfProtection, (req, res)=>{
   }
 });
 
-//회원가입
+//회원가입 버튼 클릭
 router.post('/register', nodemailerController.uploadFile, csrfProtection, applicantController.findApplicant, applicantController.getTotalUser, applicantController.createApplicant, passport.authenticate("local",{
   successRedirect: '/',
   failureRedirect: '/'
@@ -86,7 +86,7 @@ router.post('/register', nodemailerController.uploadFile, csrfProtection, applic
   console.log(req.body._csrf);
 });
 
-//로그인 기능
+//로그인
 router.post('/userLogin', csrfProtection, passport.authenticate('local', {
   failureRedirect: '/loginFailed',
   session: true
@@ -94,6 +94,7 @@ router.post('/userLogin', csrfProtection, passport.authenticate('local', {
   //로그인 성공하면 유저, 게시글 정보 불러옴
   var applicantsData = req.applicantsData;
   var articlesData = req.articlesData;
+  //관리자면 관리자 페이지, 아니면 사용자 상세페이지로 이동
   if (applicantsData[0].isAdmin) {
     res.redirect('/adminPage/illustrator/1');
   } else {
@@ -120,6 +121,7 @@ router.get('/applicants/:username', csrfProtection, isLoggedIn, applicantControl
     });
   } else {
     let ArticlesData = req.articlesData;
+    //최신 게시글부터 보이게. 지금은 1개이므로 필요없음
     ArticlesData.reverse();
     let ApplicantsData = req.applicantsData;
     //cors 우회
@@ -152,30 +154,24 @@ router.post('/changeStatus', isLoggedIn, (req, res)=>{
 });
 
 //유저 프로필 업데이트
-//지원하기 버튼 클릭
+//저장하기 버튼 클릭
 router.post('/apply', isLoggedIn, nodemailerController.uploadFields, csrfProtection, applicantController.findApplicant, articleController.findArticle,(req, res, next) => {
   if (req.isAuthenticated()) {
     if (req.user.username == req.body.username) {
       articleController.deleteArticle(req, res, req.articlesData[0]._id);
       articleController.createArticle(req, res, req.user._id);
-
       res.redirect('/applicants/' + req.user.username);
     } else {
       res.render('errorPage', {
         errorDetail: '현재 사용자와 다른 사용자입니다!'
       });
     }
-  }
-  else{
+  } else {
     res.render('errorPage_loginFailure');
   }
-  next();
-}, (req, res)=>{
-
-
 });
 
-//유저 개인정보 수정하기
+//사용자 개인정보 수정하기 페이지
 router.get('/updateApplicant/:username', csrfProtection, isLoggedIn, applicantController.findApplicant,  categoryController.getAllCategories, (req, res) => {
   let CategoryData = req.categoriesData.find((category)=>
     category.categoryName == 'illustrator'
@@ -201,7 +197,7 @@ router.get('/updateApplicant/:username', csrfProtection, isLoggedIn, applicantCo
     }
   }
 });
-
+//개인정보 수정하기 버튼 클릭
 router.post('/updateApplicant/:username', isLoggedIn, nodemailerController.uploadFile, csrfProtection, applicantController.findApplicant, (req, res)=>{
   applicantController.updateApplicant(req, res);
   res.redirect('/applicants/' + req.user.username);
@@ -247,7 +243,7 @@ router.get('/notice/:content', csrfProtection, (req, res) => {
       break;
   }
 });
-
+//제휴문의
 router.post('/notice/contact', csrfProtection, (req, res)=>{
   req.body.content = req.body.content.replaceAll(/(\r\n|\n|\r)/gm, "<br>");
   nodemailerController.sendContactMail(req, res);

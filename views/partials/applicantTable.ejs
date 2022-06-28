@@ -42,14 +42,13 @@
       <div class="applicant_list_profile_subimgs">
         <% for (let j=0;j<6;j++){ %>
           <% if (Applicants[i].fileNames[j] != null) { %>
-              <img src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[i].username%>/<%= Applicants[i].fileNames[j]%>" alt="구도 0. 새로고침 필요">
+              <img src="https://domnc9j4gfidk.cloudfront.net/image/<%= Applicants[i].username%>/<%= Applicants[i].fileNames[j]%>" alt="구도 <%=j%>. 새로고침 필요">
           <% } else {%>
               <img src="/images/default_<%=j+1%>.png" alt="">
           <% } %>
         <% } %>
       </div>
     </div>
-
   </div>
 <hr>
 <%}%>

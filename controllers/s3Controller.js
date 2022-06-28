@@ -1,25 +1,26 @@
 /* 해당 코드는 안진형(cookise09@naver.com)에 의해 작성되었습니다 */
-
+//AWS S3 담당
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const dotenv = require('dotenv');
 
 dotenv.config();
-
-
+//AWS 계정과 연결
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   region: process.env.AWS_REGION,
 });
-
+//이미지 업로드 (포트폴리오 및 프로필 이미지);
 exports.s3Upload = (req, res, userEmail, filename) => {
+  //저장경로 설정
   let param = {
     'Bucket': process.env.AWS_BUCKET,
     'Key': 'image/' + userEmail + '/' + filename,
     'ACL': 'public-read',
     'Body': fs.createReadStream(__dirname + '/../uploads/' + filename),
   };
+  //업로드
   s3.upload(param, (err, data) => {
     if (err) {
       console.log('something wrong at s3.upload');
@@ -33,32 +34,14 @@ exports.s3Upload = (req, res, userEmail, filename) => {
     }
   });
 };
-
-exports.s3Download = (req, res, userEmail, filename) => {
-  console.log('s3Download');
-  let param = {
-    'Bucket': process.env.AWS_BUCKET,
-    'Key': 'image/' + userEmail + '/' + filename,
-  };
-  s3.getObject(param, (err, data) => {
-    if (err) {
-      console.log('something wrong at s3.download');
-      console.log(err);
-    } else {
-      //다운로드 성공
-      console.log('다운로드 성공');
-      console.log(data);
-      req.file = data.Body.toString();
-      //console.log(req.file);
-    }
-  });
-}
-
+//이미지 삭제 (포트폴리오 및 프로필 이미지)
 exports.s3Delete = (req, res, userEmail, filename) => {
+  //경로 설정
   let param = {
     'Bucket': process.env.AWS_BUCKET,
     'Key': 'image/' + userEmail + '/' + filename,
   };
+  //삭제
   s3.deleteObject(param, (err, data) => {
     if (err) {
       console.log('something wrong at s3.delete');
@@ -68,14 +51,16 @@ exports.s3Delete = (req, res, userEmail, filename) => {
     }
   });
 };
-
+//공지사항 업로드 시 이미지가 첨부되어있다면
 exports.s3NoticeUpload = (req, res, filename) => {
+  //저장경로 설정
   let param = {
     'Bucket': process.env.AWS_BUCKET,
     'Key': 'notice/' + req.body.title + '/' + filename,
     'ACL': 'public-read',
     'Body': fs.createReadStream(__dirname + '/../uploads/' + filename),
   };
+  //업로드
   s3.upload(param, (err, data) => {
     if (err) {
       console.log('something wrong at s3.upload');

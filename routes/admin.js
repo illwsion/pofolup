@@ -1,18 +1,22 @@
 /* 해당 코드는 안진형(cookise09@naver.com)에 의해 작성되었습니다 */
 
+//기본 미들웨어
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
 const path = require('path');
+
+//DB 연결
 const Applicant = require('./../models/applicant');
 
+//보안을 위한 미들웨어
 const http = require('http');
 const url = require('url');
 const csrf = require('csurf');
 const csrfProtection = csrf({
   cookie: true
 });
-//mongoose
+//Controller와 연결
 const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
 const categoryController = require('./../controllers/categoryController');
@@ -21,7 +25,8 @@ const noticeController = require('./../controllers/noticeController');;
 
 //스태틱 폴더 지정
 router.use(express.static(__dirname + '/../public'));
-
+//pageSize : 한 페이지당 보일 지원자 수
+//pageSize_notice: 한 페이지당 보일 공지사항 수
 let pageSize = 4;
 let pageSize_notice = 10;
 
@@ -39,22 +44,21 @@ const isAdmin = (req, res, next) => {
       return next();
     }
   }
-  console.log("user is not admin or logged in!!");
   res.render('errorPage', {
     errorDetail: '관리자가 아닙니다!'
   });
 };
 
-
-//adminPage 검색 기능
+//관리자페이지에서 검색창 썼는지 확인
 const searchCheck = (req, res, next) => {
   const queryObject = url.parse(req.url, true).query;
   let hashTags = Object.entries(queryObject);
   let ApplicantsData;
   if (hashTags[0] != undefined){
     if (hashTags[0][0] == 'search'){
-      //검색했으므로 태그 무시하고 이름으로만 찾음
+      //검색창에 무언가를 검색했으므로 태그 무시하고 검색으로만 찾음
       if (hashTags[1][1] == "realname"){
+        //이름 으로 검색했다면
         Applicant.find({realname: hashTags[0][1]}, (error, applicants)=>{
           if (error){
             console.log('error at finding applicant at adminPage' + error);
@@ -65,7 +69,9 @@ const searchCheck = (req, res, next) => {
           }
         });
       } else if (hashTags[1][1] == "applicantNumber"){
+        //회원번호 로 검색했다면
         if (hashTags[1][1].length != 6){
+          //34로 검색해도 000034로 검색되게 변경
           hashTags[0][1] = ('000000' + hashTags[0][1]).slice(-6);
         }
         Applicant.find({applicantNumber: hashTags[0][1]}, (error, applicants)=>{
@@ -78,6 +84,8 @@ const searchCheck = (req, res, next) => {
           }
         });
       }else{
+      //검색 옵션 늘리려면 여기서 else if (hashTags[1][1] == "새로운 검색옵션")}
+      //혹은 switch문 사용
         next();
       }
     }else{
@@ -89,7 +97,7 @@ const searchCheck = (req, res, next) => {
 };
 
 
-//관리자 페이지
+//관리자 페이지 조회
 router.get('/adminPage/:category/:pageNum', isAdmin, applicantController.getAllApplicants, categoryController.getAllCategories, searchCheck, (req, res) => {
   let ApplicantsData = req.applicantsData;
   let CategoryData = req.categoriesData.find((category)=>
@@ -98,11 +106,11 @@ router.get('/adminPage/:category/:pageNum', isAdmin, applicantController.getAllA
 
   const queryObject = url.parse(req.url, true).query;
   let hashTags = Object.entries(queryObject);
-  //주어진 queryObject로
 
+  //주어진 queryObject로 ApplicantsData 수정
   if (hashTags[0] != undefined){
     if (hashTags[0][0] != 'search'){
-      //검색한게 없으므로 태그 적용
+      //검색창에 입력한게 없으므로 태그 적용
       outer : for (var i=0; i<ApplicantsData.length; i++){
         //category 검사해서 맞지 않는 applicant는 삭제
         //지금은 category 'illustrator' 1개뿐이므로 비활성화
@@ -124,6 +132,7 @@ router.get('/adminPage/:category/:pageNum', isAdmin, applicantController.getAllA
       }
     }
   }else{
+    //태그도 없고 검색도 안함.
     //category 검사해서 맞지 않는 applicant는 삭제
     //지금은 category 'illustrator' 1개뿐이므로 비활성화
     /*
@@ -137,15 +146,17 @@ router.get('/adminPage/:category/:pageNum', isAdmin, applicantController.getAllA
     */
   }
 
-  let maxPage = parseInt(ApplicantsData.length / pageSize);
-  if (ApplicantsData.length % pageSize != 0) {
-    maxPage++;
-  }
-  //유저 updateDate 기준으로 정렬
+  //사용자를 updateDate 기준으로 정렬
   ApplicantsData.sort((a,b)=>{
     if (a.updateDate < b.updateDate) return 1;
     else return -1;
   });
+
+  //페이지네이션
+  let maxPage = parseInt(ApplicantsData.length / pageSize);
+  if (ApplicantsData.length % pageSize != 0) {
+    maxPage++;
+  }
 
   if (req.params.pageNum > maxPage)
     req.params.pageNum = maxPage;
@@ -177,25 +188,15 @@ router.get('/adminPage/:category/:pageNum', isAdmin, applicantController.getAllA
       curCategory: CategoryData,
     });
   }
-
 });
 
-//태그 검색
+//관리자 페이지에서 검색
 router.post('/adminPage/:category/:pageNum', isAdmin, categoryController.getAllTags, (req, res) => {
   let queryString = "/adminPage/" + req.params.category + "/" + req.params.pageNum + "?";
   //검색창에 무언가를 검색했을 경우
   if (req.body.targetName.length != 0){
     queryString += ("search="+req.body.targetName + "&");
     queryString += ("searchOption="+req.body.searchOption + "&");
-  }
-
-  //category별로 hashTags 불러와서 queryString에 넣음
-  let query = 'req.body.' + req.Category.hashTags[0];
-  if (req.body.targetName+'1' != '1'){
-    //console.log('뭔가 입력됐네 post');
-    req.targetName = req.body.targetName;
-  }else{
-    //console.log('아무것도 입력 안됨post');
   }
 
   if (req.body.hashTags != undefined){
@@ -218,7 +219,7 @@ router.post('/adminPage/:category/:pageNum', isAdmin, categoryController.getAllT
 });
 
 
-//scrapList 받아오기 기능
+//즐겨찾기한 사용자들만 불러오기
 const scrapList = (req, res, next) => {
   Applicant.findById(req.user._id)
   .populate('scrapList')
@@ -237,7 +238,6 @@ const scrapList = (req, res, next) => {
 
 router.get('/scrapList/:category/:pageNum', isAdmin, categoryController.getAllCategories, scrapList, (req, res)=>{
   let ApplicantsData = req.applicantsData;
-  //ApplicantsData.reverse();
   let CategoryData = req.categoriesData.find((category)=>
     category.categoryName == req.params.category
   );
@@ -249,8 +249,10 @@ router.get('/scrapList/:category/:pageNum', isAdmin, categoryController.getAllCa
   if (ApplicantsData.length % pageSize != 0) {
     maxPage++;
   }
+  //최근에 즐겨찾기한 사람이 제일 먼저 보이도
   ApplicantsData.reverse();
 
+  //페이지네이션
   if (req.params.pageNum > maxPage)
     req.params.pageNum = maxPage;
   if (req.params.pageNum == 0)
