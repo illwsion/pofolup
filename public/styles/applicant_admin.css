@@ -195,7 +195,7 @@
   }
   #detail_info_url a{
     width: 100%;
-    font-size: 1rem;
+    font-size: 1.5rem;
     text-decoration: none;
     display: flex;
     justify-content: center;
@@ -454,7 +454,7 @@
   }
   #detail_info_url a{
     margin-left: 20px;
-    font-size: 10pt;
+    font-size: 20pt;
     text-decoration: none;
   }
 

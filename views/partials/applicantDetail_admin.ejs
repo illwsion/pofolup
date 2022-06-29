@@ -69,10 +69,11 @@
 
     <div id="detail_info_url">
       <p>포트폴리오 URL : </p>
-      <% if (Applicants[0].url != '') {%>
-          <a href="<%= Applicants[0].url %>" target="_blank">포트폴리오 링크</a>
+      <% if (Applicants[0].url == '' || Applicants[0].url == undefined) {%>
+        <p>포트폴리오 url 없음</p>
       <% } else { %>
-          <p>포트폴리오 url 없음</p>
+        <a href="<%= Applicants[0].url %>" target="_blank">포트폴리오 링크</a>
+
       <% } %>
     </div>
     <div id="detail_info_update">
