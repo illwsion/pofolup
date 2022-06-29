@@ -73,7 +73,11 @@
             <div>
               <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
                 <% if (i <= maxPage) { %>
-                  <a href="/noticeboard/<%= i %>">[<%= i %>]</a>
+                  <% if (i == pageNum) { %>
+                    <a href="/noticeboard/<%= i %>" style="color: #cccccc;">[<%= i %>]</a>
+                  <% } else { %>
+                    <a href="/noticeboard/<%= i %>">[<%= i %>]</a>
+                  <% } %>
                 <% } %>
               <% } %>
             </div>

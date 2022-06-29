@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+<head>
+  <%- include('./partials/head'); %>
+
+  <link href="/styles/categoryUpdate.css" rel="stylesheet" type="text/css">
+
+  <script>
+    //파일 업로드 시 미리보기
+    function setThumbnail(event, num){
+      let reader = new FileReader();
+      console.log("image_container_"+num);
+      reader.onload = (event)=>{
+        document.getElementById("image_container_"+ num).src = event.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
+
+  <script>
+  //양식 제출
+    function submitForm(){
+      let form = document.getElementById('category_update');
+      form.submit();
+    }
+  </script>
+
+  <script>
+  //공지사항 높이
+  window.onload = function(){
+    heightChange();
+  }
+    function heightChange(){
+      let textarea1 = document.getElementById('categoryDesc1');
+      let textarea2 = document.getElementById('categoryDesc2');
+      textarea1.style.height = '1px';
+      textarea1.style.height = (12 + textarea1.scrollHeight) + 'px';
+      textarea2.style.height = '1px';
+      textarea2.style.height = (12 + textarea2.scrollHeight) + 'px';
+    }
+  </script>
+</head>
+
+<body id="popupscroll">
+
+  <div id="container">
+    <div id="header">
+      <%- include('./partials/header'); %>
+    </div>
+    <div id="contents">
+      <div id="article_table">
+        <form id="category_update" action="/categoryUpdate" method="post" enctype="multipart/form-data">
+          <div class="article_upload_title">
+              <img src="/images/06_view_11.jpg" alt="">
+          </div>
+
+          <div class="article_upload_desc">
+              <textarea id="categoryDesc1" name="categoryDesc" cols="30" rows="10" onchange="heightChange()"><%=curCategory.categoryDesc[0]%></textarea>
+          </div>
+
+          <div class="article_upload_image">
+            <div class="article_image">
+              <% if (curCategory.fileNames[0] != null) { %>
+                  <img id= "image_container_0" src="https://domnc9j4gfidk.cloudfront.net/category/illustrator/0_<%= curCategory.fileNames[0]%>" width="100px" , height="100px" alt="구도 0. 새로고침 필요">
+              <% } else {%>
+                  <img id= "image_container_0" src="/images/default_1.png" alt="">
+              <% } %>
+
+              <div class="upload_button">
+                <textarea name="fileDesc" rows="8" cols="80"><%=curCategory.fileDesc[0]%></textarea>
+                <input type="file" id="image0" onchange="setThumbnail(event, 0);" name="0" accept=".jpg, .png"><br>
+                <label for="image0">파일 선택</label>
+              </div>
+            </div>
+            <div class="article_image article_image_middle">
+              <% if (curCategory.fileNames[1] != null) { %>
+                  <img id= "image_container_1" src="https://domnc9j4gfidk.cloudfront.net/category/illustrator/1_<%= curCategory.fileNames[1]%>" width="100px" , height="100px" alt="구도 1. 새로고침 필요">
+              <% } else {%>
+                  <img id= "image_container_1" src="/images/default_2.png" alt="">
+              <% } %>
+              <div class="upload_button">
+                <textarea name="fileDesc" rows="8" cols="80"><%=curCategory.fileDesc[1]%></textarea>
+                <input type="file" id="image1" onchange="setThumbnail(event, 1);" name="1" accept=".jpg, .png"><br>
+                <label for="image1">파일 선택</label>
+              </div>
+            </div>
+            <div class="article_image">
+              <% if (curCategory.fileNames[2] != null) { %>
+                  <img id= "image_container_2" src="https://domnc9j4gfidk.cloudfront.net/category/illustrator/2_<%= curCategory.fileNames[2]%>" width="100px" , height="100px" alt="구도 2. 새로고침 필요">
+              <% } else {%>
+                  <img id= "image_container_2" src="/images/default_3.png" alt="">
+              <% } %>
+              <div class="upload_button">
+                <textarea name="fileDesc" rows="8" cols="80"><%=curCategory.fileDesc[2]%></textarea>
+                <input type="file" id="image2" onchange="setThumbnail(event, 2);" name="2" accept=".jpg, .png"><br>
+                <label for="image2">파일 선택</label>
+              </div>
+            </div>
+          </div>
+
+          <p class="article_upload_title">Select Upload</p>
+          <div class="article_upload_desc">
+            <textarea id="categoryDesc2" name="categoryDesc" cols="30" rows="10" onchange="heightChange()"><%=curCategory.categoryDesc[1]%></textarea>
+          </div>
+
+          <div class="article_upload_image">
+            <div class="article_image">
+              <% if (curCategory.fileNames[3] != null) { %>
+                  <img id= "image_container_3" src="https://domnc9j4gfidk.cloudfront.net/category/illustrator/3_<%= curCategory.fileNames[3]%>" width="100px" , height="100px" alt="구도 3. 새로고침 필요">
+              <% } else {%>
+                  <img id= "image_container_3" src="/images/default_4.png" alt="">
+              <% } %>
+              <div class="upload_button">
+                <textarea name="fileDesc" rows="8" cols="80"><%=curCategory.fileDesc[3]%></textarea>
+                <input type="file" id="image3" onchange="setThumbnail(event, 3);" name="3" accept=".jpg, .png"><br>
+                <label for="image3">파일 선택</label>
+              </div>
+            </div>
+            <div class="article_image article_image_middle">
+              <% if (curCategory.fileNames[4] != null) { %>
+                  <img id= "image_container_4" src="https://domnc9j4gfidk.cloudfront.net/category/illustrator/4_<%= curCategory.fileNames[4]%>" width="100px" , height="100px" alt="구도 4. 새로고침 필요">
+              <% } else {%>
+                  <img id= "image_container_4" src="/images/default_5.png" alt="">
+              <% } %>
+              <div class="upload_button">
+                <textarea name="fileDesc" rows="8" cols="80"><%=curCategory.fileDesc[4]%></textarea>
+                <input type="file" id="image4" onchange="setThumbnail(event, 4);" name="4" accept=".jpg, .png"><br>
+                <label for="image4">파일 선택</label>
+
+              </div>
+            </div>
+            <div class="article_image">
+              <% if (curCategory.fileNames[5] != null) { %>
+                  <img id= "image_container_5" src="https://domnc9j4gfidk.cloudfront.net/category/illustrator/5_<%= curCategory.fileNames[5]%>" width="100px" , height="100px" alt="구도 5. 새로고침 필요">
+              <% } else {%>
+                  <img id= "image_container_5" src="/images/default_6.png" alt="">
+              <% } %>
+              <div class="upload_button">
+                <textarea name="fileDesc" rows="8" cols="80"><%=curCategory.fileDesc[5]%></textarea>
+                <input type="file" id="image5" onchange="setThumbnail(event, 5);" name="5" accept=".jpg, .png"><br>
+                <label for="image5">파일 선택</label>
+
+              </div>
+            </div>
+          </div>
+
+          <div id="article_upload_button">
+            <label for="article_submit">저장하기</label>
+            <input type="text" id="verify" hidden value="<%=user.isVerified%>">
+            <input type="button" onclick="submitForm()" id="article_submit">
+          </div>
+
+        </form>
+
+
+      </div>
+    </div>
+    <div id="footer">
+      <%- include('./partials/footer'); %>
+    </div>
+  </div>
+</body>
+
+</html>

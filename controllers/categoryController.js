@@ -4,6 +4,11 @@ const Category = require('./../models/category');
 const Applicant = require('./../models/applicant');
 const moment = require('moment-timezone');
 
+const s3Controller = require('./../controllers/s3Controller');
+
+//포트폴리오에서 받는 파일의 수
+let fileLength = 6;
+
 //모든 카테고리의 데이터를 불러온다
 exports.getAllCategories = (req, res, next)=>{
   Category.find({}, (error, categories)=>{
@@ -37,8 +42,7 @@ exports.createCategory = (req, res, categoryName)=>{
   .where('categoryName').equals(categoryName)
   .exec((error, category)=>{
     if(error){
-      console.log('error at createcategory');
-      console.log(error);
+      console.log('error at createcategory' + error);
     } else{
       if (category.length == 0){
 
@@ -51,6 +55,59 @@ exports.createCategory = (req, res, categoryName)=>{
     categoryName: req.body.categoryName,
   })
 };
+
+//카테고리를 수정한다
+exports.updateCategory = (req, res, categoryName)=>{
+  console.log('req.body');
+  console.log(req.body);
+  console.log('req.art')
+
+  Category.find()
+  .where('categoryName').equals(categoryName)
+  .exec((error, category)=>{
+    if(error){
+      console.log('error at updateCategory' + error);
+      console.log(error);
+    } else{
+      if (category.length == 0){
+        //카테고리가 존재하지 않음
+      } else{
+        let fileArray = [];
+        for (let i=0; i<fileLength; i++){
+          fileArray.push(req.body.fileDesc + (i+1));
+        }
+        category[0].fileDesc = fileArray;
+
+        //파일 업데이트 이거 수정해야함
+        for (let i=0; i<fileLength; i++){
+          //업로드한 파일이 있다면
+          if (req.files[i] != undefined){
+            //원래 있던 것은 삭제
+            console.log('새로운 파일');
+            console.log(req.files[i]);
+            console.log('원래 있는 파일');
+            console.log(category[0].fileNames[i]);
+            if (category[0].fileNames[i] != null){
+              s3Controller.s3CategoryDelete(req, res, i, category[0].fileNames[i]);
+            }
+            //새로운 파일로 업데이트
+            category[0].fileNames[i] = req.files[i][0].filename;
+            s3Controller.s3CategoryUpload(req, res, i, req.files[i][0].filename);
+          }
+          //파일 설명 업데이트
+          category[0].fileDesc[i] = req.body.fileDesc[i]
+        }
+        for (let i=0;i<2;i++){
+          category[0].categoryDesc[i] = req.body.categoryDesc[i];
+        }
+
+        category[0].save();
+      }
+    }
+  });
+
+};
+
 //새로운 태그 생성
 exports.createTag = (req, res, categoryName)=>{
   Category.find()

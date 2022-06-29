@@ -100,7 +100,11 @@
             <div>
               <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
                 <% if (i <= maxPage) { %>
-                  <a href="/adminPage/<%= category %>/<%= i %><%=queryString%>">[<%= i %>]</a>
+                  <% if (i == pageNum) { %>
+                    <a href="/adminPage/<%= category %>/<%= i %><%=queryString%>" style="color: #cccccc;">[<%= i %>]</a>
+                  <% } else { %>
+                    <a href="/adminPage/<%= category %>/<%= i %><%=queryString%>">[<%= i %>]</a>
+                  <% } %>
                 <% } %>
               <% } %>
             </div>
@@ -111,6 +115,9 @@
                <a href="/adminPage/<%= category %>/<%=maxPage%><%=queryString%>">[맨끝]</a>
             <% } %>
           </div>
+        </div>
+        <div id="category_Update">
+          <a href="/categoryUpdate">양식 수정하기</a>
         </div>
 
       </div>

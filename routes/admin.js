@@ -415,4 +415,20 @@ router.get('/checkDateUpdate/:applicantEmail', isAdmin, (req, res)=>{
   res.redirect('/applicants/'+req.params.applicantEmail);
 });
 
+//양식 수정하기
+router.get('/categoryUpdate', isAdmin, categoryController.getAllCategories, (req, res)=>{
+  let CategoryData = req.categoriesData.find((category)=>
+    category.categoryName == 'illustrator'
+  );
+  res.render('categoryUpdate', {
+    curCategory: CategoryData,
+  });
+});
+
+router.post('/categoryUpdate', isAdmin, nodemailerController.uploadFields, (req, res)=>{
+  categoryController.updateCategory(req, res, 'illustrator');
+
+  res.redirect('/adminPage/illustrator/1');
+});
+
 module.exports = router;

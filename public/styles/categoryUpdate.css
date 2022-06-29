@@ -64,15 +64,14 @@
   .article_upload_desc textarea{
     font-family: 'NanumSquareRound';
     font-size: 10pt;
-    width: 80%;
+    width: 600px;
     height: auto;
     display: flex;
     text-align: center;
     margin: 2px;
     resize: none;
-    border: 0;
+    border: 1px solid #c4c4c4;
     background-color: #ffffff;
-    color: #000000;
   }
   .article_upload_image{
     display: flex;
@@ -125,12 +124,9 @@
     width: 80%;
     height: 50px;
     font-size: 20pt;
-    text-align: center;
     resize: none;
-    margin-bottom: 10px;
-    border: 0;
-    background-color: #ffffff;
-    color: #000000;
+    border: 1px solid #c4c4c4;
+    margin-bottom: 20px;
   }
   .upload_button h6{
     font-size: 15pt;
@@ -303,9 +299,8 @@
     text-align: center;
     margin: 2px;
     resize: none;
-    border: 0;
+    border: 1px solid #c4c4c4;
     background-color: #ffffff;
-    color: #000000;
   }
   .article_upload_image{
     display: flex;
@@ -354,9 +349,7 @@
     height: 50px;
     font-size: 20pt;
     resize: none;
-    border: 0;
-    background-color: #ffffff;
-    color: #000000;
+    border: 1px solid #c4c4c4;
   }
   .upload_button h6{
     font-size: 15pt;

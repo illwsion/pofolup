@@ -99,7 +99,7 @@ exports.createApplicant = (req, res, next) => {
       createDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
       updateDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
       isAdmin: false,
-      isVerified: true,
+      isVerified: false,
       verifyKey: crypto.randomBytes(16).toString('hex'),
       articles: new Array(0),
       tagInfo: new Array(0),

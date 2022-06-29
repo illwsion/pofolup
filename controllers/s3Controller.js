@@ -74,3 +74,45 @@ exports.s3NoticeUpload = (req, res, filename) => {
     }
   });
 };
+//이미지 업로드 (포트폴리오 양식 변경)
+exports.s3CategoryUpload = (req, res, fileNumber, filename) => {
+  //저장경로 설정
+  let param = {
+    'Bucket': process.env.AWS_BUCKET,
+    'Key': 'category/illustrator/' + fileNumber + '_' + filename,
+    'ACL': 'public-read',
+    'Body': fs.createReadStream(__dirname + '/../uploads/' + filename),
+  };
+  //업로드
+  s3.upload(param, (err, data) => {
+    if (err) {
+      console.log('something wrong at s3.upload');
+      console.log(err);
+    } else {
+      //업로드 성공
+      //로컬 파일은 삭제
+      if (fs.existsSync(__dirname + '/../uploads/' + filename)) {
+        fs.unlinkSync(__dirname + '/../uploads/' + filename);
+      }
+    }
+  });
+};
+//이미지 삭제 (포트폴리오 양식 변경)
+exports.s3CategoryDelete = (req, res, fileNumber, filename) => {
+  //경로 설정
+  console.log('s3CategoryDelete 실행@@@');
+  let param = {
+    'Bucket': process.env.AWS_BUCKET,
+    'Key': 'category/illustrator/' + fileNumber + '_' + filename,
+  };
+  //삭제
+  s3.deleteObject(param, (err, data) => {
+    if (err) {
+      console.log('something wrong at s3.delete');
+      console.log(err);
+    } else {
+      console.log('category/illustrator/' + fileNumber + '_' + filename + '  삭제??');
+      //삭제 성공
+    }
+  });
+};

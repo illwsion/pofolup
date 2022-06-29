@@ -298,7 +298,24 @@
     color: #404040;
     margin: 0 4px;
   }
-
+  #category_Update a{
+    font-family: 'NanumSquareRound';
+    font-size: 15pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    width: 200px;
+    height: 40px;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 0;
+    line-height: normal;
+    border: 1px solid #000000;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 20px;
+  }
 }
 @media (min-width: 1000px){
   #contents{
@@ -576,5 +593,21 @@
     color: #404040;
     margin: 0 8px;
   }
-
+  #category_Update a{
+    font-family: 'NanumSquareRound';
+    font-size: 15pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    width: 200px;
+    height: 40px;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 0;
+    line-height: normal;
+    border: 1px solid #000000;
+    cursor: pointer;
+    text-decoration: none;
+  }
 }
