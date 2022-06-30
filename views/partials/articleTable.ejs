@@ -289,6 +289,7 @@
 <script type="text/javascript">
 //이메일 인증 팝업
 window.onload = function(){
+  heightChange();
   function openPopup(){
     let bodyscroll = document.getElementById('popupscroll');
     bodyscroll.classList.toggle("popupscroll");
@@ -309,9 +310,18 @@ window.onload = function(){
   //document.getElementById('popup_confirm').addEventListener('click', confirmPopup);
   document.getElementById('popup_close').addEventListener('click', closePopup);
 
-  let style = document.getElementById('detail_info_style_text').innerHTML;
-  style = style.replaceAll("&lt;br&gt;", "<br>");
-  document.getElementById('detail_info_style_text').innerHTML = style;
+  //let style = document.getElementById('detail_info_style_text').innerHTML;
+  //style = style.replaceAll("&lt;br&gt;", "<br>");
+  //document.getElementById('detail_info_style_text').innerHTML = style;
+
+  function heightChange(){
+    let textarea1 = document.getElementById('categoryDesc1');
+    let textarea2 = document.getElementById('categoryDesc2');
+    textarea1.style.height = '1px';
+    textarea1.style.height = (12 + textarea1.scrollHeight) + 'px';
+    textarea2.style.height = '1px';
+    textarea2.style.height = (12 + textarea2.scrollHeight) + 'px';
+  }
 }
 
 </script>
@@ -320,20 +330,5 @@ window.onload = function(){
   function submitForm(){
     let form = document.getElementById('register_form');
     form.submit();
-  }
-</script>
-
-<script>
-//공지사항 높이
-window.onload = function(){
-  heightChange();
-}
-  function heightChange(){
-    let textarea1 = document.getElementById('categoryDesc1');
-    let textarea2 = document.getElementById('categoryDesc2');
-    textarea1.style.height = '1px';
-    textarea1.style.height = (12 + textarea1.scrollHeight) + 'px';
-    textarea2.style.height = '1px';
-    textarea2.style.height = (12 + textarea2.scrollHeight) + 'px';
   }
 </script>
