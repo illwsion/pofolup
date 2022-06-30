@@ -234,7 +234,7 @@
     width: 10%;
   }
   .notice_title{
-    width: 65%;
+    width: 60%;
     display: flex;
 
   }
@@ -246,7 +246,7 @@
     text-decoration-line: underline;
   }
   .notice_adminName{
-    width: 10%;
+    width: 15%;
   }
   .notice_createDate{
     width: 15%;

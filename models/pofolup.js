@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const pofolupSchema = mongoose.Schema({
   totalUser: 'number',
   totalNotice: 'number',
+  totalContact: 'number',
 }, {
   collection: 'pofolupDB'
 });

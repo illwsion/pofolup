@@ -19,6 +19,7 @@ const applicantController = require('./../controllers/applicantController');
 const articleController = require('./../controllers/articleController');
 const categoryController = require('./../controllers/categoryController');
 const nodemailerController = require('./../controllers/nodemailerController.js')
+const noticeController = require('./../controllers/noticeController.js')
 const s3Controller = require('./../controllers/s3Controller');
 
 
@@ -222,10 +223,17 @@ router.get("/logout", function(req, res) {
   res.redirect("/");
 });
 
-//공지사항 페이지
+
+//그 외 공지사항 페이지
 router.get('/notice/:content', csrfProtection, (req, res) => {
   switch (req.params.content) {
-    case 'contact':
+    case 'pofolup_contact':
+      if (req.isAuthenticated()){
+        if (req.user.isAdmin){
+          res.redirect('/contactboard/1');
+          break;
+        }
+      }
       res.render('notice_contact',{
         csrfToken: req.csrfToken(),
       });
@@ -243,11 +251,14 @@ router.get('/notice/:content', csrfProtection, (req, res) => {
       break;
   }
 });
-//제휴문의
-router.post('/notice/contact', csrfProtection, (req, res)=>{
+//제휴문의 생성
+router.post('/notice/pofolup_contact', csrfProtection, noticeController.getTotalContact, noticeController.createContact, (req, res)=>{
+  /*
+  이메일 전송 기능
   req.body.content = req.body.content.replaceAll(/(\r\n|\n|\r)/gm, "<br>");
   nodemailerController.sendContactMail(req, res);
-  res.redirect('/notice/contact');
+  */
+  res.redirect('/notice/pofolup_contact');
 });
 
 module.exports = router;

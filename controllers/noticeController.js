@@ -1,6 +1,7 @@
 /* 해당 코드는 안진형(cookise09@naver.com)에 의해 작성되었습니다 */
 //공지사항 담당
 const Applicant = require('./../models/applicant');
+const Contact = require('./../models/contact');
 const Notice = require('./../models/notice');
 const Pofolup = require('./../models/pofolup');
 const applicantController = require('./../controllers/applicantController');
@@ -14,7 +15,7 @@ const moment = require('moment-timezone');
 exports.getTotalNotice = (req, res, next) => {
   Pofolup.find({}, (error, pofolupDB)=>{
     if (error){
-      console.log('error at getTotalUser! '+error)
+      console.log('error at getTotalNotice! '+error)
     }else{
       req.totalNotice = pofolupDB[0].totalNotice;
     }
@@ -99,11 +100,99 @@ exports.findNotice = (req, res, next) => {
   let targetName;
   Notice.find({
     noticeNumber: req.params.noticeNumber
-  }, (error, Notices) => {
+  }, (error, notices) => {
     if (error) {
       console.log(error);
     } else {
-      req.noticesData = Notices;
+      req.noticesData = notices;
+      next();
+    }
+  });
+};
+
+//제휴문의
+//총 제휴문의 수 조회
+exports.getTotalContact = (req, res, next) => {
+  Pofolup.find({}, (error, pofolupDB)=>{
+    if (error){
+      console.log('error at getTotalContact! '+error)
+    }else{
+      req.totalContact = pofolupDB[0].totalContact;
+    }
+    next();
+  });
+};
+//모든 제휴문의 데이터 검색
+exports.getAllContacts = (req, res, next) => {
+  Contact.find({}, (error, contacts) => {
+    if (error) {
+      console.log(err);
+    } else {
+      req.contactsData = contacts;
+      next();
+    }
+  });
+};
+//제휴문의 생성 (보내기 버튼)
+exports.createContact = (req, res, next) => {
+  //현재 제휴문의 수
+  let currentContact = req.totalContact;
+  currentContact = ('0000'+currentContact).slice(-4);
+  //새로운 제휴문의 생성
+  let newContact = new Contact({
+    contactNumber: currentContact,
+    companyName: req.body.companyname,
+    enquireName: req.body.enquirename,
+    phone: req.body.phone,
+    email: req.body.email,
+    item: req.body.item,
+    content: req.body.content,
+    createDate: moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm'),
+  });
+
+  newContact.save((error, Notice) => {
+    if (error) {
+      console.log('Contact save error' + error);
+    } else {
+      //총 제휴문의 수 +1
+      Pofolup.updateOne({}, {$inc:{totalContact:1}}, (error, pofolupDB)=>{
+        if (error){
+          console.log(error);
+        }else{
+          next();
+        }
+      });
+    }
+  });
+};
+//제휴문의 삭제
+exports.deleteContact = (req, res, contactNumber) => {
+  Contact.find({contactNumber: contactNumber}, async (error, contact) => {
+    if (error) {
+      console.log('error at deleteContact' + error);
+    } else {
+      //제휴문의 삭제
+      Contact.deleteOne({
+        _id: contact[0]._id
+      }, (error, result) => {
+        if (error) {
+          console.log('error at deleteContact' + error);
+        } else {
+        }
+      });
+    }
+  });
+};
+//제휴문의 조회
+exports.findContact = (req, res, next) => {
+  let targetName;
+  Contact.find({
+    contactNumber: req.params.contactNumber
+  }, (error, contacts) => {
+    if (error) {
+      console.log(error);
+    } else {
+      req.contactsData = contacts;
       next();
     }
   });

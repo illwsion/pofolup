@@ -52,6 +52,20 @@
     display: flex;
     justify-content: center;
   }
+  .upload_button{
+    font-size: 15pt;
+    display: flex;
+    float: right;
+    width: 114px;
+    height: 48px;
+    color: #ffffff;
+    background-color: #404040;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: normal;
+    cursor: pointer;
+  }
   .upload_button label{
     font-size: 15pt;
     display: flex;
@@ -89,7 +103,12 @@
     margin-bottom: 30px;
     flex-direction: column;
   }
-
+  .notice_info_title{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
   .contact_info_key p{
     width: auto;
     font-size: 20px;
@@ -205,6 +224,7 @@
   #notice_header{
     display: flex;
     justify-content: center;
+    flex-direction: column;
     margin-bottom: 35px;
   }
   #notice_header h2{
@@ -232,6 +252,20 @@
   }
 
   /* contact */
+  .upload_button{
+    font-size: 15pt;
+    display: flex;
+    float: right;
+    width: 114px;
+    height: 48px;
+    color: #ffffff;
+    background-color: #404040;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: normal;
+    cursor: pointer;
+  }
 
   .upload_button label{
     font-size: 15pt;
@@ -261,7 +295,13 @@
     margin-bottom: 30px;
     flex-direction: column;
   }
-
+  .notice_info_title{
+    width: 500px;
+    padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
   .contact_info_key p{
     width: auto;
     font-size: 20px;
@@ -281,7 +321,13 @@
     font-size: 20pt;
     height: 40px
   }
-
+  .contact_info_value input:disabled{
+    font-family: 'NanumSquareRound';
+    font-size: 20pt;
+    height: 40px
+    color: #000000;
+    background-color: #ffffff;
+  }
   .contact_info_item{
     display: flex;
     align-items: center;

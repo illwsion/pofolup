@@ -19,7 +19,7 @@
         <h2>제휴문의</h2>
       </div>
       <div id="notice_contact">
-        <form id="contact_form" action="/notice/contact" method="post">
+        <form id="contact_form" action="/notice/pofolup_contact" method="post">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <ul>
             <li class="contact_info">
@@ -125,7 +125,7 @@
       </div>
 
       <script>
-      //회원가입 팝업
+      //모달 팝업창
       window.onload = function(){
         function openPopup(){
           let bodyscroll = document.getElementById('popupscroll');

@@ -308,20 +308,25 @@ router.post('/unscrapApplicant/:applicantId', isAdmin, (req, res)=>{
 })
 
 //공지사항 게시판
-
+//공지사항 생성 페이지
 router.get('/noticeboard/create', csrfProtection, isAdmin, (req, res)=>{
   res.render('notice_createNotice',{
     csrfToken: req.csrfToken(),
   });
 });
-
+//공지사항 생성
 router.post('/noticeboard/create', isAdmin, nodemailerController.upload.array('file'), csrfProtection, noticeController.getTotalNotice, noticeController.createNotice, (req, res, error)=>{
   if (error){
     console.log('error at create notice' + error);
   }
   res.redirect('/noticeboard/1');
 });
-
+//공지사항 삭제
+router.get('/noticeboard/deleteNotice/:noticeNumber', isAdmin, (req, res)=>{
+  noticeController.deleteNotice(req, res, req.params.noticeNumber);
+  res.redirect('/noticeboard/1');
+});
+//공지사항 게시글 조회
 router.get('/noticeboard/views/:noticeNumber', noticeController.findNotice, (req, res)=>{
   if(req.noticesData.length){
     res.render('notice_noticeArticle',{
@@ -332,14 +337,8 @@ router.get('/noticeboard/views/:noticeNumber', noticeController.findNotice, (req
       errorDetail: '존재하지 않는 공지사항입니다'
     })
   }
-
 });
-
-router.get('/noticeboard/deleteNotice/:noticeNumber', isAdmin, (req, res)=>{
-  noticeController.deleteNotice(req, res, req.params.noticeNumber);
-  res.redirect('/noticeboard/1');
-});
-
+//공지사항 게시판 조회
 router.get('/noticeboard/:pageNum', noticeController.getAllNotices,(req, res)=>{
   let NoticesData = req.noticesData;
   NoticesData.reverse();
@@ -361,6 +360,47 @@ router.get('/noticeboard/:pageNum', noticeController.getAllNotices,(req, res)=>{
     pageNum: req.params.pageNum,
     maxPage: maxPage,
   });
+});
+//제휴문의
+//제휴문의 게시판 조회
+router.get('/contactboard/:pageNum', isAdmin, noticeController.getAllContacts,(req, res)=>{
+  let ContactsData = req.contactsData;
+  ContactsData.reverse();
+
+  let maxPage = parseInt(ContactsData.length / pageSize_notice);
+  if (ContactsData.length % pageSize_notice != 0){
+    maxPage++;
+  }
+  if (req.params.pageNum > maxPage)
+    req.params.pageNum = maxPage;
+  if (req.params.pageNum == 0)
+    req.params.pageNum = 1;
+  if (maxPage ==0) maxPage++;
+
+  ContactsData = ContactsData.slice((req.params.pageNum - 1) * pageSize_notice, req.params.pageNum * pageSize_notice);
+
+  res.render('notice_contactboard',{
+    Contacts: ContactsData,
+    pageNum: req.params.pageNum,
+    maxPage: maxPage,
+  });
+});
+//제휴문의 게시글 조회
+router.get('/contactboard/views/:contactNumber', isAdmin, noticeController.findContact, (req, res)=>{
+  if(req.contactsData.length){
+    res.render('notice_contactArticle',{
+      Contacts: req.contactsData,
+    });
+  }else{
+    res.render('errorPage',{
+      errorDetail: '존재하지 않는 제휴문의입니다'
+    })
+  }
+});
+//제휴문의 삭제
+router.get('/contactboard/deleteContact/:contactNumber', isAdmin, (req, res)=>{
+  noticeController.deleteContact(req, res, req.params.contactNumber);
+  res.redirect('/contactboard/1');
 });
 
 //유저 삭제

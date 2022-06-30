@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <%- include('./partials/head'); %>
+  <link href="/styles/notice.css" rel="stylesheet" type="text/css">
+  <link href="/styles/register.css" rel="stylesheet" type="text/css">
+  <script>
+    let deleteContact = ()=>{
+      let result = confirm("정말 제휴문의를 삭제하시겠습니까?");
+      if(result){
+        alert('제휴문의가 삭제되었습니다');
+        let contactNumber = document.getElementById('contactNumber').value;
+        location.href = "/contactboard/deleteContact/"+contactNumber;
+      }
+    }
+  </script>
+  <script>
+    window.onload = function(){
+      let textarea = document.getElementById('content');
+      console.log(textarea.scrollHeight);
+      textarea.style.height = '1px';
+      textarea.style.height = (12 + textarea.scrollHeight) + 'px';
+    }
+  </script>
+</head>
+
+<body id="popupscroll">
+  <div id="container">
+
+    <div id="header">
+      <%- include('./partials/header'); %>
+    </div>
+
+    <div id="contents">
+      <input id="contactNumber" type="text" hidden name="" value="<%= Contacts[0].contactNumber %>">
+      <div id="notice_header">
+        <h2>제휴문의</h2>
+      </div>
+      <div class="notice_info_title">
+        <div>
+          <a href="/contactboard/1"><img src="/images/06_view_03.jpg" alt=""></a>
+          <input onclick="deleteContact()" class="upload_button" type="button" name="" value="삭제">
+        </div>
+      </div>
+      <div id="notice_contact">
+        <form id="contact_form" action="/notice/pofolup_contact" method="post">
+          <ul>
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>기업명</p>
+              </div>
+              <div class="contact_info_value">
+                <input disabled value="<%= Contacts[0].companyName %>" type="text" id="companyname" name="companyname" required>
+              </div>
+            </li>
+
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>담당자 이름</p>
+              </div>
+              <div class="contact_info_value">
+                <input disabled value="<%= Contacts[0].enquireName %>" type="text" id="enquirename" name="enquirename" required>
+              </div>
+            </li>
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>연락처</p>
+              </div>
+              <div class="contact_info_value">
+                <!-- 나중에 input type 수정 필요 -->
+                <input disabled value="<%= Contacts[0].phone %>" id="phone" type="text" name="phone" required>
+              </div>
+            </li>
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>이메일</p>
+              </div>
+              <div class="contact_info_value">
+                <input disabled value="<%= Contacts[0].email %>" type="email" id="email" name="email" required>
+              </div>
+            </li>
+
+
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>문의종류</p>
+              </div>
+              <div class="contact_info_value">
+                <input disabled value="<%= Contacts[0].item %>" type="email" id="email" name="email" required>
+              </div>
+            </li>
+
+            <li class="contact_info">
+              <div class="contact_info_key">
+                <p>문의 내용</p>
+              </div>
+              <div class="contact_info_value">
+                <textarea disabled id="content" name="content" rows="8" cols="80" maxlength="3000" wrap="hard" required><%= Contacts[0].content %></textarea>
+              </div>
+            </li>
+
+          </ul>
+        </form>
+      </div>
+
+
+    </div>
+
+    <div id="footer">
+      <%- include('./partials/footer'); %>
+    </div>
+
+  </div>
+</body>
+
+
+
+</html>

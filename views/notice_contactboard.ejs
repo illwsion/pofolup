@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <%- include('./partials/head'); %>
+  <link href="/styles/notice.css" rel="stylesheet" type="text/css">
+  <link href="/styles/noticeboard.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+
+    <div id="header">
+      <%- include('./partials/header'); %>
+    </div>
+
+    <div id="contents">
+      <div id="notice_header">
+        <h2>제휴문의</h2>
+      </div>
+      <div id="noticeboard">
+        <ul>
+          <li>
+            <div class="notice_noticeNumber">
+              <p>글번호</p>
+            </div>
+            <div class="notice_title">
+              <p>회사</p>
+            </div>
+            <div class="notice_adminName">
+              <p>담당자</p>
+            </div>
+            <div class="notice_createDate">
+              <p>작성일</p>
+            </div>
+          </li>
+          <% for (let i=0; i<Contacts.length; i++) { %>
+            <li>
+              <div class="notice_noticeNumber">
+                <p><%= Contacts[i].contactNumber %></p>
+              </div>
+              <div class="notice_title">
+                <a href="/contactboard/views/<%= Contacts[i].contactNumber %>"><p><%= Contacts[i].companyName %></p></a>
+              </div>
+              <div class="notice_adminName">
+                <p><%= Contacts[i].enquireName %></p>
+              </div>
+              <div class="notice_createDate">
+                <p><%= Contacts[i].createDate.slice(0,10) %></p>
+              </div>
+            </li>
+          <%}%>
+        </ul>
+
+      </div>
+      <div id="util">
+        <div id="notice_list_pagination">
+          <div id="createNotice">
+
+          </div>
+          <div id="paging">
+            <% if (pageNum > 1) { %>
+               <a class="pg" href="/contactboard/1">[처음]</a>
+            <% } %>
+            <% if (pageNum > 10) { %>
+               <a href="/contactboard/<%= parseInt((pageNum-1)/10)*10 %>">[이전]</a>
+            <% } %>
+            <div>
+              <% for (var i = parseInt((pageNum-1)/10)*10 + 1; i < parseInt((pageNum-1)/10)*10 + 11; i++) { %>
+                <% if (i <= maxPage) { %>
+                  <% if (i == pageNum) { %>
+                    <a href="/contactboard/<%= i %>" style="color: #cccccc;">[<%= i %>]</a>
+                  <% } else { %>
+                    <a href="/contactboard/<%= i %>">[<%= i %>]</a>
+                  <% } %>
+                <% } %>
+              <% } %>
+            </div>
+            <% if (pageNum <= parseInt(maxPage/10)*10) { %>
+               <a href="/contactboard/<%= parseInt((pageNum-1)/10)*10+11 %>">[다음]</a>
+            <% } %>
+            <% if (pageNum != maxPage) { %>
+               <a href="/contactboard/<%=maxPage%>">[맨끝]</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="footer">
+      <%- include('./partials/footer'); %>
+    </div>
+
+  </div>
+</body>
+
+
+
+</html>
